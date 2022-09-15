@@ -35,7 +35,7 @@
 
         <div class="mb-3">
             <label for="name" class="form-label">회원 이름</label>
-            <input type="password" class="form-control" id="name" th:field="*{name}" th:errorclass="field-error">
+            <input type="text" class="form-control" id="name" th:field="*{name}" th:errorclass="field-error">
             <div class="field-error" th:errors="*{name}"></div>
         </div>
 
