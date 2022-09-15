@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/memberHeader :: header">
+    <meta charset="UTF-8">
+
+    <title>Login Form Page</title>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>로그인</h2>
+    </div>
+
+    <form action="post.html" th:action th:object="${loginForm}" method="post">
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+
+        <div class="mb-3">
+            <label for="loginId" class="form-label">로그인 ID</label>
+            <input type="text" class="form-control" id="loginId" th:field="*{loginId}" th:errorclass="field-error">
+            <div class="field-error" th:errors="*{loginId}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}" th:errorclass="field-error">
+            <div class="field-error" th:errors="*{password}"></div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="w-100 btn btn-dark btn-lg">로그인</button>
+            </div>
+            <div class="col">
+                <button type="button" class="w-100 btn btn-dark btn-lg"
+                        onclick="location.href='posts.html'"
+                        th:onclick="|location.href='@{/}'|">
+                    취소
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>
