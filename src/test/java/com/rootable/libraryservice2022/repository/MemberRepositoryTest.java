@@ -113,5 +113,32 @@ public class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void certify(){
+
+        String loginId = "aaa";
+        String pw = "1111";
+
+        //given
+        Member member = Member.builder()
+                .name("kim")
+                .loginId(loginId)
+                .password(pw)
+                .email("ssss@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        memberRepository.save(member);
+
+        //when
+        Member certifiedMember = memberRepository.certify(loginId, pw);
+        System.out.println("LoginId = " + certifiedMember.getLoginId());
+        System.out.println("Password = " + certifiedMember.getPassword());
+
+        //then
+        assertThat(certifiedMember).isNotNull();
+
+    }
+
 
 }

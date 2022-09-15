@@ -18,4 +18,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("select m from Member m where m.email = :memberEmail")
     Member findByEmail(@Param("memberEmail") String email);
 
+    @Query("select m from Member m where m.loginId LIKE %:memberId% and m.password LIKE %:pw%")
+    Member certify(@Param("memberId") String loginId,
+                   @Param("pw") String password);
+
 }
