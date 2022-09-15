@@ -2,6 +2,7 @@ package com.rootable.libraryservice2022.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Member {
 
     @Id @GeneratedValue
