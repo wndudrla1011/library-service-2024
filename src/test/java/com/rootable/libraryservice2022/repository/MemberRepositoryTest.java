@@ -72,17 +72,20 @@ public class MemberRepositoryTest {
     }
 
     @Test
-    public void findByLoginId() {
+    public void findByLoginIdAndEmail() {
 
         String loginId1 = "aaa";
         String loginId2 = "bbb";
+
+        String email1 = "gggg@gmail.com";
+        String email2 = "ssss@gmail.com";
 
         //given
         Member member1 = Member.builder()
                 .name("kim")
                 .loginId(loginId1)
                 .password("1111")
-                .email("ssss@gmail.com")
+                .email(email1)
                 .role(Role.USER)
                 .build();
 
@@ -90,7 +93,7 @@ public class MemberRepositoryTest {
                 .name("joo")
                 .loginId(loginId2)
                 .password("1111")
-                .email("ssss@gmail.com")
+                .email(email2)
                 .role(Role.USER)
                 .build();
 
@@ -98,11 +101,17 @@ public class MemberRepositoryTest {
         memberRepository.save(member2);
 
         //when
-        Member findMember = memberRepository.findByLoginId(loginId1);
+        Member findMember1 = memberRepository.findByLoginId(loginId1);
+        Member findMember2 = memberRepository.findByEmail(email1);
 
         //then
-        assertThat(findMember.getLoginId()).isEqualTo(loginId1);
-        assertThat(findMember.getName()).isEqualTo("kim");
+        assertThat(findMember1.getLoginId()).isEqualTo(loginId1);
+        assertThat(findMember1.getName()).isEqualTo("kim");
+
+        assertThat(findMember2.getEmail()).isEqualTo(email1);
+        assertThat(findMember2.getLoginId()).isEqualTo(loginId1);
 
     }
+
+
 }
