@@ -5,6 +5,7 @@ import com.rootable.libraryservice2022.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
 @Service
 @RequiredArgsConstructor
@@ -19,5 +20,6 @@ public class MemberService {
     public Long join(Member member) {
         return memberRepository.save(member).getId();
     }
+
 
 }
