@@ -23,12 +23,18 @@
 
     <main class="px-3">
         <h1 th:text="|반갑습니다! ${member.name} 회원님|">로그인한 회원 이름</h1>
-        <p class="lead">메인 페이지에서 </br>서비스를 이용할 수 있습니다.</p>
+        <p class="lead">메인 페이지에서 서비스를 이용할 수 있습니다.</p>
         <p class="lead">
-            <button class="btn btn-lg btn-secondary fw-bold border-white bg-white text-dark" type="button"
-                    th:onclick="|location.href='@{/posts}'|">메인으로</button>
-            <button class="btn btn-lg btn-secondary fw-bold border-white bg-white text-dark" type="button"
-                    th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+            <button class="btn btn-lg btn-secondary fw-bold border-white bg-white text-dark"
+                    type="button" th:onclick="|location.href='@{/posts}'|">
+                메인으로
+            </button>
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-lg btn-secondary fw-bold border-white bg-white text-dark"
+                        type="submit">
+                    로그아웃
+                </button>
+            </form>
         </p>
     </main>
 
