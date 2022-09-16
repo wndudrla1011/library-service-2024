@@ -1,6 +1,7 @@
 package com.rootable.libraryservice2022;
 
 import com.rootable.libraryservice2022.web.argumentresolver.LoginMemberArgumentResolver;
+import com.rootable.libraryservice2022.web.interceptor.AuthInterceptor;
 import com.rootable.libraryservice2022.web.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -18,6 +19,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error");
+
+        registry.addInterceptor(new AuthInterceptor())
+                .order(2)
+                .addPathPatterns("/**")
+                .excludePathPatterns();
+
     }
 
     @Override

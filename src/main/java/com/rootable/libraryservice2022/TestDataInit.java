@@ -20,7 +20,7 @@ public class TestDataInit {
     @PostConstruct
     public void init() {
 
-        Member member = Member.builder()
+        Member member1 = Member.builder()
                 .name("test")
                 .loginId("testId")
                 .password("1111")
@@ -28,7 +28,25 @@ public class TestDataInit {
                 .role(Role.USER)
                 .build();
 
-        memberRepository.save(member);
+        Member member2 = Member.builder()
+                .name("bot1")
+                .loginId("admin11")
+                .password("1234")
+                .email("admin@gmail.com")
+                .role(Role.ADMIN)
+                .build();
+
+        Member member3 = Member.builder()
+                .name("bot2")
+                .loginId("staff22")
+                .password("1234")
+                .email("staff@gmail.com")
+                .role(Role.STAFF)
+                .build();
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
 
     }
 
