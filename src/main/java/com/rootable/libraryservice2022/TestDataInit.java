@@ -22,8 +22,8 @@ public class TestDataInit {
 
         Member member1 = Member.builder()
                 .name("test")
-                .loginId("testId")
-                .password("1111")
+                .loginId("test1")
+                .password("1111!!aa")
                 .email("test@gmail.com")
                 .role(Role.USER)
                 .build();
@@ -31,7 +31,7 @@ public class TestDataInit {
         Member member2 = Member.builder()
                 .name("bot1")
                 .loginId("admin11")
-                .password("1234")
+                .password("1111!!bb")
                 .email("admin@gmail.com")
                 .role(Role.ADMIN)
                 .build();
@@ -39,7 +39,7 @@ public class TestDataInit {
         Member member3 = Member.builder()
                 .name("bot2")
                 .loginId("staff22")
-                .password("1234")
+                .password("1111!!cc")
                 .email("staff@gmail.com")
                 .role(Role.STAFF)
                 .build();
