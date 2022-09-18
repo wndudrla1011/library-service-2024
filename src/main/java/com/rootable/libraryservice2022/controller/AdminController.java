@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,7 @@ public class AdminController {
 
     @MySecured(role = Role.STAFF)
     @GetMapping("/admin/members")
-    public String books(Model model, HttpServletRequest request) {
+    public String members(Model model, HttpServletRequest request) {
 
         log.info("관리자 페이지 접근");
 
@@ -39,7 +40,7 @@ public class AdminController {
         Member member = (Member) session.getAttribute("loginMember");
 
         model.addAttribute("member", member);
-        return "posts/posts"; //임시 값(members.html로 교체해야 함)
+        return "members/members";
 
     }
 
