@@ -26,6 +26,7 @@ public class AdminController {
 
         model.addAttribute("member", member);
         return "loginHomeAdmin";
+
     }
 
     @MySecured(role = Role.STAFF)
@@ -39,7 +40,7 @@ public class AdminController {
 
         model.addAttribute("member", member);
         return "posts/posts"; //임시 값(members.html로 교체해야 함)
-    }
 
+    }
 
 }

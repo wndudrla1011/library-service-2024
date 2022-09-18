@@ -49,13 +49,13 @@ public class AuthInterceptor implements HandlerInterceptor {
                 //관리자가 아닌 사용자의 접근 -> 리다이렉션
                 if (member.getRole() == Role.GUEST || member.getRole() == Role.USER) {
                     log.info("접근을 거부합니다.");
-                    response.sendRedirect("/error");
+                    response.sendRedirect("/error-403");
                     return false;
                 }
             } else if ("STAFF".equals(role)) {
                 if (member.getRole() != Role.ADMIN) {
                     log.info("접근을 거부합니다.");
-                    response.sendRedirect("/error");
+                    response.sendRedirect("/error-403");
                     return false;
                 }
             }
