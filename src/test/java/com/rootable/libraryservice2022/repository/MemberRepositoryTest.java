@@ -140,5 +140,44 @@ public class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void checkDuplicatedLoginId() {
+
+        Long id = 1L;
+        String loginId = "test1";
+        String updateId = "test2";
+        String password = "1111!!ee";
+
+        //given
+        Member member1 = Member.builder()
+                .name("kim")
+                .loginId(loginId)
+                .password(password)
+                .email("ssss@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member2 = Member.builder()
+                .name("kim")
+                .loginId(updateId)
+                .password(password)
+                .email("ddss@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        //when
+        member1.update(updateId, password, Role.USER);
+        Member member = memberRepository.checkDuplicatedLoginId(id, updateId);
+
+        System.out.println("Updated LoginId = " + member1.getLoginId());
+        System.out.println("duplicated LoginId = " + member.getLoginId());
+
+        //then
+        assertThat(member.getLoginId()).isEqualTo(updateId);
+
+    }
 
 }
