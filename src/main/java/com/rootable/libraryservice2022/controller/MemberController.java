@@ -10,26 +10,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
-    @GetMapping("/add")
+    @GetMapping("/members/add")
     public String joinForm(@ModelAttribute("member") Member member) {
 
         log.info(">>> Show Join Form");
@@ -37,7 +33,7 @@ public class MemberController {
 
     }
 
-    @PostMapping("/add")
+    @PostMapping("/members/add")
     public String join(@Valid @ModelAttribute Member form, BindingResult bindingResult) {
 
         Member member = Member.builder()
@@ -59,6 +55,46 @@ public class MemberController {
         log.info("정상 입력으로 회원 가입 진행");
         memberService.join(member);
         return "redirect:/";
+
+    }
+
+    @MySecured(role = Role.STAFF)
+    @GetMapping("/admin/members")
+    public String members(Model model, HttpServletRequest request) {
+
+        log.info("관리자 페이지 접근");
+
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members);
+
+        return "members/members";
+
+    }
+
+    @MySecured(role = Role.STAFF)
+    @GetMapping("/admin/members/{memberId}")
+    public String member(@PathVariable Long memberId, Model model) {
+
+        log.info("회원 정보");
+
+        Member member = memberService.findOne(memberId);
+
+        model.addAttribute("member", member);
+        return "members/memberInfo";
+
+    }
+
+    @MySecured(role = Role.STAFF)
+    @GetMapping("/admin/members/{memberId}/edit")
+    public String updateForm(@PathVariable Long memberId, Model model) {
+
+        log.info(">>> Show Update Form");
+
+        Member member = memberService.findOne(memberId);
+
+        model.addAttribute("member", member);
+        model.addAttribute("roles", Role.values());
+        return "members/update";
 
     }
 

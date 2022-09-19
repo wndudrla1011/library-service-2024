@@ -45,7 +45,9 @@
 
     <div class="row">
       <div class="col">
-        <button type="submit" class="w-100 btn btn-dark btn-lg">수정</button>
+        <button type="button" class="w-100 btn btn-dark btn-lg"
+                onclick="location.href='update.html'"
+                th:onclick="|location.href='@{/admin/members/{memberId}/edit(memberId=${member.id})}'|">수정</button>
       </div>
       <div class="col">
         <button type="button" class="w-100 btn btn-dark btn-lg"
