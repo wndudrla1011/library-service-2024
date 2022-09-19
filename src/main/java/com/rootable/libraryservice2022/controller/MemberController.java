@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -34,7 +35,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/add")
-    public String join(@Valid @ModelAttribute Member form, BindingResult bindingResult) {
+    public String join(@Valid @ModelAttribute("member") Member form, BindingResult bindingResult) {
 
         Member member = Member.builder()
                 .name(form.getName())
@@ -95,6 +96,34 @@ public class MemberController {
         model.addAttribute("member", member);
         model.addAttribute("roles", Role.values());
         return "members/update";
+
+    }
+
+    @MySecured(role = Role.STAFF)
+    @PostMapping("/admin/members/{memberId}/edit")
+    public String edit(@PathVariable Long memberId, @Valid @ModelAttribute("member") Member form, BindingResult bindingResult){
+
+        log.info("회원 정보 수정 진행");
+
+        duplicationCheckUpdateLoginId(form, bindingResult); //중복 아이디 검증
+
+        if (bindingResult.hasErrors()) {
+            log.info("검증 에러 errors={}", bindingResult);
+            return "members/update";
+        }
+
+        memberService.update(memberId, form);
+
+        return "redirect:/admin/members";
+
+    }
+
+    private void duplicationCheckUpdateLoginId(Member member, BindingResult bindingResult) {
+
+        if (memberRepository.checkDuplicatedLoginId(member.getId(), member.getLoginId()) != null) {
+            log.info(">>> 로그인 ID 중복");
+            bindingResult.rejectValue("loginId", "overlap");
+        }
 
     }
 

@@ -46,4 +46,10 @@ public class Member {
         this.role = role;
     }
 
+    public void update(String loginId, String password, Role role) {
+        this.loginId = loginId;
+        this.password = password;
+        this.role = role;
+    }
+
 }

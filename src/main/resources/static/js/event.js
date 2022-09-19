@@ -6,13 +6,13 @@ var main = {
             $('#sidebars').addClass('active');
             $('.overlay').addClass('fade-in');
             $('.fixed-footer').addClass('awake')
-            $('#menu-bar').addClass('page-out');
+            $('#menu-bar').addClass('fade-in');
         });
         $('.overlay').on('click', function () {
             $('#sidebars').removeClass('active');
             $('.overlay').removeClass('fade-in');
             $('.fixed-footer').removeClass('awake');
-            $('#menu-bar').removeClass('page-out');
+            $('#menu-bar').removeClass('fade-in');
         });
 
     },

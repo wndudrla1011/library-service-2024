@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -36,6 +37,21 @@ public class MemberService {
 
         return memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + id));
+
+    }
+
+    /*
+     * 회원 수정
+     * */
+    @Transactional
+    public Long update(Long memberId, Member updateParam) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + memberId));
+
+        member.update(updateParam.getLoginId(), updateParam.getPassword(), updateParam.getRole());
+
+        return memberId;
 
     }
 

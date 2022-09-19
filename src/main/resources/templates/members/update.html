@@ -32,20 +32,20 @@
 
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="password" th:field="*{password}" th:errorclass="field-error">
+            <input type="text" class="form-control" id="password" th:field="*{password}" th:errorclass="field-error">
             <div class="field-error" th:errors="*{password}"></div>
         </div>
 
         <div class="mb-3">
             <label for="name" class="form-label">회원 이름</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}" th:errorclass="field-error" disabled>
+            <input type="text" class="form-control" id="name" th:field="*{name}" th:errorclass="field-error" readonly>
             <div class="field-error" th:errors="*{name}"></div>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">이메일 주소</label>
             <input type="email" class="form-control" id="email" th:field="*{email}"
-                   th:errorclass="field-error" aria-describedby="emailHelp" disabled>
+                   th:errorclass="field-error" aria-describedby="emailHelp" readonly>
             <div class="field-error" th:errors="*{email}"></div>
         </div>
 
@@ -66,7 +66,7 @@
             <div class="col">
                 <button type="button" class="w-100 btn btn-dark btn-lg"
                         onclick="location.href='posts.html'"
-                        th:onclick="|location.href='@{/admin/members/{memberId(memberId=${member.id})}}'|">
+                        th:onclick="|location.href='@{/admin/members/{memberId(memberId=${id})}}'|">
                     취소
                 </button>
             </div>
