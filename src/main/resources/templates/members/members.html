@@ -65,30 +65,34 @@
 </div>
 
 <div class="overlay">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>회원번호</th>
-            <th>이름</th>
-            <th>회원 아이디</th>
-            <th>비밀번호</th>
-            <th>이메일</th>
-            <th>권한</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="member : ${members}">
-            <td>
-                <a href="#" th:href="@{/admin/members/{memberId}(memberId=${member.id})}" th:text="${member.id}"></a>
-            </td>
-            <td th:text="${member.name}"></td>
-            <td th:text="${member.loginId}"></td>
-            <td th:text="${member.password}"></td>
-            <td th:text="${member.email}"></td>
-            <td th:text="${member.role}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <h2 class="text-center mb-4">회원 목록</h2>
+        <table class="table table-borderless table-hover">
+            <thead>
+            <tr>
+                <th>회원번호</th>
+                <th>이름</th>
+                <th>회원 아이디</th>
+                <th>비밀번호</th>
+                <th>이메일</th>
+                <th>권한</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${members}">
+                <td>
+                    <a href="#" th:href="@{/admin/members/{memberId}(memberId=${member.id})}" th:text="${member.id}"></a>
+                </td>
+                <td th:text="${member.name}"></td>
+                <td th:text="${member.loginId}"></td>
+                <td th:text="${member.password}"></td>
+                <td th:text="${member.email}"></td>
+                <td th:text="${member.role}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 
