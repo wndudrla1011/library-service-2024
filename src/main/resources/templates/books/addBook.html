@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/formHeader :: header">
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <title>AddBook Form Page</title>
+
 </head>
 <body>
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>도서 등록</h2>
+    </div>
+
+    <h4 class="mb-3">도서 정보 입력</h4>
+
+    <form action="" th:action th:object="${book}" method="post">
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">책 제목</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}"
+                   th:errorclass="field-error" placeholder="책 제목을 입력하세요">
+            <div class="field-error" th:errors="*{title}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="writer" class="form-label">저자</label>
+            <input type="text" class="form-control" id="writer" th:field="*{writer}"
+                   th:errorclass="field-error" placeholder="저자를 입력하세요">
+            <div class="field-error" th:errors="*{writer}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">가격</label>
+            <input type="text" class="form-control" id="price" th:field="*{price}"
+                   th:errorclass="field-error" placeholder="가격을 입력하세요">
+            <div class="field-error" th:errors="*{price}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">재고</label>
+            <input type="text" class="form-control" id="stock" th:field="*{stock}"
+                   th:errorclass="field-error" placeholder="재고를 입력하세요">
+            <div class="field-error" th:errors="*{stock}"></div>
+        </div>
+
+        <div class="mb-3">
+            <div>도서 상태</div>
+            <select th:field="*{status}" class="form-select">
+                <option value="">권한 선택 🔻</option>
+                <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+            </select>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="w-100 btn btn-dark btn-lg">등록</button>
+            </div>
+            <div class="col">
+                <button type="button" class="w-100 btn btn-dark btn-lg"
+                        onclick="location.href='posts.html'"
+                        th:onclick="|location.href='@{/admin/books}'|">
+                    취소
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+
+<div th:replace="fragments/flexFooter :: footer"></div>
 
 </body>
 </html>
