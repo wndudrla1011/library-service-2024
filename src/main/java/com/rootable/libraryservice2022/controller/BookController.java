@@ -1,8 +1,10 @@
 package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Book;
+import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.service.BookService;
+import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.dto.BookSaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ public class BookController {
 
     private final BookService bookService;
 
+    @MySecured(role = Role.ADMIN)
     @GetMapping("/admin/books")
     public String books(Model model) {
 
@@ -35,6 +38,7 @@ public class BookController {
 
     }
 
+    @MySecured(role = Role.ADMIN)
     @GetMapping("/admin/books/add")
     public String bookForm(Model model) {
 
@@ -46,6 +50,7 @@ public class BookController {
 
     }
 
+    @MySecured(role = Role.ADMIN)
     @PostMapping("/admin/books/add")
     public String create(@Validated @ModelAttribute("book") BookSaveForm form, BindingResult bindingResult, Model model) {
 
@@ -70,6 +75,12 @@ public class BookController {
 
         return "redirect:/admin/books"; //등록 확인 페이지로 수정해야 됨
 
+    }
+
+    @MySecured(role = Role.ADMIN)
+    @GetMapping("/admin/books/{bookId}")
+    public String book() {
+        return "";
     }
 
 }
