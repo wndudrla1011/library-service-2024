@@ -17,7 +17,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Book {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
