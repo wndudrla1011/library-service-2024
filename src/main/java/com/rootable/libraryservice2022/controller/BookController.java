@@ -47,7 +47,16 @@ public class BookController {
     }
 
     @PostMapping("/admin/books/add")
-    public String create(@Validated @ModelAttribute("book") BookSaveForm form, BindingResult bindingResult) {
+    public String create(@Validated @ModelAttribute("book") BookSaveForm form, BindingResult bindingResult, Model model) {
+
+        model.addAttribute("statusList", Status.values());
+
+        if (bindingResult.hasErrors()) {
+            log.info("검증 에러 errors={}", bindingResult);
+            return "books/addBook";
+        }
+
+        log.info("정상 입력으로 도서 등록 진행");
 
         Book book = Book.builder()
                 .title(form.getTitle())
@@ -57,14 +66,8 @@ public class BookController {
                 .status(form.getStatus())
                 .build();
 
-        if (bindingResult.hasErrors()) {
-            log.info("검증 에러 errors={}", bindingResult);
-            return "books/addBook";
-        }
-
-        log.info("정상 입력으로 도서 등록 진행");
-
         bookService.create(book);
+
         return "redirect:/admin/books"; //등록 확인 페이지로 수정해야 됨
 
     }

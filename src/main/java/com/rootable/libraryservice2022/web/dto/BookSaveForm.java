@@ -5,15 +5,16 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
 public class BookSaveForm {
 
-    @NotNull(message = "도서 제목을 입력해주세요")
+    @NotBlank(message = "책 제목을 입력해주세요")
     private String title;
 
-    @NotNull(message = "저자를 입력해주세요")
+    @NotBlank(message = "저자를 입력해주세요")
     private String writer;
 
     @NotNull(message = "가격을 입력해주세요")
@@ -24,7 +25,7 @@ public class BookSaveForm {
     @Max(999)
     private Integer stock;
 
-    @NotNull
+    @NotNull(message = "상태를 입력해주세요")
     private Status status;
 
 }

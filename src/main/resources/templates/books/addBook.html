@@ -52,7 +52,7 @@
         <div class="mb-3">
             <div>도서 상태</div>
             <select th:field="*{status}" class="form-select">
-                <option value="">권한 선택 🔻</option>
+                <option value="">상태 목록 🔻</option>
                 <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
             </select>
         </div>
