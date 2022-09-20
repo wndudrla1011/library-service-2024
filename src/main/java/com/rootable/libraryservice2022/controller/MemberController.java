@@ -101,9 +101,16 @@ public class MemberController {
 
     @MySecured(role = Role.STAFF)
     @PostMapping("/admin/members/{memberId}/edit")
-    public String edit(@PathVariable Long memberId, @Valid @ModelAttribute("member") Member form, BindingResult bindingResult){
+    public String edit(@PathVariable Long memberId, @Valid @ModelAttribute("member") Member form,
+                       BindingResult bindingResult, Model model){
+
+        model.addAttribute("roles", Role.values());
 
         duplicationCheckUpdateLoginId(form, bindingResult); //중복 아이디 검증
+
+        if (form.getRole() == null) {
+            bindingResult.reject("roleNull");
+        }
 
         if (bindingResult.hasErrors()) {
             log.info("검증 에러 errors={}", bindingResult);
