@@ -29,4 +29,14 @@ public class BookService {
         return bookRepository.findBooks();
     }
 
+    /*
+     * 도서 조회
+     * */
+    public Book findOne(Long id) {
+
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 도서가 존재하지 않습니다. id=" + id));
+
+    }
+
 }

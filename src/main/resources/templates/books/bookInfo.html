@@ -52,12 +52,14 @@
         <div class="col">
             <button type="button" class="w-100 btn btn-dark btn-lg"
                     onclick="location.href='update.html'"
-                    th:onclick="|location.href='@{/admin/members/{memberId}/edit(memberId=${member.id})}'|">수정</button>
+                    th:onclick="|location.href='@{/admin/books/{bookId}/edit(bookId=${book.id})}'|">
+                수정
+            </button>
         </div>
         <div class="col">
             <button type="button" class="w-100 btn btn-dark btn-lg"
                     onclick="location.href='posts.html'"
-                    th:onclick="|location.href='@{/admin/members}'|">
+                    th:onclick="|location.href='@{/admin/books}'|">
                 취소
             </button>
         </div>
