@@ -21,18 +21,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String title;
-
-    @NotNull
     private String writer;
-
-    @NotNull
-    @Range(min = 1000, max = 100000)
     private Integer price;
-
-    @NotNull
-    @Max(999)
     private Integer stock;
 
     @Enumerated(EnumType.STRING)
