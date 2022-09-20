@@ -3,17 +3,17 @@
 <head th:replace="fragments/formHeader :: header">
     <meta charset="UTF-8">
 
-    <title>Join Form Page</title>
+    <title>Edit Page for Book</title>
 
 </head>
 <body>
 
 <div class="container">
     <div class="py-5 text-center">
-        <h2>회원 정보 수정</h2>
+        <h2>도서 정보 수정</h2>
     </div>
 
-    <form action="" th:action th:object="${member}" method="post">
+    <form action="" th:action th:object="${book}" method="post">
 
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>

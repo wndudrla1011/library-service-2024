@@ -95,7 +95,7 @@ public class MemberController {
 
         model.addAttribute("member", member);
         model.addAttribute("roles", Role.values());
-        return "members/update";
+        return "members/editMember";
 
     }
 
@@ -109,7 +109,7 @@ public class MemberController {
 
         if (bindingResult.hasErrors()) {
             log.info("검증 에러 errors={}", bindingResult);
-            return "members/update";
+            return "members/editMember";
         }
 
         memberService.update(memberId, form);

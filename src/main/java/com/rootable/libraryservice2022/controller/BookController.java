@@ -57,6 +57,12 @@ public class BookController {
 
         model.addAttribute("statusList", Status.values());
 
+        if (form.getStock() != null && form.getStatus() != null) {
+            if (form.getStock() > 0 && form.getStatus() == Status.DENIED) {
+                bindingResult.reject("invalid");
+            }
+        }
+
         if (bindingResult.hasErrors()) {
             log.info("검증 에러 errors={}", bindingResult);
             return "books/addBook";
