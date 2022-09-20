@@ -2,6 +2,7 @@ package com.rootable.libraryservice2022.service;
 
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.repository.BookRepository;
+import com.rootable.libraryservice2022.web.dto.BookUpdateForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,21 @@ public class BookService {
 
         return bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 도서가 존재하지 않습니다. id=" + id));
+
+    }
+
+    /*
+    * 도서 수정
+    * */
+    @Transactional
+    public Long update(Long bookId, BookUpdateForm bookParam) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 도서가 존재하지 않습니다. id=" + bookId));
+
+        book.update(bookParam.getPrice(), bookParam.getStock(), bookParam.getStatus());
+
+        return bookId;
 
     }
 

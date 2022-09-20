@@ -103,14 +103,14 @@ public class MemberController {
     @PostMapping("/admin/members/{memberId}/edit")
     public String edit(@PathVariable Long memberId, @Valid @ModelAttribute("member") Member form, BindingResult bindingResult){
 
-        log.info("회원 정보 수정 진행");
-
         duplicationCheckUpdateLoginId(form, bindingResult); //중복 아이디 검증
 
         if (bindingResult.hasErrors()) {
             log.info("검증 에러 errors={}", bindingResult);
             return "members/editMember";
         }
+
+        log.info("회원 정보 수정 진행");
 
         memberService.update(memberId, form);
 

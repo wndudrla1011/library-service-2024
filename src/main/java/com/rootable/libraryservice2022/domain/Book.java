@@ -39,4 +39,10 @@ public class Book {
         this.status = status;
     }
 
+    public void update(Integer price, Integer stock, Status status) {
+        this.price = price;
+        this.stock = stock;
+        this.status = status;
+    }
+
 }

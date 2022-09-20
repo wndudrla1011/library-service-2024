@@ -6,16 +6,14 @@ import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.dto.BookSaveForm;
+import com.rootable.libraryservice2022.web.dto.BookUpdateForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -108,6 +106,35 @@ public class BookController {
         model.addAttribute("book", book);
         model.addAttribute("statusList", Status.values());
         return "books/editBook";
+
+    }
+
+    @MySecured(role = Role.ADMIN)
+    @PostMapping("/admin/books/{bookId}/edit")
+    public String edit(@PathVariable Long bookId, @Validated @ModelAttribute("book") BookUpdateForm form,
+                       BindingResult bindingResult, Model model) {
+
+        model.addAttribute("statusList", Status.values());
+
+        if (form.getStock() != null && form.getStatus() != null) {
+            if (form.getStock() > 0 && form.getStatus() == Status.DENIED) {
+                bindingResult.reject("invalid");
+            }
+        }
+
+        if (form.getStatus() == null) {
+            bindingResult.reject("statusNull");
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("검증 에러 errors={}", bindingResult);
+            return "books/editBook";
+        }
+
+        log.info("도서 정보 수정 진행");
+
+        bookService.update(bookId, form);
+        return "redirect:/admin/books";
 
     }
 

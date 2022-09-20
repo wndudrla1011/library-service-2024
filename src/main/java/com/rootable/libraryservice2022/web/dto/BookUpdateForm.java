@@ -15,6 +15,7 @@ public class BookUpdateForm {
     private Integer price;
 
     //수정에서는 재고 범위 자유
+    @NotNull(message = "재고를 입력해주세요")
     private Integer stock;
 
     private Status status;
