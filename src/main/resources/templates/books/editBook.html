@@ -20,40 +20,39 @@
         </div>
 
         <div class="mb-3">
-            <label for="id" class="form-label">회원번호</label>
+            <label for="id" class="form-label">도서번호</label>
             <input type="text" class="form-control" id="id" th:field="*{id}" th:errorclass="field-error" readonly>
         </div>
 
         <div class="mb-3">
-            <label for="loginId" class="form-label">회원 ID</label>
-            <input type="text" class="form-control" id="loginId" th:field="*{loginId}" th:errorclass="field-error">
-            <div class="field-error" th:errors="*{loginId}"></div>
+            <label for="title" class="form-label">책 제목</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" th:errorclass="field-error" readonly>
+            <div class="field-error" th:errors="*{title}"></div>
         </div>
 
         <div class="mb-3">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="text" class="form-control" id="password" th:field="*{password}" th:errorclass="field-error">
-            <div class="field-error" th:errors="*{password}"></div>
+            <label for="writer" class="form-label">저자</label>
+            <input type="text" class="form-control" id="writer" th:field="*{writer}" th:errorclass="field-error" readonly>
+            <div class="field-error" th:errors="*{writer}"></div>
         </div>
 
         <div class="mb-3">
-            <label for="name" class="form-label">회원 이름</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}" th:errorclass="field-error" readonly>
-            <div class="field-error" th:errors="*{name}"></div>
+            <label for="price" class="form-label">가격</label>
+            <input type="text" class="form-control" id="price" th:field="*{price}" th:errorclass="field-error">
+            <div class="field-error" th:errors="*{price}"></div>
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">이메일 주소</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}"
-                   th:errorclass="field-error" aria-describedby="emailHelp" readonly>
-            <div class="field-error" th:errors="*{email}"></div>
+            <label for="stock" class="form-label">재고</label>
+            <input type="text" class="form-control" id="stock" th:field="*{stock}" th:errorclass="field-error">
+            <div class="field-error" th:errors="*{stock}"></div>
         </div>
 
         <div class="mb-3">
-            <div>권한</div>
-            <select th:field="*{role}" class="form-select">
-                <option value="">권한 선택 🔻</option>
-                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+            <div>상태</div>
+            <select th:field="*{status}" class="form-select">
+                <option value="">상태 선택 🔻</option>
+                <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
             </select>
         </div>
 
@@ -66,7 +65,7 @@
             <div class="col">
                 <button type="button" class="w-100 btn btn-dark btn-lg"
                         onclick="location.href='posts.html'"
-                        th:onclick="|location.href='@{/admin/members/{memberId}(memberId=${id})}'|">
+                        th:onclick="|location.href='@{/admin/books/{bookId}(bookId=${id})}'|">
                     취소
                 </button>
             </div>

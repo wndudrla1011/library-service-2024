@@ -89,7 +89,7 @@ public class MemberController {
     @GetMapping("/admin/members/{memberId}/edit")
     public String updateForm(@PathVariable Long memberId, Model model) {
 
-        log.info(">>> Show Update Form");
+        log.info(">>> Show Update Member Form");
 
         Member member = memberService.findOne(memberId);
 

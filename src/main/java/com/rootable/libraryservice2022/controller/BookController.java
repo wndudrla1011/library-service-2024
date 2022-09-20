@@ -97,4 +97,18 @@ public class BookController {
 
     }
 
+    @MySecured(role = Role.ADMIN)
+    @GetMapping("/admin/books/{bookId}/edit")
+    public String editForm(@PathVariable Long bookId, Model model) {
+
+        log.info(">>> Show Update Book Form");
+
+        Book book = bookService.findOne(bookId);
+
+        model.addAttribute("book", book);
+        model.addAttribute("statusList", Status.values());
+        return "books/editBook";
+
+    }
+
 }
