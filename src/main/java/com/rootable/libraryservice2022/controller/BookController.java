@@ -61,6 +61,10 @@ public class BookController {
             }
         }
 
+        if (form.getStatus() == null) {
+            bindingResult.reject("statusNull");
+        }
+
         if (bindingResult.hasErrors()) {
             log.info("검증 에러 errors={}", bindingResult);
             return "books/addBook";
