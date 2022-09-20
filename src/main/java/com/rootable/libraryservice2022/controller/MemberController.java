@@ -63,7 +63,7 @@ public class MemberController {
     @GetMapping("/admin/members")
     public String members(Model model, HttpServletRequest request) {
 
-        log.info("관리자 페이지 접근");
+        log.info(">>> Members Management Page");
 
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);

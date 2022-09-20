@@ -20,13 +20,13 @@ public class Book {
     @Id @GeneratedValue
     private Long id;
 
-    @NotBlank
+    @NotNull
     private String title;
 
-    @NotBlank
+    @NotNull
     private String writer;
 
-    @NotBlank
+    @NotNull
     @Range(min = 1000, max = 100000)
     private Integer price;
 

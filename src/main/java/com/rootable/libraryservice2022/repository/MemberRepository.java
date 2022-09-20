@@ -26,4 +26,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member certify(@Param("memberId") String loginId,
                    @Param("pw") String password);
 
+
 }
