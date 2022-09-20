@@ -66,6 +66,13 @@
 <div class="overlay">
     <div class="container">
         <h2 class="text-center mb-4">도서 목록</h2>
+        <div class="d-flex justify-content-end">
+            <button class="btn bg-dark text-white mt-4 mb-4"
+                    type="button"
+                    th:onclick="|location.href='@{/admin/books/add}'|">
+                도서 등록
+            </button>
+        </div>
         <table class="table table-borderless table-hover">
             <thead>
                 <tr>
