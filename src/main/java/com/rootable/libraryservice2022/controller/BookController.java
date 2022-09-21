@@ -80,9 +80,9 @@ public class BookController {
                 .status(form.getStatus())
                 .build();
 
-        bookService.create(book);
+        Long savedId = bookService.create(book);
 
-        return "redirect:/admin/books"; //등록 확인 페이지로 수정해야 됨
+        return "redirect:/admin/books/" + savedId;
 
     }
 
