@@ -13,9 +13,8 @@ var main = {
             $('.overlay').removeClass('fade-in');
             $('.fixed-footer').removeClass('awake');
             $('#menu-bar').removeClass('fade-in');
-        });
-
-    },
+        }),
+    }
 
 };
 

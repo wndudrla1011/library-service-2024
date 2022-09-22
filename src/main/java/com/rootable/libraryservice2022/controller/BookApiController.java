@@ -16,11 +16,25 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 public class BookApiController {
 
     private final BookService bookService;
+
+    @MySecured(role = Role.ADMIN)
+    @GetMapping("/admin/api/books")
+    public List<Book> bookList() {
+
+        log.info("API 도서 목록");
+
+        List<Book> books = bookService.books();
+
+        return books;
+
+    }
 
 }

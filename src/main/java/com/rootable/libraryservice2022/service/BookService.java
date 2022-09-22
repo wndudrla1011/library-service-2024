@@ -55,4 +55,17 @@ public class BookService {
 
     }
 
+    /*
+     * 도서 삭제
+     * */
+    @Transactional
+    public void delete(Long bookId) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 도서가 존재하지 않습니다. id=" + bookId));
+
+        bookRepository.delete(book);
+
+    }
+
 }
