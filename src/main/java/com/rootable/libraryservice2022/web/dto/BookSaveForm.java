@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Data
 public class BookSaveForm {
@@ -22,6 +23,7 @@ public class BookSaveForm {
     private Integer price;
 
     @NotNull(message = "재고를 입력해주세요")
+    @PositiveOrZero
     @Max(999)
     private Integer stock;
 

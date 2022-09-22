@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Data
 public class BookUpdateForm {
@@ -16,6 +17,7 @@ public class BookUpdateForm {
 
     //수정에서는 재고 범위 자유
     @NotNull(message = "재고를 입력해주세요")
+    @PositiveOrZero
     private Integer stock;
 
     private Status status;
