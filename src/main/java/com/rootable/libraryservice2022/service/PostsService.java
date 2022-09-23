@@ -1,6 +1,7 @@
 package com.rootable.libraryservice2022.service;
 
 import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostsService {
 
-    public List<Posts> findPosts
+    private final PostsRepository postsRepository;
+
+    public List<Posts> findPosts() {
+        return postsRepository.findPosts();
+    }
 
 }

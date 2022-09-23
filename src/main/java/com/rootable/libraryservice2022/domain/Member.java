@@ -40,7 +40,7 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "member")
+    @OneToOne(mappedBy = "member")
     private List<Posts> posts = new ArrayList<>();
 
     @Builder

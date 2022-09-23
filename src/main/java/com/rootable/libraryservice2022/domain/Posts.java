@@ -26,10 +26,9 @@ public class Posts extends BaseTimeEntity {
     @NotBlank
     private String title;
 
-    @NotBlank
     private String content;
 
-    @ManyToOne(fetch = LAZY)
+    @OneToOne
     @JoinColumn(name = "member_id")
     @NotBlank
     private Member member; //게시물 작성자
@@ -44,20 +43,30 @@ public class Posts extends BaseTimeEntity {
 
     private List<UploadFile> imageFiles; //이미지 파일들
 
-    @Builder
-    public Posts(Member member, Book book, UploadFile attachFile, List<UploadFile> imageFiles) {
-        this.member = member;
-        this.book = book;
-        this.attachFile = attachFile;
-        this.imageFiles = imageFiles;
-    }
-
     /*
      * 연관관계 메서드
      * */
     public void setMember(Member member) {
         this.member = member;
         member.getPosts().add(this);
+    }
+
+    /*
+    * 생성 메서드
+    * */
+    public static Posts createPost(String title, String content, Member member,
+                                   Book book, UploadFile attachFile, List<UploadFile> imageFiles) {
+
+        Posts posts = new Posts();
+        posts.setTitle(title);
+        posts.setContent(content);
+        posts.setMember(member);
+        posts.setBook(book);
+        posts.setAttachFile(attachFile);
+        posts.setImageFiles(imageFiles);
+
+        return posts;
+
     }
 
 }

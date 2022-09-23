@@ -61,7 +61,7 @@ public class MemberController {
 
     @MySecured(role = Role.STAFF)
     @GetMapping("/admin/members")
-    public String members(Model model, HttpServletRequest request) {
+    public String members(Model model) {
 
         log.info(">>> Members Management Page");
 

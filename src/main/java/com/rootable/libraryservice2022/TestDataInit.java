@@ -1,9 +1,6 @@
 package com.rootable.libraryservice2022;
 
-import com.rootable.libraryservice2022.domain.Book;
-import com.rootable.libraryservice2022.domain.Member;
-import com.rootable.libraryservice2022.domain.Role;
-import com.rootable.libraryservice2022.domain.Status;
+import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -87,6 +84,12 @@ public class TestDataInit {
         bookRepository.save(book1);
         bookRepository.save(book2);
         bookRepository.save(book3);
+
+        /*
+        * 게시물
+        * */
+
+
 
     }
 
