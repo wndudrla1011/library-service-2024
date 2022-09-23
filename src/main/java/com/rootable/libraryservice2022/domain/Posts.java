@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
 
 import java.util.List;
 
-import static javax.persistence.FetchType.*;
-
 @Getter
 @Setter
 @Entity

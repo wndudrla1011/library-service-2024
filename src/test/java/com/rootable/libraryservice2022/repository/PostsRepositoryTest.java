@@ -33,13 +33,6 @@ public class PostsRepositoryTest {
         //given
         LocalDateTime now = LocalDateTime.of(2022, 9, 23, 0, 0, 0);
 
-        postsRepository.save(Posts.builder()
-                .member(createMember())
-                .book(createBook())
-                .attachFile(new UploadFile("aaa", "bbb"))
-                .imageFiles(new ArrayList<>())
-                .build());
-
         //when
 
 
