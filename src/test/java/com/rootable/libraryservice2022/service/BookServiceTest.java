@@ -3,7 +3,6 @@ package com.rootable.libraryservice2022.service;
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.repository.BookRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -53,11 +51,25 @@ public class BookServiceTest {
     }
 
     @Test
-    public void books() {
-    }
-
-    @Test
     public void findOne() {
+
+        //given
+        Book book = Book.builder()
+                .title("book1")
+                .writer("a")
+                .price(10000)
+                .stock(2)
+                .status(Status.PERMISSION)
+                .build();
+
+        Long savedId = bookService.create(book);
+
+        //when
+        Book savedBook = bookService.findOne(savedId);
+
+        //then
+        assertThat(savedBook).usingRecursiveComparison().isEqualTo(book);
+
     }
 
     @Test
