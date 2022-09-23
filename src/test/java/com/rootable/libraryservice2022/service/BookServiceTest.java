@@ -87,7 +87,7 @@ public class BookServiceTest {
 
 
     @Test(expected = IllegalArgumentException.class)
-    @DisplayName("저장되지 않은 책 조회")
+    @DisplayName("존재하지 않는 책 조회")
     public void notFindOne() {
 
         //given
@@ -106,7 +106,7 @@ public class BookServiceTest {
         bookService.findOne(failId);
 
         //then
-        fail("예외가 발생해야 한다.");
+        fail("존재하지 않는 책 조회로 예외가 발생해야 한다.");
 
     }
 
