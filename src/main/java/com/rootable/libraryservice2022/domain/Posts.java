@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,5 +37,21 @@ public class Posts extends BaseTimeEntity {
     private UploadFile attachFile; //첨부 파일(회원카드)
 
     private List<UploadFile> imageFiles; //이미지 파일들
+
+    @Builder
+    public Posts(Member member, Book book, UploadFile attachFile, List<UploadFile> imageFiles) {
+        this.member = member;
+        this.book = book;
+        this.attachFile = attachFile;
+        this.imageFiles = imageFiles;
+    }
+
+    /*
+     * 연관관계 메서드
+     * */
+    public void setMember(Member member) {
+        this.member = member;
+        member.getPosts().add(this);
+    }
 
 }
