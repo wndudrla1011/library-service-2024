@@ -3,6 +3,7 @@ package com.rootable.libraryservice2022.service;
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.repository.BookRepository;
+import com.rootable.libraryservice2022.web.dto.BookUpdateForm;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -111,6 +112,35 @@ public class BookServiceTest {
 
     @Test
     public void update() {
+
+        //given
+        Book book1 = Book.builder()
+                .title("book1")
+                .writer("a")
+                .price(10000)
+                .stock(2)
+                .status(Status.PERMISSION)
+                .build();
+
+        BookUpdateForm book2 = createUpdateForm();
+        bookService.create(book1);
+
+        //when
+        bookService.update(book1.getId(), book2);
+
+        //then
+        assertThat(book1.getPrice()).isEqualTo(book2.getPrice());
+        assertThat(book1.getStock()).isEqualTo(book2.getStock());
+        assertThat(book1.getStatus()).isEqualTo(book2.getStatus());
+
+    }
+
+    private BookUpdateForm createUpdateForm() {
+        BookUpdateForm book2 = new BookUpdateForm();
+        book2.setPrice(20000);
+        book2.setStock(4);
+        book2.setStatus(Status.PERMISSION);
+        return book2;
     }
 
     @Test
