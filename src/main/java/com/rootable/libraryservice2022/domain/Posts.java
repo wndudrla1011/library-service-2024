@@ -23,6 +23,12 @@ public class Posts extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    private String title;
+
+    @NotBlank
+    private String content;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     @NotBlank
