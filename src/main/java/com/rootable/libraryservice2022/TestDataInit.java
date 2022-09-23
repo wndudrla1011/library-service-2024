@@ -3,6 +3,7 @@ package com.rootable.libraryservice2022;
 import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
+import com.rootable.libraryservice2022.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ public class TestDataInit {
 
     private final MemberRepository memberRepository;
     private final BookRepository bookRepository;
+    private final PostsRepository postsRepository;
 
     /*
     * 테스트용 데이터 추가
@@ -49,6 +51,10 @@ public class TestDataInit {
                 .role(Role.STAFF)
                 .build();
 
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
+
         /*
          * 도서
          * */
@@ -77,10 +83,6 @@ public class TestDataInit {
                 .status(Status.PERMISSION)
                 .build();
 
-        memberRepository.save(member1);
-        memberRepository.save(member2);
-        memberRepository.save(member3);
-
         bookRepository.save(book1);
         bookRepository.save(book2);
         bookRepository.save(book3);
@@ -88,8 +90,13 @@ public class TestDataInit {
         /*
         * 게시물
         * */
+        Posts posts1 = new Posts();
+        posts1.setTitle("첫 게시글");
+        posts1.setContent("하하");
+        posts1.setMember(member1);
+        posts1.setBook(book1);
 
-
+        postsRepository.save(posts1);
 
     }
 

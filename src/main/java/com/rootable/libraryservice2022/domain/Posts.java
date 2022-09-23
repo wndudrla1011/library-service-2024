@@ -28,40 +28,37 @@ public class Posts extends BaseTimeEntity {
 
     @OneToOne
     @JoinColumn(name = "member_id")
-    @NotBlank
+    @NotNull
     private Member member; //게시물 작성자
 
     @OneToOne
     @JoinColumn(name = "book_id")
-    @NotBlank
+    @NotNull
     private Book book; //신청 도서
 
-    @NotNull
-    private UploadFile attachFile; //첨부 파일(회원카드)
+//    @NotNull
+//    private UploadFile attachFile; //첨부 파일(회원카드)
 
-    private List<UploadFile> imageFiles; //이미지 파일들
+//    private List<UploadFile> imageFiles; //이미지 파일들
 
     /*
      * 연관관계 메서드
      * */
-    public void setMember(Member member) {
-        this.member = member;
-        member.getPosts().add(this);
-    }
+
 
     /*
     * 생성 메서드
     * */
     public static Posts createPost(String title, String content, Member member,
-                                   Book book, UploadFile attachFile, List<UploadFile> imageFiles) {
+                                   Book book) {
 
         Posts posts = new Posts();
         posts.setTitle(title);
         posts.setContent(content);
         posts.setMember(member);
         posts.setBook(book);
-        posts.setAttachFile(attachFile);
-        posts.setImageFiles(imageFiles);
+//        posts.setAttachFile(attachFile);
+//        posts.setImageFiles(imageFiles);
 
         return posts;
 

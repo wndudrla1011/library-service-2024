@@ -41,7 +41,7 @@ public class Member extends BaseTimeEntity {
     private Role role;
 
     @OneToOne(mappedBy = "member")
-    private List<Posts> posts = new ArrayList<>();
+    private Posts posts;
 
     @Builder
     public Member(String name, String loginId, String password, String email, Role role) {
