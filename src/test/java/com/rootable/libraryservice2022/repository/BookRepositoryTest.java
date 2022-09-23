@@ -2,7 +2,6 @@ package com.rootable.libraryservice2022.repository;
 
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Status;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
