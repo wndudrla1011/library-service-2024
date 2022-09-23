@@ -27,6 +27,9 @@ public class Book extends BaseTimeEntity{
     @Column(nullable = false)
     private Status status;
 
+    @OneToOne(mappedBy = "book")
+    private Posts posts;
+
     @Builder
     public Book(String title, String writer, Integer price, Integer stock, Status status) {
         this.title = title;

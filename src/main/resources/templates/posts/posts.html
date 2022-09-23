@@ -72,22 +72,18 @@
             <tr>
                 <th>게시글 번호</th>
                 <th>작성자</th>
-                <th>회원 아이디</th>
-                <th>비밀번호</th>
-                <th>이메일</th>
-                <th>권한</th>
+                <th>제목</th>
+                <th>수정 시간</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="member : ${members}">
+            <tr th:each="post : ${posts}">
                 <td>
-                    <a href="#" th:href="@{/admin/members/{memberId}(memberId=${member.id})}" th:text="${member.id}"></a>
+                    <a href="#" th:href="@{/}" th:text="${post.id}"></a>
                 </td>
-                <td th:text="${member.name}"></td>
-                <td th:text="${member.loginId}"></td>
-                <td th:text="${member.password}"></td>
-                <td th:text="${member.email}"></td>
-                <td th:text="${member.role}"></td>
+                <td th:text="${posts.}"></td>
+                <td th:text="${posts.title}"></td>
+                <td th:text="${posts.modifiedDate}"></td>
             </tr>
             </tbody>
         </table>
