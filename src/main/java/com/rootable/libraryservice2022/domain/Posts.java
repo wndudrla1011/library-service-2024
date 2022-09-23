@@ -16,7 +16,7 @@ import static javax.persistence.FetchType.*;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
