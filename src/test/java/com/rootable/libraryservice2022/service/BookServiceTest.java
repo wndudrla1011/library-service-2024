@@ -145,5 +145,23 @@ public class BookServiceTest {
 
     @Test
     public void delete() {
+
+        //given
+        Book book = Book.builder()
+                .title("book1")
+                .writer("a")
+                .price(10000)
+                .stock(2)
+                .status(Status.PERMISSION)
+                .build();
+
+        bookService.create(book);
+
+        //when
+        bookService.delete(book.getId());
+
+        //then
+        assertThat(entityManager.contains(book)).isFalse();
+
     }
 }
