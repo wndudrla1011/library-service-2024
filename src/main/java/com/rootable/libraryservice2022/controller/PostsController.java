@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.controller;
 
+import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -54,7 +57,12 @@ public class PostsController {
     }
 
     @PostMapping("/posts/add")
-    public String write(@RequestParam("file") MultipartFile files, PostDto postDto) {
+    public String write(@RequestParam("bookId") Long bookId,
+                        @RequestParam("file") MultipartFile files,
+                        PostDto postDto, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("loginMember");
 
         //파일 -> 서버 (저장/업로드)
         try {
@@ -78,7 +86,8 @@ public class PostsController {
 
             Long fileId = fileService.saveFile(fileDto);
             postDto.setFileId(fileId);
-            postsService.savePost(postDto);
+
+            postsService.savePost(member.getId(), bookId, postDto);
         } catch (IOException e) {
             e.printStackTrace();
         }

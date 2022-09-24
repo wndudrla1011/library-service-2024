@@ -1,6 +1,10 @@
 package com.rootable.libraryservice2022.service;
 
+import com.rootable.libraryservice2022.domain.Book;
+import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.repository.BookRepository;
+import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostsService {
 
+    private final MemberRepository memberRepository;
+    private final BookRepository bookRepository;
     private final PostsRepository postsRepository;
 
     /*
@@ -47,8 +53,14 @@ public class PostsService {
      * 게시글 저장
      * */
     @Transactional
-    public Long savePost(PostDto postDto) {
-        return postsRepository.save(postDto.toEntity()).getId();
+    public Long savePost(Long memberId, Long bookId, PostDto postDto) {
+
+        //엔티티 조회
+        Member member = memberRepository.findById(memberId).get();
+        Book book = bookRepository.findById(bookId).get();
+
+        return postsRepository.save(postDto.toEntity(member, book)).getId();
+
     }
 
 }

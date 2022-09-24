@@ -30,9 +30,9 @@
 
         <div class="mb-3">
             <div>도서 선택</div>
-            <select th:field="*{book}" class="form-select">
+            <select name="bookId" id="book" class="form-select">
                 <option value="">도서 목록 🔻</option>
-                <option th:each="book : ${bookList}" th:value="${book}" th:text="${book}"></option>
+                <option th:each="book : ${bookList}" th:value="${book.id}" th:text="${book.title}"></option>
             </select>
         </div>
 

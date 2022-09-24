@@ -18,7 +18,7 @@ public class PostDto {
     private Book book;
     private Long fileId;
 
-    public Posts toEntity() {
+    public Posts toEntity(Member member, Book book) {
         Posts build = Posts.builder()
                 .id(id)
                 .title(title)
