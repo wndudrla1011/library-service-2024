@@ -19,6 +19,7 @@ public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @NotBlank
@@ -36,32 +37,17 @@ public class Posts extends BaseTimeEntity {
     @NotNull
     private Book book; //신청 도서
 
-//    @NotNull
-//    private UploadFile attachFile; //첨부 파일(회원카드)
+    @NotNull
+    private Long fileId;
 
-//    private List<UploadFile> imageFiles; //이미지 파일들
-
-    /*
-     * 연관관계 메서드
-     * */
-
-
-    /*
-    * 생성 메서드
-    * */
-    public static Posts createPost(String title, String content, Member member,
-                                   Book book) {
-
-        Posts posts = new Posts();
-        posts.setTitle(title);
-        posts.setContent(content);
-        posts.setMember(member);
-        posts.setBook(book);
-//        posts.setAttachFile(attachFile);
-//        posts.setImageFiles(imageFiles);
-
-        return posts;
-
+    @Builder
+    public Posts(Long id, String title, String content, Member member, Book book, Long fileId) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.member = member;
+        this.book = book;
+        this.fileId = fileId;
     }
 
 }

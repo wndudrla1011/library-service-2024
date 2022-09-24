@@ -90,13 +90,6 @@ public class TestDataInit {
         /*
         * 게시물
         * */
-        Posts posts1 = new Posts();
-        posts1.setTitle("첫 게시글");
-        posts1.setContent("하하");
-        posts1.setMember(member1);
-        posts1.setBook(book1);
-
-        postsRepository.save(posts1);
 
     }
 
