@@ -25,32 +25,6 @@ public class FileStore {
         return fileDir + filename;
     }
 
-    /*//여러 파일 저장
-    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
-
-        List<UploadFile> storeFileResult = new ArrayList<>();
-        for (MultipartFile multipartFile : multipartFiles) {
-            if (!multipartFile.isEmpty()) {
-                storeFileResult.add(storeFile(multipartFile)); //저장된 업로드 파일을 List에 추가
-            }
-        }
-        return storeFileResult;
-    }*/
-
-    /*//파일 -> 서버 (저장/업로드)
-    public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
-
-        if (multipartFile.isEmpty()) {
-            return null;
-        }
-
-        String originalFilename = multipartFile.getOriginalFilename(); //고객이 업로드한 파일명
-        String storeFileName = createStoreFileName(originalFilename); //서버 저장 파일명
-        multipartFile.transferTo(new File(getFullPath(storeFileName))); //파일 저장
-        return new UploadFile(originalFilename, storeFileName);
-
-    }*/
-
     //서버 파일 저장 형식 (uuid.확장자)
     public String createStoreFileName(String originalFilename) {
         String ext = extractExt(originalFilename); //확장자

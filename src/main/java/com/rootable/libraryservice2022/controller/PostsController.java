@@ -91,7 +91,7 @@ public class PostsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/";
+        return "redirect:/posts";
 
     }
 
