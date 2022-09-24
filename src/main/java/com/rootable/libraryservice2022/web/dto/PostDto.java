@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.web.dto;
 
+import com.rootable.libraryservice2022.domain.BaseTimeEntity;
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
@@ -31,7 +32,8 @@ public class PostDto {
     }
 
     @Builder
-    public PostDto(Long id, String title, String content, Member member, Book book, Long fileId) {
+    public PostDto(Long id, String title, String content, Member member, Book book,
+                   Long fileId) {
         this.id = id;
         this.title = title;
         this.content = content;

@@ -4,18 +4,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
-public class Posts extends BaseTimeEntity {
+@EntityListeners(AuditingEntityListener.class)
+public class Posts extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,7 @@ public class Posts extends BaseTimeEntity {
     @NotBlank
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @OneToOne
@@ -37,7 +38,6 @@ public class Posts extends BaseTimeEntity {
     @NotNull
     private Book book; //신청 도서
 
-    @NotNull
     private Long fileId;
 
     @Builder

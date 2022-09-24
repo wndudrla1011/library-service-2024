@@ -22,7 +22,7 @@ public class FileService {
     }
 
     /*
-     * 저장한 파일 조회
+     * 저장된 파일 조회
      * */
     @Transactional
     public FileDto getFile(Long id) {
