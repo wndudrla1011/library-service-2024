@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 public class Posts extends BaseTimeEntity{
 
     @Id
