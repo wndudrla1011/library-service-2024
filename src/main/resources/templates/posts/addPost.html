@@ -17,23 +17,25 @@
 
     <form th:action th:object="${posts}" method="post" enctype="multipart/form-data">
 
-<!--        <div th:if="${#fields.hasGlobalErrors()}">-->
-<!--            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
-<!--        </div>-->
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
 
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" id="title" th:field="*{title}"
                    th:errorclass="field-error" placeholder="게시글 제목을 입력하세요">
-<!--            <div class="field-error" th:errors="*{title}"></div>-->
+            <div class="field-error" th:errors="*{title}"></div>
         </div>
 
         <div class="mb-3">
             <div>도서 선택</div>
-            <select name="bookId" id="book" class="form-select">
+            <select th:field="*{book}" class="form-select">
                 <option value="">도서 목록 🔻</option>
-                <option th:each="book : ${bookList}" th:value="${book.id}" th:text="${book.title}"></option>
+                <option th:each="book : ${bookList}" th:value="${book.id}" th:text="${book.title}"
+                        th:errorclass="field-error"></option>
             </select>
+            <div class="field-error" th:errors="*{book}"></div>
         </div>
 
         <div class="mb-3 form-group row">
@@ -48,8 +50,8 @@
 
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <textarea type="text" id="content" th:field="*{content}" th:errorclass="field-error"></textarea>
-<!--            <div class="field-error" th:errors="*{price}"></div>-->
+            <textarea type="text" id="content" th:field="*{content}"
+                      placeholder="문의 사항이 있으면 적어주세요"></textarea>
         </div>
 
         <hr class="my-4">

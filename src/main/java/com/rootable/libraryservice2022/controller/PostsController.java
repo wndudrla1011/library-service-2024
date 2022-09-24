@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.controller;
 
+import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.service.BookService;
@@ -12,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -57,16 +62,26 @@ public class PostsController {
     }
 
     @PostMapping("/posts/add")
-    public String write(@RequestParam("bookId") Long bookId,
+    public String write(@Validated @ModelAttribute("posts") PostDto postDto, BindingResult bindingResult,
+                        @RequestParam(value = "bookId", required = false) Long bookId,
                         @RequestParam("file") MultipartFile files,
-                        PostDto postDto, HttpServletRequest request) {
+                        Model model, HttpServletRequest request) {
+
+        log.info("게시글 등록");
+
+        model.addAttribute("bookList", bookService.books());
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
 
+        postDto.setMember(member);
+
         //파일 -> 서버 (저장/업로드)
         try {
             String originFilename = files.getOriginalFilename(); //고객이 업로드한 파일명
+            if ("".equals(originFilename)) {
+                throw new IOException();
+            }
             String storeFileName = fileStore.createStoreFileName(originFilename); //서버 저장 파일명
             String saveDir = fileStore.getFileDir();
             if (!new File(saveDir).exists()) {
@@ -87,10 +102,26 @@ public class PostsController {
             Long fileId = fileService.saveFile(fileDto);
             postDto.setFileId(fileId);
 
-            postsService.savePost(member.getId(), bookId, postDto);
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            if (bookId != null) {
+                postDto.setBook(bookService.findOne(bookId));
+            }
+
+            if (bindingResult.hasFieldErrors("title")) {
+                log.info("검증 에러 errors={}", bindingResult);
+                return "posts/addPost";
+            }
+
+            if (postDto.getBook() == null) {
+                log.info("검증 에러 errors={}", bindingResult);
+                return "posts/addPost";
+            }
+
+            postsService.savePost(postDto);
         }
+
         return "redirect:/posts";
 
     }

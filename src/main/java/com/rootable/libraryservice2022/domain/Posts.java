@@ -4,11 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
+import static javax.persistence.FetchType.*;
 
 @Getter
 @Setter
@@ -21,20 +20,18 @@ public class Posts extends BaseTimeEntity{
     @Column(name = "post_id")
     private Long id;
 
-    @NotBlank
+    @Column(length = 20, nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @OneToOne
-    @JoinColumn(name = "member_id")
-    @NotNull
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member; //게시물 작성자
 
-    @OneToOne
-    @JoinColumn(name = "book_id")
-    @NotNull
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book; //신청 도서
 
     private Long fileId;

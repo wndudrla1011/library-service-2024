@@ -22,6 +22,14 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     /*
+     * 게시글 저장
+     * */
+    @Transactional
+    public Long savePost(PostDto postDto) {
+        return postsRepository.save(postDto.toEntity()).getId();
+    }
+
+    /*
     * 전체 게시글 조회
     * */
     public List<Posts> findPosts() {
@@ -46,20 +54,6 @@ public class PostsService {
                 .build();
 
         return postDto;
-
-    }
-
-    /*
-     * 게시글 저장
-     * */
-    @Transactional
-    public Long savePost(Long memberId, Long bookId, PostDto postDto) {
-
-        //엔티티 조회
-        Member member = memberRepository.findById(memberId).get();
-        Book book = bookRepository.findById(bookId).get();
-
-        return postsRepository.save(postDto.toEntity(member, book)).getId();
 
     }
 
