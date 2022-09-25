@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -39,8 +41,8 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private Posts posts;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Posts> posts = new ArrayList<>();
 
     @Builder
     public Member(String name, String loginId, String password, String email, Role role) {

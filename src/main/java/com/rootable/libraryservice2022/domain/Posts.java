@@ -26,7 +26,7 @@ public class Posts extends BaseTimeEntity{
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @OneToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member; //게시물 작성자
 
