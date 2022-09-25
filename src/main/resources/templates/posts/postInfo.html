@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/form-header :: header">
+    <meta charset="UTF-8">
+
+    <title>Book Info Page</title>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>도서 정보</h2>
+    </div>
+
+    <form action="" th:action method="post">
+
+        <div class="mb-3">
+            <label for="post-id" class="form-label">게시글 번호</label>
+            <input type="text" class="form-control" id="post-id" value="1" th:value="${post.id}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" value="hello" th:value="${post.title}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <input type="text" class="form-control" id="content" value="hello" th:value="${post.content}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="writer" class="form-label">저자</label>
+            <input type="text" class="form-control" id="writer" value="kim" th:value="${post.member.name}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="book" class="form-label">신청 도서</label>
+            <input type="text" class="form-control" id="book" value="kim" th:value="${post.book.title}" readonly>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="w-100 btn btn-dark btn-lg"
+                        onclick="location.href='update.html'"
+                        th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.id})}'|">
+                    수정
+                </button>
+            </div>
+            <div class="col">
+                <button type="submit" class="w-100 btn btn-dark btn-lg">
+                    삭제
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="w-100 btn btn-dark btn-lg"
+                        onclick="location.href='posts.html'"
+                        th:onclick="|location.href='@{/posts}'|">
+                    목록으로
+                </button>
+            </div>
+        </div>
+    </form>
+</div> <!-- /container -->
+
+<div th:replace="fragments/flex-footer :: footer"></div>
+
+</body>
+</html>

@@ -15,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -123,6 +120,18 @@ public class PostsController {
         }
 
         return "redirect:/posts";
+
+    }
+
+    @GetMapping("/posts/{postId}")
+    public String post(@PathVariable Long postId, Model model) {
+
+        log.info("게시글 정보");
+
+        PostDto post = postsService.getPost(postId);
+        model.addAttribute("post", post);
+
+        return "/posts/postInfo";
 
     }
 
