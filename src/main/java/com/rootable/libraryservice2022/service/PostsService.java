@@ -18,15 +18,21 @@ import java.util.List;
 public class PostsService {
 
     private final MemberRepository memberRepository;
-    private final BookRepository bookRepository;
     private final PostsRepository postsRepository;
 
     /*
      * 게시글 저장
      * */
     @Transactional
-    public Long savePost(PostDto postDto) {
-        return postsRepository.save(postDto.toEntity()).getId();
+    public Long savePost(Long memberId, PostDto postDto) {
+
+        Posts posts = postDto.toEntity();
+
+        Member member = memberRepository.findById(memberId).get();
+        posts.setMember(member);
+
+        return postsRepository.save(posts).getId();
+
     }
 
     /*

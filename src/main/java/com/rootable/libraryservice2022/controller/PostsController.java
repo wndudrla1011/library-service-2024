@@ -119,7 +119,7 @@ public class PostsController {
                 return "posts/addPost";
             }
 
-            postsService.savePost(postDto);
+            postsService.savePost(member.getId(), postDto);
         }
 
         return "redirect:/posts";

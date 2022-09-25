@@ -42,7 +42,7 @@ public class Member extends BaseTimeEntity {
     private Role role;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Posts> posts = new ArrayList<>();
+    private List<Posts> postsList = new ArrayList<>();
 
     @Builder
     public Member(String name, String loginId, String password, String email, Role role) {

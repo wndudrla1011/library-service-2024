@@ -46,4 +46,12 @@ public class Posts extends BaseTimeEntity{
         this.fileId = fileId;
     }
 
+    /*
+     * 연관관계 메서드
+     * */
+    public void setMember(Member member) {
+        this.member = member;
+        member.getPostsList().add(this);
+    }
+
 }
