@@ -41,7 +41,7 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     private List<Posts> postsList = new ArrayList<>();
 
     @Builder

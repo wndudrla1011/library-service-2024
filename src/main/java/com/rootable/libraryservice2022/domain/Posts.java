@@ -26,8 +26,8 @@ public class Posts extends BaseTimeEntity{
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member; //게시물 작성자
 
     @OneToOne(fetch = LAZY)
@@ -52,6 +52,13 @@ public class Posts extends BaseTimeEntity{
     public void setMember(Member member) {
         this.member = member;
         member.getPostsList().add(this);
+    }
+
+    public void update(String title, String content, Book book, Long fileId) {
+        this.title = title;
+        this.content = content;
+        this.book = book;
+        this.fileId = fileId;
     }
 
 }

@@ -155,4 +155,21 @@ public class PostsController {
 
     }
 
+    @PutMapping("/posts/{postId}/edit")
+    public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto postDto,
+                       BindingResult bindingResult, Model model, HttpServletRequest request) {
+
+        log.info("게시글 수정");
+
+        model.addAttribute("bookList", bookService.books());
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("loginMember");
+
+        postsService.savePost(member.getId(), postDto);
+
+        return "redirect:/posts/" + postId;
+
+    }
+
 }
