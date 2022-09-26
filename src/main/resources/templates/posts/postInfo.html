@@ -28,7 +28,8 @@
 
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <input type="text" class="form-control" id="content" value="hello" th:value="${post.content}" readonly>
+            <textarea type="text" class="form-control" id="content" value="hello" th:value="${post.content}" readonly>
+            </textarea>
         </div>
 
         <div class="mb-3">
@@ -39,6 +40,11 @@
         <div class="mb-3">
             <label for="book" class="form-label">신청 도서</label>
             <input type="text" class="form-control" id="book" value="kim" th:value="${post.book.title}" readonly>
+        </div>
+
+        <div class="mb-3" th:if="${post.fileId != null}">
+            <strong>첨부파일</strong>
+            <a class="card-text" th:href="@{'/download/' + ${post.fileId}}" th:text="${filename}"></a>
         </div>
 
         <hr class="my-4">

@@ -1,6 +1,5 @@
 package com.rootable.libraryservice2022.controller;
 
-import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.service.BookService;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -130,6 +128,11 @@ public class PostsController {
 
         PostDto post = postsService.getPost(postId);
         model.addAttribute("post", post);
+
+        if (post.getFileId() != null) {
+            FileDto file = fileService.getFile(post.getFileId());
+            model.addAttribute("filename", file.getOriginFilename());
+        }
 
         return "/posts/postInfo";
 
