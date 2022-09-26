@@ -28,8 +28,8 @@
 
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <textarea type="text" class="form-control" id="content" value="hello" th:value="${post.content}" readonly>
-            </textarea>
+            <textarea class="form-control" id="content" value="hello"
+                      th:value="${post.content}" th:text="${post.content}" readonly></textarea>
         </div>
 
         <div class="mb-3">

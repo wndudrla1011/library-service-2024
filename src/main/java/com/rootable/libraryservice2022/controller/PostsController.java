@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.controller;
 
+import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.service.BookService;
@@ -137,6 +138,20 @@ public class PostsController {
         }
 
         return "/posts/postInfo";
+
+    }
+
+    @GetMapping("/posts/{postId}/edit")
+    public String editForm(@PathVariable Long postId, Model model) {
+
+        log.info(">>> Show Update Post Form");
+
+        PostDto post = postsService.getPost(postId);
+
+        model.addAttribute("posts", post);
+        model.addAttribute("bookList", bookService.books());
+
+        return "posts/editPost";
 
     }
 
