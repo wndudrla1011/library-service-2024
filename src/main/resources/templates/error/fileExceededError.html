@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/form-header :: header">
+    <meta charset="UTF-8">
+    <title>File Exceeds Error Page</title>
+</head>
+<body>
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center">
+        <h1 class="display-1">🚫</h1>
+        <p class="fs-3"> <span class="text-danger">파일 용량 오류</span></p>
+        <p class="lead">
+            파일 용량이 제한된 크기를 초과했습니다.
+        </p>
+        <button class="btn btn-lg fw-bold btn-dark"
+                th:onclick="|location.href='@{/posts/add}'|">돌아가기</button>
+    </div>
+</div>
+
+</body>
+</html>

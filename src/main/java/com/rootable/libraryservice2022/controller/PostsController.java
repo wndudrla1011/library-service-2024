@@ -74,6 +74,7 @@ public class PostsController {
         //파일 -> 서버 (저장/업로드)
         try {
             String originFilename = files.getOriginalFilename(); //고객이 업로드한 파일명
+            //업로드 파일이 없는 경우
             if ("".equals(originFilename)) {
                 throw new IOException();
             }
@@ -99,17 +100,18 @@ public class PostsController {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (bookId != null) {
+        } finally {
+            //검증
+            if (bookId != null) { //선택한 도서가 있는 경우
                 postDto.setBook(bookService.findOne(bookId));
             }
 
-            if (bindingResult.hasFieldErrors("title")) {
+            if (bindingResult.hasFieldErrors("title")) { //제목을 입력하지 않은 경우
                 log.info("검증 에러 errors={}", bindingResult);
                 return "posts/addPost";
             }
 
-            if (postDto.getBook() == null) {
+            if (postDto.getBook() == null) { //선택한 도서가 없는 경우
                 log.info("검증 에러 errors={}", bindingResult);
                 return "posts/addPost";
             }
