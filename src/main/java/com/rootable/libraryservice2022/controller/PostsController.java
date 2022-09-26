@@ -148,6 +148,11 @@ public class PostsController {
 
         PostDto post = postsService.getPost(postId);
 
+        if (post.getFileId() != null) {
+            FileDto file = fileService.getFile(post.getFileId());
+            model.addAttribute("filename", file.getOriginFilename());
+        }
+
         model.addAttribute("posts", post);
         model.addAttribute("bookList", bookService.books());
 

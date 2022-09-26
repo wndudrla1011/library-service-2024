@@ -37,15 +37,15 @@
             <div class="field-error" th:errors="*{book}"></div>
         </div>
 
-<!--        <div class="mb-3 form-group row">-->
-<!--            <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부파일</strong></label>-->
-<!--            <div class="col-sm-10">-->
-<!--                <div class="custom-file" id="inputFile">-->
-<!--                    <input name="file" type="file" class="custom-file-input" id="customFile" />-->
-<!--                    <label class="custom-file-label" for="customFile">파일을 선택해 주세요<strong>(100MB 제한)</strong></label>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="mb-3 form-group row">
+            <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부파일</strong></label>
+            <div class="col-sm-10">
+                <div class="custom-file" id="inputFile">
+                    <input name="file" type="file" class="custom-file-input" id="customFile" th:text="${filename}" />
+                    <label class="custom-file-label" for="customFile">파일을 선택해 주세요<strong>(100MB 제한)</strong></label>
+                </div>
+            </div>
+        </div>
 
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
