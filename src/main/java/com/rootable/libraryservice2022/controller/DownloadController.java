@@ -7,17 +7,14 @@ import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
-import com.rootable.libraryservice2022.web.dto.PostUpdateFileDto;
 import com.rootable.libraryservice2022.web.file.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,8 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -56,6 +51,7 @@ public class DownloadController {
 
     }
 
+    //파일 삭제
     @DeleteMapping("/posts/{postId}/edit")
     public ModelAndView deleteFile(@PathVariable Long postId, HttpServletRequest request) {
 
@@ -98,6 +94,7 @@ public class DownloadController {
 
     }
 
+    //파일 수정
     @PostMapping("/posts/{postId}/edit")
     public ModelAndView renewFile(@PathVariable Long postId, @RequestParam("file") MultipartFile files) {
 
