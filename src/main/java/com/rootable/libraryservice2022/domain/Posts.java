@@ -60,4 +60,8 @@ public class Posts extends BaseTimeEntity{
         this.book = book;
     }
 
+    public void setFile(Long fileId) {
+        this.fileId = fileId;
+    }
+
 }

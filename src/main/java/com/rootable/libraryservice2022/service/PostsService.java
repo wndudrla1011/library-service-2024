@@ -8,6 +8,7 @@ import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import com.rootable.libraryservice2022.web.dto.PostUpdateDto;
+import com.rootable.libraryservice2022.web.dto.PostUpdateFileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,6 +90,21 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + postId));
 
         postsRepository.delete(posts);
+
+    }
+
+    /*
+     * 게시글 파일 수정
+     * */
+    @Transactional
+    public Posts updateFile(Long id, PostDto postDto) {
+
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
+
+        posts.setFile(postDto.getFileId());
+
+        return posts;
 
     }
 

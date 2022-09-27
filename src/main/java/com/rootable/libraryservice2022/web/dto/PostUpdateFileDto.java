@@ -1,8 +1,6 @@
 package com.rootable.libraryservice2022.web.dto;
 
 import com.rootable.libraryservice2022.domain.Book;
-import com.rootable.libraryservice2022.domain.Member;
-import com.rootable.libraryservice2022.domain.Posts;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-public class PostUpdateDto {
+public class PostUpdateFileDto {
 
     private Long id;
 
@@ -26,12 +24,15 @@ public class PostUpdateDto {
     @NotNull(message = "도서를 선택해주세요")
     private Book book;
 
+    private Long fileId;
+
     @Builder
-    public PostUpdateDto(Long id, String title, String content, Book book) {
+    public PostUpdateFileDto(Long id, String title, String content, Book book, Long fileId) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.book = book;
+        this.fileId = fileId;
     }
 
 }

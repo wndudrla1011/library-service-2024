@@ -7,6 +7,7 @@ import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
+import com.rootable.libraryservice2022.web.dto.PostUpdateFileDto;
 import com.rootable.libraryservice2022.web.file.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -97,13 +98,13 @@ public class DownloadController {
 
     }
 
-    /*@PostMapping("/posts/{postId}/edit")
-    public Long renewFile(@PathVariable Long postId, @ModelAttribute("post") PostDto postDto,
-                          @RequestParam("file") MultipartFile files, Model model) {
+    @PostMapping("/posts/{postId}/edit")
+    public ModelAndView renewFile(@PathVariable Long postId, @RequestParam("file") MultipartFile files) {
 
         log.info("첨부파일 수정");
 
-
+        ModelAndView mav = new ModelAndView("/posts/editPost");
+        mav.addObject("bookList", bookService.books());
 
         try {
             String originFilename = files.getOriginalFilename(); //고객이 업로드한 파일명
@@ -132,12 +133,23 @@ public class DownloadController {
 
             //DB File 저장
             Long fileId = fileService.saveFile(fileDto);
-            postDto.setFileId(fileId);
 
+            //현재 게시글 조회 + fileId 변경
+            PostDto postDto = postsService.getPost(postId);
+            postDto.setFileId(fileId);
+            Posts posts = postsService.updateFile(postId, postDto);
+
+            if (postDto.getFileId() != null) {
+                FileDto file = fileService.getFile(posts.getFileId());
+                mav.addObject("filename", file.getOriginFilename());
+            }
+
+            mav.addObject("posts", posts);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
-    }*/
+
+        return mav;
+    }
 
 }
