@@ -147,6 +147,7 @@ public class PostsController {
         log.info(">>> Show Update Post Form");
 
         PostDto post = postsService.getPost(postId);
+        model.addAttribute("post", post);
 
         if (post.getFileId() != null) {
             FileDto file = fileService.getFile(post.getFileId());
