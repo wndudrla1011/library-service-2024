@@ -15,10 +15,10 @@
     </div>
 
     <form action="" th:action method="post">
-
+        <input type="hidden" name="_method" value="delete" />
         <div class="mb-3">
             <label for="post-id" class="form-label">게시글 번호</label>
-            <input type="text" class="form-control" id="post-id" value="1" th:value="${post.id}" readonly>
+            <input type="text" name="id" class="form-control" id="post-id" value="1" th:value="${post.id}" readonly>
         </div>
 
         <div class="mb-3">

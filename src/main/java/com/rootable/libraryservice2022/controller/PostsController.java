@@ -178,4 +178,14 @@ public class PostsController {
 
     }
 
+    @DeleteMapping("/posts/{postId}")
+    public String delete(@PathVariable Long postId) {
+
+        log.info("게시글 삭제");
+
+        postsService.delete(postId);
+        return "redirect:/posts";
+
+    }
+
 }

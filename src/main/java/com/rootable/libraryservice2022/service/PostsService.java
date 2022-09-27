@@ -63,4 +63,17 @@ public class PostsService {
 
     }
 
+    /*
+     * 게시글 삭제
+     * */
+    @Transactional
+    public void delete(Long postId) {
+
+        Posts posts = postsRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + postId));
+
+        postsRepository.delete(posts);
+
+    }
+
 }
