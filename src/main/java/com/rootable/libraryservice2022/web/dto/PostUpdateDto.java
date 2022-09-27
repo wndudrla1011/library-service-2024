@@ -26,6 +26,8 @@ public class PostUpdateDto {
     @NotNull(message = "도서를 선택해주세요")
     private Book book;
 
+    private Long fileId;
+
     @Builder
     public PostUpdateDto(Long id, String title, String content, Book book) {
         this.id = id;

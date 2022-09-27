@@ -85,16 +85,17 @@ public class PostsController {
                 throw new IOException();
             }
             String storeFileName = fileStore.createStoreFileName(originFilename); //서버 저장 파일명
-            String saveDir = fileStore.getFileDir();
+            String saveDir = fileStore.getFileDir(); //서버 저장 디렉토리
+            //저장 디렉토리가 없는 경우
             if (!new File(saveDir).exists()) {
                 try {
-                    new File(saveDir).mkdir();
+                    new File(saveDir).mkdir(); //생성
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
             }
             String filePath = fileStore.getFullPath(originFilename);
-            files.transferTo(new File(filePath));
+            files.transferTo(new File(filePath)); //업로드
 
             FileDto fileDto = new FileDto();
             fileDto.setOriginFilename(originFilename);

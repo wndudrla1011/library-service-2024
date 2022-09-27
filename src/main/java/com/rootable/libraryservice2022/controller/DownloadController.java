@@ -16,10 +16,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +39,7 @@ public class DownloadController {
     private final FileService fileService;
     private final PostsService postsService;
     private final BookService bookService;
+    private final FileStore fileStore;
 
     @GetMapping("/download/{fileId}")
     public ResponseEntity<Resource> fileDownload(@PathVariable("fileId") Long fileId) throws IOException {
@@ -96,5 +96,48 @@ public class DownloadController {
         return mav;
 
     }
+
+    /*@PostMapping("/posts/{postId}/edit")
+    public Long renewFile(@PathVariable Long postId, @ModelAttribute("post") PostDto postDto,
+                          @RequestParam("file") MultipartFile files, Model model) {
+
+        log.info("첨부파일 수정");
+
+
+
+        try {
+            String originFilename = files.getOriginalFilename(); //고객이 업로드한 파일명
+            //업로드 파일이 없는 경우
+            if ("".equals(originFilename)) {
+                throw new IOException();
+            }
+            String storeFileName = fileStore.createStoreFileName(originFilename); //서버 저장 파일명
+            String saveDir = fileStore.getFileDir(); //서버 저장 디렉토리
+            //저장 디렉토리가 없는 경우
+            if (!new File(saveDir).exists()) {
+                try {
+                    new File(saveDir).mkdir(); //생성
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+            }
+            String filePath = fileStore.getFullPath(originFilename);
+            files.transferTo(new File(filePath)); //업로드
+
+            //FileDto 셋팅
+            FileDto fileDto = new FileDto();
+            fileDto.setOriginFilename(originFilename);
+            fileDto.setFilename(storeFileName);
+            fileDto.setFilePath(filePath);
+
+            //DB File 저장
+            Long fileId = fileService.saveFile(fileDto);
+            postDto.setFileId(fileId);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }*/
 
 }
