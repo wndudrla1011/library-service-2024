@@ -15,7 +15,6 @@
     </div>
 
     <form action="" th:action method="post">
-        <input type="hidden" name="_method" value="delete" />
         <div class="mb-3">
             <label for="post-id" class="form-label">게시글 번호</label>
             <input type="text" name="id" class="form-control" id="post-id" value="1" th:value="${post.id}" readonly>
@@ -33,7 +32,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="writer" class="form-label">저자</label>
+            <label for="writer" class="form-label">작성자</label>
             <input type="text" class="form-control" id="writer" value="kim" th:value="${post.member.name}" readonly>
         </div>
 
@@ -58,9 +57,10 @@
                 </button>
             </div>
             <div class="col">
-                <button type="submit" class="w-100 btn btn-dark btn-lg">
-                    삭제
-                </button>
+                <form th:action="@{/posts}" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="w-100 btn btn-dark btn-lg">삭제</button>
+                </form>
             </div>
             <div class="col">
                 <button type="button" class="w-100 btn btn-dark btn-lg"

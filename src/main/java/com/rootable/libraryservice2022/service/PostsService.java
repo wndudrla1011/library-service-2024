@@ -7,6 +7,7 @@ import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
 import com.rootable.libraryservice2022.web.dto.PostDto;
+import com.rootable.libraryservice2022.web.dto.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +65,21 @@ public class PostsService {
     }
 
     /*
+     * 게시글 수정
+     * */
+    @Transactional
+    public Long update(Long id, PostUpdateDto requestDto) {
+
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
+
+        posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getBook());
+
+        return id;
+
+    }
+
+    /*
      * 게시글 삭제
      * */
     @Transactional
@@ -74,6 +90,13 @@ public class PostsService {
 
         postsRepository.delete(posts);
 
+    }
+
+    /*
+     * 게시글 조회 by FileId
+     * */
+    public Posts findPostByFileId(Long fileId) {
+        return postsRepository.findByFileId(fileId);
     }
 
 }

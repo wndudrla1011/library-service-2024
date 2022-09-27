@@ -40,4 +40,12 @@ public class FileService {
 
     }
 
+    /*
+     * 파일 삭제
+     * */
+    public void delete(Long fileId) {
+        File file = fileRepository.findById(fileId).get();
+        fileRepository.delete(file);
+    }
+
 }

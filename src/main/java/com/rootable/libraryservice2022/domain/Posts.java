@@ -54,11 +54,10 @@ public class Posts extends BaseTimeEntity{
         member.getPostsList().add(this);
     }
 
-    public void update(String title, String content, Book book, Long fileId) {
+    public void update(String title, String content, Book book) {
         this.title = title;
         this.content = content;
         this.book = book;
-        this.fileId = fileId;
     }
 
 }

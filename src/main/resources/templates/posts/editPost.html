@@ -14,7 +14,6 @@
     </div>
 
     <form action="" th:action th:object="${posts}" method="post">
-        <input type="hidden" name="_method" value="put" />
         <input type="hidden" name="id" th:value="${posts.id}" />
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
@@ -37,20 +36,23 @@
             <div class="field-error" th:errors="*{book}"></div>
         </div>
 
-<!--        <div class="mb-3 form-group row" id="attachBox">-->
-<!--            <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부파일</strong></label>-->
-<!--            <div class="col-sm-10">-->
-<!--                <div class="custom-file" id="inputFile">-->
-<!--                    <input name="file" type="file" class="custom-file-input" id="customFile" />-->
-<!--                    <label class="custom-file-label" for="customFile">파일을 선택해 주세요<strong>(100MB 제한)</strong></label>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="mb-3 form-group row" id="attachBox">
+            <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부파일</strong></label>
+            <div class="col-sm-10">
+                <div class="custom-file" id="inputFile">
+                    <input name="file" type="file" class="custom-file-input" id="customFile" />
+                    <label class="custom-file-label" for="customFile">파일을 선택해 주세요<strong>(100MB 제한)</strong></label>
+                </div>
+            </div>
+        </div>
 
-        <div class="mb-3" th:if="${post.fileId != null}" id="fileDownload">
+        <div class="mb-3" th:if="${posts.fileId != null}" id="fileDownload">
             <strong>첨부파일</strong>
-            <a class="card-text" th:href="@{'/download/' + ${post.fileId}}" th:text="${filename}"></a>
-            <button type="submit" id="remove-file" class="btn btn-gray btn-sm">x</button>
+            <a class="card-text" th:href="@{'/download/' + ${posts.fileId}}" th:text="${filename}"></a>
+            <form id="delete-form" th:action method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" class="btn btn-dark">X</button>
+            </form>
         </div>
 
         <div class="mb-3">
@@ -63,7 +65,10 @@
 
         <div class="row">
             <div class="col">
-                <button type="submit" class="w-100 btn btn-dark btn-lg">수정완료</button>
+                <form id="update-form" th:action method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    <button type="submit" class="w-100 btn btn-dark btn-lg">수정완료</button>
+                </form>
             </div>
             <div class="col">
                 <button type="button" class="w-100 btn btn-dark btn-lg"

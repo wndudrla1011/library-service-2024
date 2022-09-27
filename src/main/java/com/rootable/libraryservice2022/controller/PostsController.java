@@ -8,9 +8,12 @@ import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
+import com.rootable.libraryservice2022.web.dto.PostUpdateDto;
 import com.rootable.libraryservice2022.web.file.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
@@ -147,7 +152,6 @@ public class PostsController {
         log.info(">>> Show Update Post Form");
 
         PostDto post = postsService.getPost(postId);
-        model.addAttribute("post", post);
 
         if (post.getFileId() != null) {
             FileDto file = fileService.getFile(post.getFileId());
@@ -162,7 +166,7 @@ public class PostsController {
     }
 
     @PutMapping("/posts/{postId}/edit")
-    public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto postDto,
+    public String edit(@PathVariable Long postId, @Validated @ModelAttribute("post") PostUpdateDto requestDto,
                        BindingResult bindingResult, Model model, HttpServletRequest request) {
 
         log.info("게시글 수정");
@@ -172,7 +176,14 @@ public class PostsController {
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
 
-        postsService.savePost(member.getId(), postDto);
+        PostDto savedPost = postsService.getPost(postId);
+
+        if (savedPost.getFileId() != null) {
+            FileDto file = fileService.getFile(savedPost.getFileId());
+            model.addAttribute("filename", file.getOriginFilename());
+        }
+
+        postsService.update(postId, requestDto);
 
         return "redirect:/posts/" + postId;
 
