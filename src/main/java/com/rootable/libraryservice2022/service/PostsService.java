@@ -1,12 +1,10 @@
 package com.rootable.libraryservice2022.service;
 
-import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
 import com.rootable.libraryservice2022.web.dto.PostDto;
-import com.rootable.libraryservice2022.web.dto.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,7 +65,7 @@ public class PostsService {
      * 게시글 수정
      * */
     @Transactional
-    public Long update(Long id, PostUpdateDto requestDto) {
+    public Long update(Long id, PostDto requestDto) {
 
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));

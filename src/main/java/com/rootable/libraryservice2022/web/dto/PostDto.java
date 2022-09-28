@@ -44,8 +44,7 @@ public class PostDto {
     }
 
     @Builder
-    public PostDto(Long id, String title, String content, Member member, Book book,
-                   Long fileId) {
+    public PostDto(Long id, String title, String content, Member member, Book book, Long fileId) {
         this.id = id;
         this.title = title;
         this.content = content;

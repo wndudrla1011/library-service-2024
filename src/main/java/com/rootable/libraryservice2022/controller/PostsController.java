@@ -1,6 +1,5 @@
 package com.rootable.libraryservice2022.controller;
 
-import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.service.BookService;
@@ -8,12 +7,9 @@ import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
-import com.rootable.libraryservice2022.web.dto.PostUpdateDto;
 import com.rootable.libraryservice2022.web.file.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,8 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
@@ -167,21 +161,24 @@ public class PostsController {
     }
 
     @PutMapping("/posts/{postId}/edit")
-    public String edit(@PathVariable Long postId, @Validated @ModelAttribute("post") PostUpdateDto requestDto,
-                       BindingResult bindingResult, Model model, HttpServletRequest request) {
+    public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto requestDto,
+                       BindingResult bindingResult, Model model) {
 
         log.info("게시글 수정");
 
         model.addAttribute("bookList", bookService.books());
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
-
         PostDto savedPost = postsService.getPost(postId);
 
         if (savedPost.getFileId() != null) {
             FileDto file = fileService.getFile(savedPost.getFileId());
+            requestDto.setFileId(file.getId());
             model.addAttribute("filename", file.getOriginFilename());
+        }
+
+        if (bindingResult.hasFieldErrors("title")) {
+            log.info("검증 에러 errors={}", bindingResult);
+            return "posts/editPost";
         }
 
         postsService.update(postId, requestDto);
