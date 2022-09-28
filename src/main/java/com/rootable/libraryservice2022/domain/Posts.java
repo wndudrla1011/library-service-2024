@@ -26,7 +26,7 @@ public class Posts extends BaseTimeEntity{
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member; //게시물 작성자
 

@@ -52,12 +52,12 @@ public class DownloadController {
     }
 
     //파일 삭제
-    @DeleteMapping("/posts/{postId}/edit")
+    @DeleteMapping("/posts/{postId}")
     public ModelAndView deleteFile(@PathVariable Long postId, HttpServletRequest request) {
 
         log.info("첨부파일 삭제");
 
-        ModelAndView mav = new ModelAndView("/posts/editPost");
+        ModelAndView mav = new ModelAndView("/posts/postInfo");
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
@@ -65,8 +65,8 @@ public class DownloadController {
         File file = null;
 
         try {
-            PostDto postDto = postsService.getPost(postId);
-            FileDto fileDto = fileService.getFile(postDto.getFileId());
+            PostDto postDto = postsService.getPost(postId); //현재 게시글 조회
+            FileDto fileDto = fileService.getFile(postDto.getFileId()); //현재 게시글의 파일 조회
             file = new File(fileDto.getFilePath());
             if (file.delete()) { //서버로 업로드된 파일 삭제
                 log.info("파일 삭제 성공");
@@ -80,11 +80,9 @@ public class DownloadController {
             fileService.delete(fileDto.getId());
             //DB Posts.fileId 제거
             postDto.setFileId(null);
-            //DB 새 Posts 저장
-            Long renewPostId = postsService.savePost(member.getId(), postDto);
+            Posts post = postsService.updateFile(postId, postDto);
             //갱신한 Posts 뷰로 전달
-            PostDto post = postsService.getPost(renewPostId);
-            mav.addObject("posts", post);
+            mav.addObject("post", post);
             mav.addObject("bookList", bookService.books());
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,6 +141,8 @@ public class DownloadController {
 
             mav.addObject("posts", posts);
         } catch (IOException e) {
+            mav = new ModelAndView("error/emptyFileError");
+            mav.addObject("postId", postId);
             e.printStackTrace();
         }
 

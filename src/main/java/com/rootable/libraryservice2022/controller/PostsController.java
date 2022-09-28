@@ -162,8 +162,7 @@ public class PostsController {
 
     @PutMapping("/posts/{postId}/edit")
     public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto requestDto,
-                       BindingResult bindingResult, Model model, HttpServletRequest request,
-                       @RequestParam(value = "bookId", required = false) Long bookId) {
+                       BindingResult bindingResult, Model model, HttpServletRequest request) {
 
         log.info("게시글 수정");
 
@@ -182,16 +181,8 @@ public class PostsController {
             model.addAttribute("filename", file.getOriginFilename());
         }
 
-        //Title Validation
-        if (bindingResult.hasFieldErrors("title")) {
-            log.info("검증 에러 errors={}", bindingResult);
-            return "posts/editPost";
-        }
-
-        //Book Validation
-        if (bookId != null) { //선택 도서가 있는 경우
-            requestDto.setBook(bookService.findOne(bookId));
-        } else {
+        //Bean Validation
+        if (bindingResult.hasFieldErrors("title") || bindingResult.hasFieldErrors("book")) {
             log.info("검증 에러 errors={}", bindingResult);
             return "posts/editPost";
         }
@@ -202,7 +193,7 @@ public class PostsController {
 
     }
 
-    @DeleteMapping("/posts/{postId}")
+    @DeleteMapping("/posts/{postId}/edit")
     public String delete(@PathVariable Long postId) {
 
         log.info("게시글 삭제");
