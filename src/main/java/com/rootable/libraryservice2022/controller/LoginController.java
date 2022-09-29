@@ -2,7 +2,7 @@ package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.service.LoginService;
-import com.rootable.libraryservice2022.web.dto.LoginForm;
+import com.rootable.libraryservice2022.web.dto.LoginDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,12 +24,12 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
+    public String loginForm(@ModelAttribute("loginForm") LoginDto dto) {
         return "login/signIn";
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
+    public String login(@Valid @ModelAttribute LoginDto dto, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
 
@@ -37,7 +37,7 @@ public class LoginController {
             return "login/singIn";
         }
 
-        Member loginMember = loginService.validationLogin(form.getLoginId(), form.getPassword());
+        Member loginMember = loginService.validationLogin(dto.getLoginId(), dto.getPassword());
         log.info("Login Member = {}", loginMember);
 
         if (loginMember == null) {

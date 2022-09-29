@@ -5,8 +5,8 @@ import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.web.MySecured;
-import com.rootable.libraryservice2022.web.dto.BookSaveForm;
-import com.rootable.libraryservice2022.web.dto.BookUpdateForm;
+import com.rootable.libraryservice2022.web.dto.BookSaveDto;
+import com.rootable.libraryservice2022.web.dto.BookUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -51,17 +51,17 @@ public class BookController {
 
     @MySecured(role = Role.ADMIN)
     @PostMapping("/admin/books/add")
-    public String create(@Validated @ModelAttribute("book") BookSaveForm form, BindingResult bindingResult, Model model) {
+    public String create(@Validated @ModelAttribute("book") BookSaveDto dto, BindingResult bindingResult, Model model) {
 
         model.addAttribute("statusList", Status.values());
 
-        if (form.getStock() != null && form.getStatus() != null) {
-            if (form.getStock() > 0 && form.getStatus() == Status.DENIED) {
+        if (dto.getStock() != null && dto.getStatus() != null) {
+            if (dto.getStock() > 0 && dto.getStatus() == Status.DENIED) {
                 bindingResult.reject("invalid");
             }
         }
 
-        if (form.getStatus() == null) {
+        if (dto.getStatus() == null) {
             bindingResult.reject("statusNull");
         }
 
@@ -73,11 +73,11 @@ public class BookController {
         log.info("정상 입력으로 도서 등록 진행");
 
         Book book = Book.builder()
-                .title(form.getTitle())
-                .writer(form.getWriter())
-                .price(form.getPrice())
-                .stock(form.getStock())
-                .status(form.getStatus())
+                .title(dto.getTitle())
+                .writer(dto.getWriter())
+                .price(dto.getPrice())
+                .stock(dto.getStock())
+                .status(dto.getStatus())
                 .build();
 
         Long savedId = bookService.create(book);
@@ -115,18 +115,18 @@ public class BookController {
 
     @MySecured(role = Role.ADMIN)
     @PostMapping("/admin/books/{bookId}/edit")
-    public String edit(@PathVariable Long bookId, @Validated @ModelAttribute("book") BookUpdateForm form,
+    public String edit(@PathVariable Long bookId, @Validated @ModelAttribute("book") BookUpdateDto dto,
                        BindingResult bindingResult, Model model) {
 
         model.addAttribute("statusList", Status.values());
 
-        if (form.getStock() != null && form.getStatus() != null) {
-            if (form.getStock() > 0 && form.getStatus() == Status.DENIED) {
+        if (dto.getStock() != null && dto.getStatus() != null) {
+            if (dto.getStock() > 0 && dto.getStatus() == Status.DENIED) {
                 bindingResult.reject("invalid");
             }
         }
 
-        if (form.getStatus() == null) {
+        if (dto.getStatus() == null) {
             bindingResult.reject("statusNull");
         }
 
@@ -137,7 +137,7 @@ public class BookController {
 
         log.info("도서 정보 수정 진행");
 
-        bookService.update(bookId, form);
+        bookService.update(bookId, dto);
         return "redirect:/admin/books/" + bookId;
 
     }

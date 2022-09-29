@@ -3,10 +3,9 @@ package com.rootable.libraryservice2022.service;
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.repository.BookRepository;
-import com.rootable.libraryservice2022.web.dto.BookUpdateForm;
+import com.rootable.libraryservice2022.web.dto.BookUpdateDto;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +121,7 @@ public class BookServiceTest {
                 .status(Status.PERMISSION)
                 .build();
 
-        BookUpdateForm book2 = createUpdateForm();
+        BookUpdateDto book2 = createUpdateForm();
         bookService.create(book1);
 
         //when
@@ -135,8 +134,8 @@ public class BookServiceTest {
 
     }
 
-    private BookUpdateForm createUpdateForm() {
-        BookUpdateForm book2 = new BookUpdateForm();
+    private BookUpdateDto createUpdateForm() {
+        BookUpdateDto book2 = new BookUpdateDto();
         book2.setPrice(20000);
         book2.setStock(4);
         book2.setStatus(Status.PERMISSION);
