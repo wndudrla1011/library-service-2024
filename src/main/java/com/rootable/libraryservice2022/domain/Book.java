@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -27,8 +29,8 @@ public class Book extends BaseTimeEntity{
     @Column(nullable = false)
     private Status status;
 
-    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
-    private Posts posts;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Posts> postsList = new ArrayList<>();
 
     @Builder
     public Book(String title, String writer, Integer price, Integer stock, Status status) {

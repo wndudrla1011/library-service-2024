@@ -7,8 +7,4 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-
-    @Query("select b from Book b order by b.id desc")
-    List<Book> findBooks();
-
 }

@@ -53,7 +53,7 @@ public class BookRepositoryTest {
         bookRepository.save(book2);
 
         //when
-        List<Book> books = bookRepository.findBooks();
+        List<Book> books = bookRepository.findAll();
 
         //then
         for (Book book : books) {

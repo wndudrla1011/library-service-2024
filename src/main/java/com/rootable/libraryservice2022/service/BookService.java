@@ -27,7 +27,7 @@ public class BookService {
      * 전체 도서 조회
      * */
     public List<Book> books() {
-        return bookRepository.findBooks();
+        return bookRepository.findAll();
     }
 
     /*

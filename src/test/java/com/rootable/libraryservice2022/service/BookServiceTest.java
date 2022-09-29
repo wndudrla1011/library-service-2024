@@ -58,7 +58,7 @@ public class BookServiceTest {
         bookService.create(book);
 
         //then
-        List<Book> books = bookRepository.findBooks();
+        List<Book> books = bookRepository.findAll();
         assertThat(books.get(0)).usingRecursiveComparison().isEqualTo(book);
 
     }
