@@ -2,9 +2,11 @@ package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
+import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,7 @@ public class PostsController {
 
     }
 
+    @MySecured(role = Role.GUEST)
     @GetMapping("/posts/add")
     public String addForm(Model model) {
 
@@ -66,6 +69,7 @@ public class PostsController {
 
     }
 
+    @MySecured(role = Role.GUEST)
     @GetMapping("/posts/{postId}/edit")
     public String editForm(@PathVariable Long postId, Model model) {
 

@@ -58,6 +58,12 @@ public class AuthInterceptor implements HandlerInterceptor {
                     response.sendRedirect("/error-403");
                     return false;
                 }
+            } else if ("GUEST".equals(role)) {
+                if (member.getRole() == Role.USER) {
+                    log.info("접근을 거부합니다.");
+                    response.sendRedirect("/error-403");
+                    return false;
+                }
             }
         }
 

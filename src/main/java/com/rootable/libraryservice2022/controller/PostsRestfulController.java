@@ -2,9 +2,11 @@ package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
+import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import com.rootable.libraryservice2022.web.file.FileStore;
@@ -32,6 +34,7 @@ public class PostsRestfulController {
     private final FileService fileService;
     private final FileStore fileStore;
 
+    @MySecured(role = Role.GUEST)
     @PostMapping("/posts/add")
     public String write(@Validated @ModelAttribute("posts") PostDto postDto, BindingResult bindingResult,
                         @RequestParam("file") MultipartFile files, HttpServletRequest request) {
@@ -87,6 +90,7 @@ public class PostsRestfulController {
 
     }
 
+    @MySecured(role = Role.GUEST)
     @PutMapping("/posts/{postId}/edit")
     public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto requestDto,
                        BindingResult bindingResult, Model model, HttpServletRequest request) {
@@ -121,6 +125,7 @@ public class PostsRestfulController {
 
     }
 
+    @MySecured(role = Role.GUEST)
     @DeleteMapping("/posts/{postId}/edit")
     public String delete(@PathVariable Long postId) {
 
@@ -131,6 +136,7 @@ public class PostsRestfulController {
 
     }
 
+    @MySecured(role = Role.GUEST)
     @PostMapping("/posts/{postId}/edit")
     public String renewFile(@PathVariable Long postId, @RequestParam("file") MultipartFile files, Model model) {
 
@@ -187,6 +193,7 @@ public class PostsRestfulController {
         return "redirect:/posts/" + postId + "/edit";
     }
 
+    @MySecured(role = Role.GUEST)
     @DeleteMapping("/posts/{postId}")
     public String deleteFile(@PathVariable Long postId, Model model) {
 
