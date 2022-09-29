@@ -25,6 +25,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginDto dto) {
+        log.info("로그인 폼 이동");
         return "login/signIn";
     }
 
@@ -32,6 +33,8 @@ public class LoginController {
     public String login(@Valid @ModelAttribute LoginDto dto, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
+
+        log.info("로그인 검증");
 
         if (bindingResult.hasErrors()) {
             return "login/singIn";
@@ -46,6 +49,7 @@ public class LoginController {
         }
 
         //로그인 성공 처리
+        log.info("정상 입력으로 로그인 성공");
 
         HttpSession session = request.getSession(); //세션 얻기
         session.setAttribute("loginMember", loginMember); //세션에 회원 정보 저장
@@ -57,6 +61,8 @@ public class LoginController {
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
+
+        log.info("로그아웃");
 
         //세션 삭제
         HttpSession session = request.getSession();

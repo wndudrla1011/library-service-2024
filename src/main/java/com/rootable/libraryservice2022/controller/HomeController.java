@@ -14,6 +14,8 @@ public class HomeController {
     @GetMapping("/")
     public String homeLogin(@Login Member loginMember, Model model) {
 
+        log.info("홈 화면 이동");
+
         //세션에 회원 데이터가 없으면 intro 화면으로
         if (loginMember == null) {
             return "intro";

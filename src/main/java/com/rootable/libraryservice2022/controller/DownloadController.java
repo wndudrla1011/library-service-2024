@@ -26,6 +26,8 @@ public class DownloadController {
     @GetMapping("/download/{fileId}")
     public ResponseEntity<Resource> fileDownload(@PathVariable("fileId") Long fileId) throws IOException {
 
+        log.info("다운로드가 진행됩니다.");
+
         FileDto fileDto = fileService.getFile(fileId);
         Path path = Paths.get(fileDto.getFilePath());
         Resource resource = new InputStreamResource(Files.newInputStream(path));

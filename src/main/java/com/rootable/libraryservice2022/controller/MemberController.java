@@ -29,13 +29,15 @@ public class MemberController {
     @GetMapping("/members/add")
     public String joinForm(@ModelAttribute("member") Member member) {
 
-        log.info(">>> Show Join Form");
+        log.info("회원 가입 폼 이동");
         return "members/signup";
 
     }
 
     @PostMapping("/members/add")
     public String join(@Valid @ModelAttribute("member") Member form, BindingResult bindingResult) {
+
+        log.info("회원 가입 검증");
 
         Member member = Member.builder()
                 .name(form.getName())
@@ -63,7 +65,7 @@ public class MemberController {
     @GetMapping("/admin/members")
     public String members(Model model) {
 
-        log.info(">>> Members Management Page");
+        log.info("회원 관리 페이지");
 
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
@@ -89,7 +91,7 @@ public class MemberController {
     @GetMapping("/admin/members/{memberId}/edit")
     public String updateForm(@PathVariable Long memberId, Model model) {
 
-        log.info(">>> Show Update Member Form");
+        log.info("회원 수정 화면 이동");
 
         Member member = memberService.findOne(memberId);
 
@@ -103,6 +105,8 @@ public class MemberController {
     @PostMapping("/admin/members/{memberId}/edit")
     public String edit(@PathVariable Long memberId, @Valid @ModelAttribute("member") Member form,
                        BindingResult bindingResult, Model model){
+
+        log.info("회원 정보 수정 검증");
 
         model.addAttribute("roles", Role.values());
 

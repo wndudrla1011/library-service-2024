@@ -28,7 +28,7 @@ public class BookController {
     @GetMapping("/admin/books")
     public String books(Model model) {
 
-        log.info(">>> Books Management Page");
+        log.info("도서 관리 페이지");
 
         List<Book> books = bookService.books();
         model.addAttribute("books", books);
@@ -41,7 +41,7 @@ public class BookController {
     @GetMapping("/admin/books/add")
     public String bookForm(Model model) {
 
-        log.info(">>> Show Book Registration Page");
+        log.info("도서 등록 폼 이동");
 
         model.addAttribute("book", new Book());
         model.addAttribute("statusList", Status.values());
@@ -52,6 +52,8 @@ public class BookController {
     @MySecured(role = Role.ADMIN)
     @PostMapping("/admin/books/add")
     public String create(@Validated @ModelAttribute("book") BookSaveDto dto, BindingResult bindingResult, Model model) {
+
+        log.info("도서 등록 검증");
 
         model.addAttribute("statusList", Status.values());
 
@@ -103,7 +105,7 @@ public class BookController {
     @GetMapping("/admin/books/{bookId}/edit")
     public String editForm(@PathVariable Long bookId, Model model) {
 
-        log.info(">>> Show Update Book Form");
+        log.info("도서 수정 폼 이동");
 
         Book book = bookService.findOne(bookId);
 
@@ -117,6 +119,8 @@ public class BookController {
     @PostMapping("/admin/books/{bookId}/edit")
     public String edit(@PathVariable Long bookId, @Validated @ModelAttribute("book") BookUpdateDto dto,
                        BindingResult bindingResult, Model model) {
+
+        log.info("도서 정보 수정 검증");
 
         model.addAttribute("statusList", Status.values());
 

@@ -27,7 +27,7 @@ public class PostsController {
     @GetMapping("/posts")
     public String posts(Model model) {
 
-        log.info(">>> Post List Page");
+        log.info("게시글 관리 페이지");
 
         List<Posts> posts = postsService.findPosts();
 
@@ -39,7 +39,7 @@ public class PostsController {
     @GetMapping("/posts/add")
     public String addForm(Model model) {
 
-        log.info(">>> Show Post Registration Page");
+        log.info("게시글 등록 폼 이동");
 
         List<Book> books = bookService.books();
 
@@ -69,7 +69,7 @@ public class PostsController {
     @GetMapping("/posts/{postId}/edit")
     public String editForm(@PathVariable Long postId, Model model) {
 
-        log.info(">>> Show Update Post Form");
+        log.info("게시글 수정 폼 이동");
 
         PostDto post = postsService.getPost(postId);
 
