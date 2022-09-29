@@ -1,6 +1,7 @@
 package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Book;
+import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.BookService;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -27,13 +30,17 @@ public class PostsController {
     private final FileService fileService;
 
     @GetMapping("/posts")
-    public String posts(Model model) {
+    public String posts(Model model, HttpServletRequest request) {
 
         log.info("게시글 관리 페이지");
 
         List<Posts> posts = postsService.findPosts();
 
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("loginMember");
+
         model.addAttribute("posts", posts);
+        model.addAttribute("member", member);
         return "posts/posts";
 
     }

@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/" class="nav-link text-white">
+                <a href="/members/memberInfo" th:href="@{/members/{memberId}(memberId=${member.id})}" class="nav-link text-white">
                     <svg class="bi pe-none me-2 fa" width="16" height="16"><use xlink:href="#grid"/></svg>
                     내 정보
                 </a>

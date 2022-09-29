@@ -12,11 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -126,6 +123,20 @@ public class MemberController {
         memberService.update(memberId, form);
 
         return "redirect:/admin/members";
+
+    }
+
+    @GetMapping("/members/{memberId}")
+    public String myInfo(@PathVariable Long memberId, Model model) {
+
+        log.info("내 정보 조회");
+
+        Member member = memberService.findOne(memberId);
+        String flag = "flag";
+
+        model.addAttribute("member", member);
+        model.addAttribute("flag", flag);
+        return "members/memberInfo";
 
     }
 
