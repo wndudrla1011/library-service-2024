@@ -56,7 +56,7 @@
                     수정
                 </button>
             </div>
-            <div class="col">
+            <div class="col" th:if="${post.fileId != null}">
                 <form th:action method="post">
                     <input type="hidden" name="_method" value="delete" />
                     <button type="submit" id="btn-delFile" class="w-100 btn btn-dark btn-lg">파일 삭제</button>
