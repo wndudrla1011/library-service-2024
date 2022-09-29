@@ -26,11 +26,11 @@ public class Posts extends BaseTimeEntity{
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.DETACH)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member; //게시물 작성자
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book; //신청 도서
 

@@ -27,7 +27,7 @@ public class Book extends BaseTimeEntity{
     @Column(nullable = false)
     private Status status;
 
-    @OneToOne(mappedBy = "book", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
     private Posts posts;
 
     @Builder

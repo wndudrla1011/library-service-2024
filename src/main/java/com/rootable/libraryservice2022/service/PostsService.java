@@ -1,7 +1,9 @@
 package com.rootable.libraryservice2022.service;
 
+import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
 import com.rootable.libraryservice2022.web.dto.PostDto;
@@ -22,11 +24,11 @@ public class PostsService {
      * 게시글 저장
      * */
     @Transactional
-    public Long savePost(Long memberId, PostDto postDto) {
+    public Long savePost(PostDto postDto) {
 
+        Member member = memberRepository.findById(postDto.getMember().getId()).get();
         Posts posts = postDto.toEntity();
 
-        Member member = memberRepository.findById(memberId).get();
         posts.setMember(member);
 
         return postsRepository.save(posts).getId();

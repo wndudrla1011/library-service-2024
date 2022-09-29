@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.controller;
 
+import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.service.BookService;
@@ -50,21 +51,20 @@ public class PostsController {
 
         log.info(">>> Show Post Registration Page");
 
+        List<Book> books = bookService.books();
+
         model.addAttribute("posts", new Posts());
-        model.addAttribute("bookList", bookService.books());
+        model.addAttribute("bookList", books);
         return "posts/addPost";
 
     }
 
     @PostMapping("/posts/add")
     public String write(@Validated @ModelAttribute("posts") PostDto postDto, BindingResult bindingResult,
-                        @RequestParam(value = "bookId", required = false) Long bookId,
                         @RequestParam("file") MultipartFile files,
                         Model model, HttpServletRequest request) {
 
         log.info("게시글 등록");
-
-        model.addAttribute("bookList", bookService.books());
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
@@ -103,21 +103,12 @@ public class PostsController {
             e.printStackTrace();
         } finally {
             //검증
-            if (bookId != null) { //선택한 도서가 있는 경우
-                postDto.setBook(bookService.findOne(bookId));
-            }
-
-            if (bindingResult.hasFieldErrors("title")) { //제목을 입력하지 않은 경우
+            if (bindingResult.hasFieldErrors("title") || bindingResult.hasFieldErrors("book")) {
                 log.info("검증 에러 errors={}", bindingResult);
                 return "posts/addPost";
             }
 
-            if (postDto.getBook() == null) { //선택한 도서가 없는 경우
-                log.info("검증 에러 errors={}", bindingResult);
-                return "posts/addPost";
-            }
-
-            postsService.savePost(member.getId(), postDto);
+            postsService.savePost(postDto);
         }
 
         return "redirect:/posts";
