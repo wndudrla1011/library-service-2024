@@ -138,7 +138,7 @@ public class BookController {
         log.info("도서 정보 수정 진행");
 
         bookService.update(bookId, form);
-        return "redirect:/admin/books" + bookId;
+        return "redirect:/admin/books/" + bookId;
 
     }
 
