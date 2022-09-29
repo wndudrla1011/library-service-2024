@@ -23,6 +23,8 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
+    public static String COMMON_MEMBER_KEY = "common";
+
     @GetMapping("/members/add")
     public String joinForm(@ModelAttribute("member") Member member) {
 
@@ -107,7 +109,7 @@ public class MemberController {
 
         model.addAttribute("roles", Role.values());
 
-        duplicationCheckUpdateLoginId(form, bindingResult); //중복 아이디 검증
+        duplicationCheckUpdateLoginId(memberId, form, bindingResult); //중복 아이디 검증
 
         if (form.getRole() == null) {
             bindingResult.reject("roleNull");
@@ -132,17 +134,53 @@ public class MemberController {
         log.info("내 정보 조회");
 
         Member member = memberService.findOne(memberId);
-        String flag = "flag";
 
         model.addAttribute("member", member);
-        model.addAttribute("flag", flag);
+        model.addAttribute("common", COMMON_MEMBER_KEY);
         return "members/memberInfo";
 
     }
 
-    private void duplicationCheckUpdateLoginId(Member member, BindingResult bindingResult) {
+    @GetMapping("/members/{memberId}/edit")
+    public String myInfoForm(@PathVariable Long memberId, Model model) {
 
-        if (memberRepository.checkDuplicatedLoginId(member.getId(), member.getLoginId()) != null) {
+        log.info("내 정보 수정 폼 이동");
+
+        Member member = memberService.findOne(memberId);
+
+        model.addAttribute("member", member);
+        model.addAttribute("common", COMMON_MEMBER_KEY);
+
+        return "members/editMember";
+
+    }
+
+    @PostMapping("/members/{memberId}/edit")
+    public String editMyInfo(@PathVariable Long memberId, @Valid @ModelAttribute("member") Member form,
+                       BindingResult bindingResult, Model model){
+
+        log.info("내 정보 수정 검증");
+
+        duplicationCheckUpdateLoginId(memberId, form, bindingResult); //중복 아이디 검증
+
+        if (bindingResult.hasErrors()) {
+            log.info("검증 에러 errors={}", bindingResult);
+            model.addAttribute("common", COMMON_MEMBER_KEY);
+            return "members/editMember";
+        }
+
+        log.info("내 정보 수정 진행");
+
+        memberService.update(memberId, form);
+
+        model.addAttribute("common", COMMON_MEMBER_KEY);
+        return "redirect:/members/" + memberId;
+
+    }
+
+    private void duplicationCheckUpdateLoginId(Long memberId, Member form, BindingResult bindingResult) {
+
+        if (memberRepository.checkDuplicatedLoginId(memberId, form.getLoginId()) != null) {
             log.info(">>> 로그인 ID 중복");
             bindingResult.rejectValue("loginId", "overlap");
         }
