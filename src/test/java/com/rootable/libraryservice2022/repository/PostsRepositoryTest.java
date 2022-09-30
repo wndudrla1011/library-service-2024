@@ -48,7 +48,6 @@ public class PostsRepositoryTest {
         Book book = createBook();
 
         Posts posts = Posts.builder()
-                .id(1L)
                 .title("aaa")
                 .content("hello")
                 .member(member)

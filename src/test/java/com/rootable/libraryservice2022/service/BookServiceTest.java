@@ -36,11 +36,6 @@ public class BookServiceTest {
     @Autowired
     EntityManager entityManager;
 
-    @After
-    public void cleanUp() {
-        bookRepository.deleteAll();
-    }
-
     @Test
     public void create() {
 
