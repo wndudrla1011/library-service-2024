@@ -15,7 +15,6 @@ public class TestDataInit {
 
     private final MemberRepository memberRepository;
     private final BookRepository bookRepository;
-    private final PostsRepository postsRepository;
 
     /*
     * 테스트용 데이터 추가

@@ -4,8 +4,7 @@ import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.After;
+import com.rootable.libraryservice2022.web.dto.PostDto;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -35,33 +34,67 @@ public class PostsServiceTest {
     PostsRepository postsRepository;
 
     @Autowired
-    EntityManager entityManager;
+    PostsService postsService;
 
-    @After
-    public void cleanUp() {
-        postsRepository.deleteAll();
-    }
+    @Autowired
+    EntityManager entityManager;
 
     @Test
     public void savePost() {
 
         String title = "First";
+        Member member = createMember();
+        Book book = createBook();
 
         //given
-        Posts posts = Posts.builder()
-                .id(1L)
+        PostDto posts = PostDto.builder()
                 .title(title)
                 .content("hello")
-                .member(createMember())
-                .book(createBook())
+                .member(member)
+                .book(book)
                 .build();
 
         //when
-        postsRepository.save(posts);
-        Posts findPost = postsRepository.findById(1L).get();
+        Long savedPost = postsService.savePost(posts);
+        Posts findPost = postsRepository.findById(savedPost).get();
 
         //then
         assertThat(entityManager.contains(findPost)).isTrue();
+
+        postsRepository.delete(findPost);
+
+    }
+
+    @Test
+    public void updatePost() {
+
+        Member member = createMember();
+        Book book = createBook();
+
+        //given
+        Posts posts = Posts.builder()
+                .title("aaa")
+                .content("hello")
+                .member(member)
+                .book(book)
+                .build();
+
+        PostDto update = PostDto.builder()
+                .title("bbb")
+                .content("upgrade")
+                .member(member)
+                .book(book)
+                .build();
+
+        postsRepository.save(posts);
+
+        //when
+        Long updatedId = postsService.update(posts.getId(), update);
+        Posts updatedPost = postsRepository.findById(updatedId).get();
+
+        //then
+        assertThat(updatedPost.getTitle()).isEqualTo("bbb");
+        assertThat(updatedPost.getContent()).isEqualTo("upgrade");
 
     }
 
@@ -70,30 +103,28 @@ public class PostsServiceTest {
     public void myPosts() {
 
         Member testMember = memberRepository.findByLoginId("test1");
+        Book book = createBook();
 
         //given
         Posts myPosts1 = Posts.builder()
-                .id(1L)
                 .title("first")
                 .content("hello")
                 .member(testMember)
-                .book(bookRepository.findById(1L).get())
+                .book(book)
                 .build();
 
         Posts myPosts2 = Posts.builder()
-                .id(2L)
                 .title("second")
                 .content("hello")
                 .member(testMember)
-                .book(bookRepository.findById(2L).get())
+                .book(book)
                 .build();
 
         Posts another = Posts.builder()
-                .id(3L)
                 .title("third")
                 .content("hello")
                 .member(memberRepository.findByLoginId("staff22"))
-                .book(bookRepository.findById(2L).get())
+                .book(book)
                 .build();
 
         postsRepository.save(myPosts1);
@@ -101,7 +132,7 @@ public class PostsServiceTest {
         postsRepository.save(another);
 
         //when
-        List<Posts> myPosts = postsRepository.findMyPosts(testMember.getId());
+        List<Posts> myPosts = postsService.findMyPosts(testMember.getId());
 
         //then
         assertThat(myPosts.size()).isEqualTo(2);
@@ -137,6 +168,5 @@ public class PostsServiceTest {
         bookRepository.save(book);
         return book;
     }
-
 
 }
