@@ -36,6 +36,8 @@ public class Posts extends BaseTimeEntity{
 
     private Long fileId;
 
+    private Result result;
+
     @Builder
     public Posts(Long id, String title, String content, Member member, Book book, Long fileId) {
         this.id = id;
@@ -62,6 +64,10 @@ public class Posts extends BaseTimeEntity{
 
     public void setFile(Long fileId) {
         this.fileId = fileId;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
     }
 
 }

@@ -82,13 +82,18 @@ public class TestDataInit {
                 .status(Status.PERMISSION)
                 .build();
 
+        Book book4 = Book.builder()
+                .title("야구 잘하는 법")
+                .writer("오타니 쇼헤이")
+                .price(18000)
+                .stock(0)
+                .status(Status.PERMISSION)
+                .build();
+
         bookRepository.save(book1);
         bookRepository.save(book2);
         bookRepository.save(book3);
-
-        /*
-        * 게시물
-        * */
+        bookRepository.save(book4);
 
     }
 

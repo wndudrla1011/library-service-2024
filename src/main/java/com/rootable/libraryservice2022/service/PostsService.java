@@ -1,8 +1,6 @@
 package com.rootable.libraryservice2022.service;
 
-import com.rootable.libraryservice2022.domain.Book;
-import com.rootable.libraryservice2022.domain.Member;
-import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
@@ -29,7 +27,18 @@ public class PostsService {
         Member member = memberRepository.findById(postDto.getMember().getId()).get();
         Posts posts = postDto.toEntity();
 
+        Status status = posts.getBook().getStatus();
+        Integer stock = posts.getBook().getStock();
+
         posts.setMember(member);
+
+        if (status != Status.DENIED && stock > 0) { //재고가 있고 절판 도서가 아닌 경우
+            posts.setResult(Result.SUCCESS);
+        } else if (status == Status.PERMISSION && stock == 0){ //재고가 없는 경우
+            posts.setResult(Result.FAIL);
+        } else if (status == Status.DENIED) { //절판 도서인 경우
+            posts.setResult(Result.DENIED);
+        }
 
         return postsRepository.save(posts).getId();
 
