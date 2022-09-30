@@ -7,11 +7,14 @@ import com.rootable.libraryservice2022.repository.PostsRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,6 +22,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class PostsServiceTest {
 
     @Autowired
@@ -29,6 +33,9 @@ public class PostsServiceTest {
 
     @Autowired
     PostsRepository postsRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     @After
     public void cleanUp() {
@@ -54,7 +61,54 @@ public class PostsServiceTest {
         Posts findPost = postsRepository.findById(1L).get();
 
         //then
-        assertThat(findPost.getTitle()).isEqualTo(title);
+        assertThat(entityManager.contains(findPost)).isTrue();
+
+    }
+
+    @Test
+    @DisplayName("나의 게시물 조회")
+    public void myPosts() {
+
+        Member testMember = memberRepository.findByLoginId("test1");
+
+        //given
+        Posts myPosts1 = Posts.builder()
+                .id(1L)
+                .title("first")
+                .content("hello")
+                .member(testMember)
+                .book(bookRepository.findById(1L).get())
+                .build();
+
+        Posts myPosts2 = Posts.builder()
+                .id(2L)
+                .title("second")
+                .content("hello")
+                .member(testMember)
+                .book(bookRepository.findById(2L).get())
+                .build();
+
+        Posts another = Posts.builder()
+                .id(3L)
+                .title("third")
+                .content("hello")
+                .member(memberRepository.findByLoginId("staff22"))
+                .book(bookRepository.findById(2L).get())
+                .build();
+
+        postsRepository.save(myPosts1);
+        postsRepository.save(myPosts2);
+        postsRepository.save(another);
+
+        //when
+        List<Posts> myPosts = postsRepository.findMyPosts(testMember.getId());
+
+        //then
+        assertThat(myPosts.size()).isEqualTo(2);
+        for (Posts myPost : myPosts) {
+            System.out.println("myPost.getTitle() = " + myPost.getTitle());
+            assertThat(myPost.getMember().getLoginId()).isEqualTo("test1");
+        }
 
     }
 
@@ -83,5 +137,6 @@ public class PostsServiceTest {
         bookRepository.save(book);
         return book;
     }
+
 
 }
