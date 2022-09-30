@@ -69,7 +69,7 @@ public class PostsController {
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
 
-        PostDto post = postsService.getPost(postId);
+        Posts post = postsService.findById(postId);
         model.addAttribute("post", post);
 
         if (post.getFileId() != null) {
@@ -115,6 +115,20 @@ public class PostsController {
         model.addAttribute("myPosts", myPosts);
 
         return "posts/myPosts";
+
+    }
+
+    @GetMapping("/alert/{postId}")
+    public String alert(@PathVariable Long postId, Model model) {
+
+        log.info("처리 결과 alert");
+
+        Posts post = postsService.findById(postId);
+        String reason = post.getResult().getReason();
+
+        model.addAttribute("msg", reason);
+        model.addAttribute("url", "/posts");
+        return "posts/alert";
 
     }
 

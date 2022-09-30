@@ -52,7 +52,7 @@ public class PostsService {
     }
 
     /*
-     * 게시글 조회
+     * 게시글 조회 - PostDto
      * */
     @Transactional
     public PostDto getPost(Long id) {
@@ -69,6 +69,17 @@ public class PostsService {
                 .build();
 
         return postDto;
+
+    }
+
+    /*
+    * 게시글 조회 - Posts
+    * */
+    @Transactional
+    public Posts findById(Long id) {
+
+        return postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
 
     }
 

@@ -46,6 +46,10 @@
             <a class="card-text" th:href="@{'/download/' + ${post.fileId}}" th:text="${filename}"></a>
         </div>
 
+        <div class="mb-3">
+            <a class="card-text" th:href="@{'/alert/' + ${post.id}}" th:text="${post.result}"></a>
+        </div>
+
         <hr class="my-4">
 
         <div class="row">
