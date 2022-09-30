@@ -2,12 +2,14 @@ package com.rootable.libraryservice2022.web.dto;
 
 import com.rootable.libraryservice2022.domain.Status;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 @Data
+@NoArgsConstructor
 public class BookUpdateDto {
 
     @NotNull(message = "가격을 입력해주세요")

@@ -2,6 +2,7 @@ package com.rootable.libraryservice2022.web.dto;
 
 import com.rootable.libraryservice2022.domain.Status;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Max;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 @Data
+@NoArgsConstructor
 public class BookSaveDto {
 
     @NotBlank(message = "책 제목을 입력해주세요")

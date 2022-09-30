@@ -16,5 +16,4 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
     @Query("select p from Posts p join p.member m where m.id = :memberId order by p.id desc")
     List<Posts> findMyPosts(@Param("memberId") Long memberId);
 
-
 }

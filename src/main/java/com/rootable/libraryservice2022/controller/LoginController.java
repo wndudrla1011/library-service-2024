@@ -30,14 +30,15 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginDto dto, BindingResult bindingResult,
+    public String login(@Valid @ModelAttribute("loginForm") LoginDto dto, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
 
         log.info("로그인 검증");
 
         if (bindingResult.hasErrors()) {
-            return "login/singIn";
+            log.info("검증 에러 errors={}", bindingResult);
+            return "login/signIn";
         }
 
         Member loginMember = loginService.validationLogin(dto.getLoginId(), dto.getPassword());

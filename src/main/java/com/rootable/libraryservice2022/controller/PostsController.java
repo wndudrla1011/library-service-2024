@@ -6,7 +6,6 @@ import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
-import com.rootable.libraryservice2022.service.MemberService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.dto.FileDto;
@@ -29,6 +28,8 @@ public class PostsController {
     private final PostsService postsService;
     private final BookService bookService;
     private final FileService fileService;
+
+    private static Long key = 2456L;
 
     @GetMapping("/posts")
     public String posts(Model model, HttpServletRequest request) {
@@ -61,9 +62,12 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String post(@PathVariable Long postId, Model model) {
+    public String post(@PathVariable Long postId, Model model, HttpServletRequest request) {
 
         log.info("게시글 정보");
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("loginMember");
 
         PostDto post = postsService.getPost(postId);
         model.addAttribute("post", post);
