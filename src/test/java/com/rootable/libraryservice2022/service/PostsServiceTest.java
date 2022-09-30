@@ -99,6 +99,30 @@ public class PostsServiceTest {
     }
 
     @Test
+    public void deletePost() {
+
+        Member member = createMember();
+        Book book = createBook();
+
+        //given
+        Posts posts = Posts.builder()
+                .title("aaa")
+                .content("hello")
+                .member(member)
+                .book(book)
+                .build();
+
+        Posts savedPost = postsRepository.save(posts);
+
+        //when
+        postsService.delete(savedPost.getId());
+
+        //then
+        assertThat(entityManager.contains(savedPost)).isFalse();
+
+    }
+
+    @Test
     @DisplayName("나의 게시물 조회")
     public void myPosts() {
 
