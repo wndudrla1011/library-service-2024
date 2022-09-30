@@ -49,14 +49,14 @@
         <hr class="my-4">
 
         <div class="row">
-            <div class="col" th:if="${key}">
+            <div class="col" th:if="${same}">
                 <button type="button" class="w-100 btn btn-dark btn-lg"
                         onclick="location.href='update.html'"
                         th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.id})}'|">
                     수정
                 </button>
             </div>
-            <div class="col" th:if="${post.fileId != null}">
+            <div class="col" th:if="${post.fileId} != null and ${same}">
                 <form th:action method="post">
                     <input type="hidden" name="_method" value="delete" />
                     <button type="submit" id="btn-delFile" class="w-100 btn btn-dark btn-lg">파일 삭제</button>

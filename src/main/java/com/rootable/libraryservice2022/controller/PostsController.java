@@ -29,7 +29,7 @@ public class PostsController {
     private final BookService bookService;
     private final FileService fileService;
 
-    private static Long key = 2456L;
+    public static String SAME_PERSON_KEY = "same";
 
     @GetMapping("/posts")
     public String posts(Model model, HttpServletRequest request) {
@@ -75,6 +75,10 @@ public class PostsController {
         if (post.getFileId() != null) {
             FileDto file = fileService.getFile(post.getFileId());
             model.addAttribute("filename", file.getOriginFilename());
+        }
+
+        if (post.getMember().getId().equals(member.getId())) {
+            model.addAttribute("same", SAME_PERSON_KEY);
         }
 
         return "/posts/postInfo";
