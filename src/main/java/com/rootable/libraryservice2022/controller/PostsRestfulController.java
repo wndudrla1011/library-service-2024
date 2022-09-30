@@ -37,7 +37,7 @@ public class PostsRestfulController {
     @MySecured(role = Role.GUEST)
     @PostMapping("/posts/add")
     public String write(@Validated @ModelAttribute("posts") PostDto postDto, BindingResult bindingResult,
-                        @RequestParam("file") MultipartFile files, HttpServletRequest request) {
+                        @RequestParam("file") MultipartFile files, HttpServletRequest request, Model model) {
 
         log.info("게시글 등록");
 
@@ -79,7 +79,9 @@ public class PostsRestfulController {
         } finally {
             ////Bean Validation
             if (bindingResult.hasFieldErrors("title") || bindingResult.hasFieldErrors("book")) {
+                model.addAttribute("bookList", bookService.books());
                 log.info("검증 에러 errors={}", bindingResult);
+
                 return "posts/addPost";
             }
 
