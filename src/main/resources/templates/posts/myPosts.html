@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/sidebars-header :: sidebars">
+
+    <meta charset="UTF-8">
+    <title>My Posts Page</title>
+
+</head>
+<body>
+
+<div class="overlay">
+    <div class="container">
+        <h2 class="text-center mt-4 mb-4">게시물 목록</h2>
+        <table class="table table-hover text-center">
+            <thead>
+            <tr>
+                <th>게시글 번호</th>
+                <th>작성자</th>
+                <th>제목</th>
+                <th>수정 시간</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${myPosts}">
+                <td th:text="${post.id}"></td>
+                <td th:text="${post.member.name}"></td>
+                <td>
+                    <a href="#" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}"></a>
+                </td>
+                <td th:text="${#temporals.format(post.modifiedDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="fragments/fixed-footer :: footer"></footer>
+
+<script src="/js/event.js"></script>
+
+</body>
+</html>

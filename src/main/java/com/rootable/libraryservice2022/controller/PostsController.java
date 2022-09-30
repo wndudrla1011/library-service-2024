@@ -6,6 +6,7 @@ import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
+import com.rootable.libraryservice2022.service.MemberService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.dto.FileDto;
@@ -93,6 +94,19 @@ public class PostsController {
         model.addAttribute("bookList", bookService.books());
 
         return "posts/editPost";
+
+    }
+
+    @GetMapping("/posts/mine")
+    public String myList(Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("loginMember");
+
+        List<Posts> myPosts = postsService.findMyPosts(member.getId());
+        model.addAttribute("myPosts", myPosts);
+
+        return "posts/myPosts";
 
     }
 

@@ -107,10 +107,11 @@ public class PostsService {
     }
 
     /*
-     * 게시글 조회 by FileId
+     * 나의 게시글 조회
      * */
-    public Posts findPostByFileId(Long fileId) {
-        return postsRepository.findByFileId(fileId);
+    public List<Posts> findMyPosts(Long memberId) {
+        List<Posts> myPosts = postsRepository.findMyPosts(memberId);
+        return myPosts;
     }
 
 }
