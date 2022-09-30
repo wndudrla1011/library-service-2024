@@ -77,7 +77,7 @@ public class PostsController {
             model.addAttribute("filename", file.getOriginFilename());
         }
 
-        if (post.getMember().getId().equals(member.getId())) {
+        if (post.getMember().getId().equals(member.getId()) || member.getRole() == Role.ADMIN) {
             model.addAttribute("same", SAME_PERSON_KEY);
         }
 
