@@ -169,7 +169,8 @@ public class PostsController {
             model.addAttribute("isWriter", SAME_WRITER_KEY);
         }
 
-        model.addAttribute("comment", comment.getComment());
+        model.addAttribute("comment", comment);
+        model.addAttribute("memberId", member.getId());
 
         return "comments/editComment";
 

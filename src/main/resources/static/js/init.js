@@ -41,7 +41,14 @@ var main = {
         const data = {
             postId: $('#postId').val(),
             commentId: $('#commentId').val(),
+            memberId: $('#memberId').val(),
+            writerId: $('#writerId').val(),
             comment: $('#comment').val()
+        }
+
+        if (data.memberId !== data.writerId) {
+            alert("본인이 작성한 댓글만 수정 가능합니다.");
+            return false;
         }
 
         if (!data.comment || data.comment.trim() === "") {

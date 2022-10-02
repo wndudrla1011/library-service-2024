@@ -44,6 +44,9 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Posts> postsList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList = new ArrayList<>();
+
     @Builder
     public Member(String name, String loginId, String password, String email, Role role) {
         this.name = name;
