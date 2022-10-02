@@ -2,6 +2,7 @@ package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.service.BookService;
+import com.rootable.libraryservice2022.service.CommentService;
 import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.MySecured;
@@ -25,8 +26,10 @@ public class PostsController {
     private final PostsService postsService;
     private final BookService bookService;
     private final FileService fileService;
+    private final CommentService commentService;
 
     public static String SAME_PERSON_KEY = "same";
+    public static String SAME_WRITER_KEY = "writer";
 
     @GetMapping("/posts")
     public String posts(Model model, HttpServletRequest request) {
@@ -78,13 +81,16 @@ public class PostsController {
             model.addAttribute("same", SAME_PERSON_KEY);
         }
 
+        //댓글 리스트
         List<Comment> comments = post.getComments();
 
         if (comments != null && !comments.isEmpty()) {
             model.addAttribute("comments", comments);
         }
 
+        //댓글 렌더링
         model.addAttribute("comment", new Comment());
+
 
         return "/posts/postInfo";
 
@@ -137,10 +143,34 @@ public class PostsController {
 
     }
 
-    @GetMapping("/posts/{postId}/comments")
+    @GetMapping("/posts/{postId}/comments/add")
     public String commentForm(@PathVariable Long postId, Model model) {
+
+        log.info("댓글 입력 폼 이동");
+
         model.addAttribute("postId", postId);
         return "comments/commentForm";
+    }
+
+    @GetMapping("/posts/{postId}/comments/{commentId}")
+    public String editComment(@PathVariable Long postId, @PathVariable Long commentId, Model model,
+                              HttpServletRequest request) {
+
+        log.info("댓글 수정");
+
+        Comment comment = commentService.getComment(commentId);
+        model.addAttribute("commentId", comment.getId());
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("loginMember");
+
+        //댓글 작성자 확인
+        if (member.getId().equals(comment.getMember().getId())) {
+            model.addAttribute("isWriter", SAME_WRITER_KEY);
+        }
+
+        return "comments/editComment";
+
     }
 
 }

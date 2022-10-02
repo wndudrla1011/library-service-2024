@@ -13,11 +13,15 @@
     </div>
     <form>
         <input type="hidden" id="postId" value="{{postId}}">
+        <input type="hidden" id="commentId" value="{{commentId}}">
         <div class="card-body">
             <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
         </div>
         <div class="card-footer">
-            <button type="button" id="btn-comment-save" class="btn btn-outline-primary">등록</button>
+            {{#isWriter}}
+            <button type="button" id="btn-comment-update" class="btn btn-outline-success">수정</button>
+            <button type="button" id="btn-comment-delete" class="btn btn-outline-danger">삭제</button>
+            {{/isWriter}}
             <a href="/posts/{{postId}}" role="button" class="btn btn-outline-dark">돌아가기</a>
         </div>
     </form>

@@ -89,7 +89,7 @@
             </span>
             <button type="button" class="btn btn-sm btn-dark"
                     onclick="location.href='posts.html'"
-                    th:onclick="|location.href='@{/posts/{postId}/comments(postId=${post.id})}'|">
+                    th:onclick="|location.href='@{/posts/{postId}/comments/add(postId=${post.id})}'|">
                 작성
             </button>
         </div>
@@ -99,8 +99,8 @@
                     <span style="font-size: small" th:text="${comment.member.name}"></span>
                     <span style="font-size: xx-small"
                           th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-                    <button class="badge text-dark">수정</button>
-                    <button class="badge text-dark">삭제</button>
+                    <a th:href="@{/posts/{postId}/comments/{commentId}(postId=${post.id}, commentId=${comment.id})}"
+                       class="btn btn-dark text-write">수정 및 삭제</a>
                 </span>
                 <div th:text="${comment.comment}"></div>
             </li>
