@@ -156,7 +156,7 @@ public class PostsController {
     public String editComment(@PathVariable Long postId, @PathVariable Long commentId, Model model,
                               HttpServletRequest request) {
 
-        log.info("댓글 수정");
+        log.info("댓글 수정 폼 이동");
 
         Comment comment = commentService.getComment(commentId);
         model.addAttribute("commentId", comment.getId());
@@ -168,6 +168,8 @@ public class PostsController {
         if (member.getId().equals(comment.getMember().getId())) {
             model.addAttribute("isWriter", SAME_WRITER_KEY);
         }
+
+        model.addAttribute("comment", comment.getComment());
 
         return "comments/editComment";
 

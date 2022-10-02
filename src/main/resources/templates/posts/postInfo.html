@@ -100,7 +100,7 @@
                     <span style="font-size: xx-small"
                           th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
                     <a th:href="@{/posts/{postId}/comments/{commentId}(postId=${post.id}, commentId=${comment.id})}"
-                       class="btn btn-dark text-write">수정 및 삭제</a>
+                       class="btn btn-sm btn-dark text-write">수정 및 삭제</a>
                 </span>
                 <div th:text="${comment.comment}"></div>
             </li>

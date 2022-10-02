@@ -47,4 +47,19 @@ public class CommentService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다. id=" + id));
     }
 
+    /*
+     * 댓글 수정
+     * */
+    @Transactional
+    public Long update(Long id, CommentRequestDto dto) {
+
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다. id=" + id));
+
+        comment.update(dto.getComment());
+
+        return id;
+
+    }
+
 }
