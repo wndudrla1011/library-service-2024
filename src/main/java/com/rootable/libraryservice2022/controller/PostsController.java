@@ -84,6 +84,8 @@ public class PostsController {
             model.addAttribute("comments", comments);
         }
 
+        model.addAttribute("comment", new Comment());
+
         return "/posts/postInfo";
 
     }
@@ -133,6 +135,12 @@ public class PostsController {
         model.addAttribute("url", "/posts");
         return "posts/alert";
 
+    }
+
+    @GetMapping("/posts/{postId}/comments")
+    public String commentForm(@PathVariable Long postId, Model model) {
+        model.addAttribute("postId", postId);
+        return "comments/commentForm";
     }
 
 }

@@ -1,0 +1,17 @@
+{{>layout/header}}
+
+<br/>
+<div class="card">
+    <div class="card-header bi bi-chat-right-dots"> Write a Comment</div>
+    <form>
+        <input type="hidden" id="postId" value="{{postId}}">
+        <div class="card-body">
+            <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+        </div>
+        <div class="card-footer">
+            <button type="button" id="btn-comment-save" class="btn btn-outline-dark bi bi-pencil-square">등록</button>
+        </div>
+    </form>
+</div>
+
+{{>layout/footer}}
