@@ -10,6 +10,9 @@ var main = {
         $('#btn-comment-update').on('click', function () {
             _this.update();
         });
+        $('#btn-comment-delete').on('click', function () {
+            _this.delete();
+        });
 
     },
 
@@ -66,6 +69,35 @@ var main = {
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
+        }
+    },
+
+    delete : function () {
+        const data = {
+            postId: $('#postId').val(),
+            commentId: $('#commentId').val(),
+            memberId: $('#memberId').val(),
+            writerId: $('#writerId').val()
+        }
+
+        if (data.memberId !== data.writerId) {
+            alert("본인이 작성한 댓글만 삭제 가능합니다.");
+            return false;
+        } else {
+            const check = confirm("삭제하시겠습니까?");
+
+            if (check === true) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/posts/' + data.postId + '/comments/' + data.commentId,
+                    contentType: 'application/json; charset=utf-8'
+                }).done(function () {
+                    alert('댓글이 삭제되었습니다.');
+                    window.location.href='/posts/' + data.postId;
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
         }
     }
 };

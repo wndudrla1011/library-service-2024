@@ -31,14 +31,19 @@ public class CommentApiController {
 
     }
 
-    @PutMapping(value = "/posts/{postId}/comments/{commentId}")
+    @PutMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity update(@PathVariable Long postId, @PathVariable Long commentId,
                                       @RequestBody CommentRequestDto dto) {
 
         log.info("댓글 수정");
-
         return ResponseEntity.ok(commentService.update(commentId, dto));
 
+    }
+
+    @DeleteMapping("/posts/{postId}/comments/{commentId}")
+    public void delete(@PathVariable Long postId, @PathVariable Long commentId) {
+        log.info("댓글 삭제");
+        commentService.delete(commentId);
     }
 
 }
