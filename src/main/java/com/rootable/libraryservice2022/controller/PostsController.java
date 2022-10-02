@@ -1,9 +1,6 @@
 package com.rootable.libraryservice2022.controller;
 
-import com.rootable.libraryservice2022.domain.Book;
-import com.rootable.libraryservice2022.domain.Member;
-import com.rootable.libraryservice2022.domain.Posts;
-import com.rootable.libraryservice2022.domain.Role;
+import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
@@ -79,6 +76,12 @@ public class PostsController {
 
         if (post.getMember().getId().equals(member.getId()) || member.getRole() == Role.ADMIN) {
             model.addAttribute("same", SAME_PERSON_KEY);
+        }
+
+        List<Comment> comments = post.getComments();
+
+        if (comments != null && !comments.isEmpty()) {
+            model.addAttribute("comments", comments);
         }
 
         return "/posts/postInfo";

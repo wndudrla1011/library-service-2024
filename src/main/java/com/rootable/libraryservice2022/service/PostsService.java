@@ -92,6 +92,17 @@ public class PostsService {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
 
+        Status status = requestDto.getBook().getStatus();
+        Integer stock = requestDto.getBook().getStock();
+
+        if (status != Status.DENIED && stock > 0) { //재고가 있고 절판 도서가 아닌 경우
+            posts.setResult(Result.SUCCESS);
+        } else if (status == Status.PERMISSION && stock == 0){ //재고가 없는 경우
+            posts.setResult(Result.FAIL);
+        } else if (status == Status.DENIED) { //절판 도서인 경우
+            posts.setResult(Result.DENIED);
+        }
+
         posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getBook());
 
         return id;

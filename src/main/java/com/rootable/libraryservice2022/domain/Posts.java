@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static javax.persistence.FetchType.*;
 
 @Getter
@@ -38,6 +40,10 @@ public class Posts extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private Result result;
+
+    @OneToMany(mappedBy = "posts", fetch = EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc") //댓글 정렬
+    private List<Comment> comments;
 
     @Builder
     public Posts(Long id, String title, String content, Member member, Book book, Long fileId) {
