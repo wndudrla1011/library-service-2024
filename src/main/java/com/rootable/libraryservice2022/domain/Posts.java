@@ -36,6 +36,7 @@ public class Posts extends BaseTimeEntity{
 
     private Long fileId;
 
+    @Enumerated(EnumType.STRING)
     private Result result;
 
     @Builder
