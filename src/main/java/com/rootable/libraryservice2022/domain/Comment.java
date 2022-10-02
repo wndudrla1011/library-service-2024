@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "comments")
 @Entity
-public class Comment {
+public class Comment extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +20,6 @@ public class Comment {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String comment; //댓글 내용
-
-    @CreatedDate
-    private String createdDate;
-
-    @LastModifiedDate
-    private String modifiedDate;
 
     @ManyToOne
     @JoinColumn(name = "posts_id")
@@ -36,11 +30,9 @@ public class Comment {
     private Member member; //작성자
 
     @Builder
-    public Comment(Long id, String comment, String createdDate, String modifiedDate, Posts posts, Member member) {
+    public Comment(Long id, String comment, Posts posts, Member member) {
         this.id = id;
         this.comment = comment;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
         this.posts = posts;
         this.member = member;
     }
