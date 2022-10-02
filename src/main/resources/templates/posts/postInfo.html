@@ -48,8 +48,6 @@
 
         <div class="mb-3">
             <a class="card-text" th:href="@{'/alert/' + ${post.id}}" th:text="${post.result}"></a>
-            <label for="result" class="form-label">신청 결과</label>
-            <input type="text" class="form-control" id="result" value="SUCCESS" th:value="${post.result}" readonly>
         </div>
 
         <hr class="my-4">
