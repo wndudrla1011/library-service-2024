@@ -20,10 +20,8 @@
             <textarea id="comment" class="form-control" rows="4">{{comment.comment}}</textarea>
         </div>
         <div class="card-footer">
-            {{#isWriter}}
             <button type="button" id="btn-comment-update" class="btn btn-outline-success">수정</button>
             <button type="button" id="btn-comment-delete" class="btn btn-outline-danger">삭제</button>
-            {{/isWriter}}
             <a href="/posts/{{postId}}" role="button" class="btn btn-outline-dark">돌아가기</a>
         </div>
     </form>
