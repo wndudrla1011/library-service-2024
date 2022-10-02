@@ -19,7 +19,7 @@ public class CommentApiController {
 
     private final CommentService commentService;
 
-    @PostMapping(value = "/posts/{postId}")
+    @PostMapping(value = "/posts/{postId}/comments")
     public ResponseEntity commentSave(@PathVariable Long postId, @RequestBody CommentRequestDto dto,
                                       HttpServletRequest request) {
 

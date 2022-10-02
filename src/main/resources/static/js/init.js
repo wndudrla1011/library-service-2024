@@ -22,7 +22,7 @@ var main = {
         } else {
             $.ajax({
                 type: 'POST',
-                url: '/posts/' + data.postId,
+                url: '/posts/' + data.postId + '/comments',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data)
             }).done(function () {
