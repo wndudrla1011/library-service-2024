@@ -1,6 +1,9 @@
 package com.rootable.libraryservice2022.web.dto;
 
+import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
@@ -11,8 +14,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BookSaveDto {
+
+    private Long id;
 
     @NotBlank(message = "책 제목을 입력해주세요")
     private String title;
@@ -31,5 +38,18 @@ public class BookSaveDto {
 
     @NotNull(message = "상태를 입력해주세요")
     private Status status;
+
+    public Book toEntity() {
+        Book build = Book.builder()
+                .id(id)
+                .title(title)
+                .writer(writer)
+                .price(price)
+                .stock(stock)
+                .status(status)
+                .build();
+
+        return build;
+    }
 
 }

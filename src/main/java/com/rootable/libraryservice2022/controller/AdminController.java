@@ -21,6 +21,7 @@ public class AdminController {
 
         log.info("관리자 페이지 접근");
 
+        //세션 획득
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
 

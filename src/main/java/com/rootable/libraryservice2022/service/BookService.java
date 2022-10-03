@@ -2,6 +2,7 @@ package com.rootable.libraryservice2022.service;
 
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.repository.BookRepository;
+import com.rootable.libraryservice2022.web.dto.BookSaveDto;
 import com.rootable.libraryservice2022.web.dto.BookUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class BookService {
      * 도서 등록
      * */
     @Transactional
-    public Long create(Book book) {
-        return bookRepository.save(book).getId();
+    public Long create(BookSaveDto dto) {
+        return bookRepository.save(dto.toEntity()).getId();
     }
 
     /*

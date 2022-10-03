@@ -30,6 +30,7 @@ public class BookController {
 
         log.info("도서 관리 페이지");
 
+        //도서 리스트 뷰 전달
         List<Book> books = bookService.books();
         model.addAttribute("books", books);
 
@@ -43,6 +44,7 @@ public class BookController {
 
         log.info("도서 등록 폼 이동");
 
+        //도서 렌더링 용 객체 전달
         model.addAttribute("book", new Book());
         model.addAttribute("statusList", Status.values());
         return "books/addBook";
@@ -57,7 +59,9 @@ public class BookController {
 
         model.addAttribute("statusList", Status.values());
 
+
         if (dto.getStock() != null && dto.getStatus() != null) {
+            //전역 에러 - DENIED 상태는 재고가 반드시 0개
             if (dto.getStock() > 0 && dto.getStatus() == Status.DENIED) {
                 bindingResult.reject("invalid");
             }
@@ -74,15 +78,7 @@ public class BookController {
 
         log.info("정상 입력으로 도서 등록 진행");
 
-        Book book = Book.builder()
-                .title(dto.getTitle())
-                .writer(dto.getWriter())
-                .price(dto.getPrice())
-                .stock(dto.getStock())
-                .status(dto.getStatus())
-                .build();
-
-        Long savedId = bookService.create(book);
+        Long savedId = bookService.create(dto);
 
         return "redirect:/admin/books/" + savedId;
 

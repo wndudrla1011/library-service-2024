@@ -3,6 +3,7 @@ package com.rootable.libraryservice2022.service;
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.repository.BookRepository;
+import com.rootable.libraryservice2022.web.dto.BookSaveDto;
 import com.rootable.libraryservice2022.web.dto.BookUpdateDto;
 import org.junit.After;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class BookServiceTest {
     public void create() {
 
         //given
-        Book book = Book.builder()
+        BookSaveDto dto = BookSaveDto.builder()
                 .title("book1")
                 .writer("a")
                 .price(10000)
@@ -49,7 +50,8 @@ public class BookServiceTest {
                 .build();
 
         //when
-        bookService.create(book);
+        Long savedId = bookService.create(dto);
+        Book book = bookService.findOne(savedId);
 
         //then
         List<Book> books = bookRepository.findAll();
@@ -61,7 +63,7 @@ public class BookServiceTest {
     public void findOne() {
 
         //given
-        Book book = Book.builder()
+        BookSaveDto dto = BookSaveDto.builder()
                 .title("book1")
                 .writer("a")
                 .price(10000)
@@ -69,7 +71,7 @@ public class BookServiceTest {
                 .status(Status.PERMISSION)
                 .build();
 
-        Long savedId = bookService.create(book);
+        Long savedId = bookService.create(dto);
 
         //when
         Book savedBook = bookService.findOne(savedId);
@@ -85,7 +87,7 @@ public class BookServiceTest {
     public void notFindOne() {
 
         //given
-        Book book = Book.builder()
+        BookSaveDto dto = BookSaveDto.builder()
                 .title("book1")
                 .writer("a")
                 .price(10000)
@@ -93,7 +95,7 @@ public class BookServiceTest {
                 .status(Status.PERMISSION)
                 .build();
 
-        bookService.create(book);
+        bookService.create(dto);
 
         //when
         Long failId = 2L;
