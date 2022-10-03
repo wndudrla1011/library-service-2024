@@ -1,10 +1,12 @@
 package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Book;
+import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.web.MySecured;
+import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.BookSaveDto;
 import com.rootable.libraryservice2022.web.dto.BookUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +28,15 @@ public class BookController {
 
     @MySecured(role = Role.ADMIN)
     @GetMapping("/admin/books")
-    public String books(Model model) {
+    public String books(Model model, @Login Member loginMember) {
 
         log.info("도서 관리 페이지");
 
         //도서 리스트 뷰 전달
         List<Book> books = bookService.books();
         model.addAttribute("books", books);
+
+        model.addAttribute("loginMember", loginMember);
 
         return "books/books";
 
