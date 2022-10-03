@@ -94,7 +94,7 @@ public class MemberController {
     }
 
     @MySecured(role = Role.STAFF)
-    @PostMapping("/admin/members/{memberId}/edit")
+    @PutMapping("/admin/members/{memberId}/edit")
     public String edit(@PathVariable Long memberId, @Valid @ModelAttribute("member") MemberDto dto,
                        BindingResult bindingResult, Model model){
 
@@ -148,7 +148,7 @@ public class MemberController {
 
     }
 
-    @PostMapping("/members/{memberId}/edit")
+    @PutMapping("/members/{memberId}/edit")
     public String editMyInfo(@PathVariable Long memberId, @Valid @ModelAttribute("member") MemberDto dto,
                        BindingResult bindingResult, Model model){
 

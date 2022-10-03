@@ -14,7 +14,7 @@
     </div>
 
     <form action="" th:action th:object="${member}" method="post">
-
+        <input type="hidden" name="_method" value="put" />
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
         </div>
