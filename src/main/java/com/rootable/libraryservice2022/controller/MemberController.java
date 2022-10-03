@@ -53,7 +53,7 @@ public class MemberController {
         }
 
         log.info("정상 입력으로 회원 가입 진행");
-        memberService.join(member);
+        memberService.join(member); //회원 가입
         return "redirect:/";
 
     }
@@ -120,7 +120,7 @@ public class MemberController {
 
         log.info("회원 정보 수정 진행");
 
-        memberService.update(memberId, form);
+        memberService.update(memberId, form); //회원 정보 갱신
 
         return "redirect:/admin/members";
 
@@ -134,7 +134,7 @@ public class MemberController {
         Member member = memberService.findOne(memberId);
 
         model.addAttribute("member", member);
-        model.addAttribute("common", COMMON_MEMBER_KEY);
+        model.addAttribute("common", COMMON_MEMBER_KEY); //작성자 키 발급
         return "members/memberInfo";
 
     }
@@ -147,7 +147,7 @@ public class MemberController {
         Member member = memberService.findOne(memberId);
 
         model.addAttribute("member", member);
-        model.addAttribute("common", COMMON_MEMBER_KEY);
+        model.addAttribute("common", COMMON_MEMBER_KEY); //작성자 키 발급
 
         return "members/editMember";
 
@@ -163,19 +163,20 @@ public class MemberController {
 
         if (bindingResult.hasErrors()) {
             log.info("검증 에러 errors={}", bindingResult);
-            model.addAttribute("common", COMMON_MEMBER_KEY);
+            model.addAttribute("common", COMMON_MEMBER_KEY); //작성자 키 발급
             return "members/editMember";
         }
 
         log.info("내 정보 수정 진행");
 
-        memberService.update(memberId, form);
+        memberService.update(memberId, form); //회원 정보 갱신
 
-        model.addAttribute("common", COMMON_MEMBER_KEY);
+        model.addAttribute("common", COMMON_MEMBER_KEY); //작성자 키 발급
         return "redirect:/members/" + memberId;
 
     }
 
+    //수정 -> ID 중복 확인
     private void duplicationCheckUpdateLoginId(Long memberId, Member form, BindingResult bindingResult) {
 
         if (memberService.checkDuplicatedLoginId(memberId, form.getLoginId()) != null) {
@@ -185,6 +186,7 @@ public class MemberController {
 
     }
 
+    //회원 ID 중복 확인
     private void duplicationCheckLoginId(Member member, BindingResult bindingResult) {
 
         if (memberService.findByLoginId(member.getLoginId()) != null) {
@@ -194,6 +196,7 @@ public class MemberController {
 
     }
 
+    //회원 이메일 중복 확인
     private void duplicationCheckEmail(Member member, BindingResult bindingResult) {
 
         if (memberService.findByEmail(member.getEmail()) != null) {

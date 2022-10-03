@@ -39,6 +39,7 @@ public class PostsController {
 
         Member member = (Member) httpSession.getAttribute("loginMember");
 
+        //뷰 렌더링 값 전달
         model.addAttribute("posts", posts);
         model.addAttribute("member", member);
         return "posts/posts";
@@ -53,6 +54,7 @@ public class PostsController {
 
         List<Book> books = bookService.books();
 
+        //뷰 렌더링 값 전달
         model.addAttribute("posts", new Posts());
         model.addAttribute("bookList", books);
         return "posts/addPost";
@@ -69,13 +71,15 @@ public class PostsController {
         Posts post = postsService.findById(postId);
         model.addAttribute("post", post);
 
+        //업로드 파일이 존재할 경우
         if (post.getFileId() != null) {
-            FileDto file = fileService.getFile(post.getFileId());
-            model.addAttribute("filename", file.getOriginFilename());
+            FileDto file = fileService.getFile(post.getFileId()); //조회
+            model.addAttribute("filename", file.getOriginFilename()); //파일명 뷰 전달
         }
 
+        //작성자 본인이거나 관리자일 경우
         if (post.getMember().getId().equals(member.getId()) || member.getRole() == Role.ADMIN) {
-            model.addAttribute("same", SAME_PERSON_KEY);
+            model.addAttribute("same", SAME_PERSON_KEY); //키 발급
         }
 
         //댓글 리스트
@@ -100,9 +104,10 @@ public class PostsController {
 
         PostDto post = postsService.getPost(postId);
 
+        //업로드 파일이 존재할 경우
         if (post.getFileId() != null) {
-            FileDto file = fileService.getFile(post.getFileId());
-            model.addAttribute("filename", file.getOriginFilename());
+            FileDto file = fileService.getFile(post.getFileId()); //조회
+            model.addAttribute("filename", file.getOriginFilename()); //파일명 뷰 전달
         }
 
         model.addAttribute("posts", post);
@@ -134,8 +139,8 @@ public class PostsController {
         Posts post = postsService.findById(postId);
         String reason = post.getResult().getReason();
 
-        model.addAttribute("msg", reason);
-        model.addAttribute("url", "/posts");
+        model.addAttribute("msg", reason); //처리 결과 사유
+        model.addAttribute("url", "/posts"); //Redirect 주소
         return "posts/alert";
 
     }
@@ -155,8 +160,6 @@ public class PostsController {
         log.info("댓글 수정 폼 이동");
 
         Comment comment = commentService.getComment(commentId);
-        model.addAttribute("commentId", comment.getId());
-
         Member member = (Member) httpSession.getAttribute("loginMember");
 
         model.addAttribute("comment", comment);

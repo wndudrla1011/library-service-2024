@@ -40,6 +40,7 @@ public class LoginController {
             return "login/signIn";
         }
 
+        //로그인 유효성 검사
         Member loginMember = loginService.validationLogin(dto.getLoginId(), dto.getPassword());
         log.info("Login Member = {}", loginMember);
 

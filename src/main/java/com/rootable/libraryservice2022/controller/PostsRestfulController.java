@@ -64,13 +64,14 @@ public class PostsRestfulController {
             String filePath = fileStore.getFullPath(originFilename);
             files.transferTo(new File(filePath)); //업로드
 
+            //FileDto 바인딩
             FileDto fileDto = new FileDto();
             fileDto.setOriginFilename(originFilename);
             fileDto.setFilename(storeFileName);
             fileDto.setFilePath(filePath);
 
-            Long fileId = fileService.saveFile(fileDto);
-            postDto.setFileId(fileId);
+            Long fileId = fileService.saveFile(fileDto); //파일 DB 저장
+            postDto.setFileId(fileId); //postDto fileId 셋팅
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,7 +84,7 @@ public class PostsRestfulController {
                 return "posts/addPost";
             }
 
-            postsService.savePost(postDto);
+            postsService.savePost(postDto); //게시글 저장
         }
 
         return "redirect:/posts";
@@ -102,13 +103,13 @@ public class PostsRestfulController {
         Member member = (Member) httpSession.getAttribute("loginMember");
         requestDto.setMember(member);
 
-        PostDto savedPost = postsService.getPost(postId);
+        PostDto savedPost = postsService.getPost(postId); //게시글 조회
 
-        //뷰 파일명 전달
+        //업로드 파일이 존재할 경우
         if (savedPost.getFileId() != null) {
-            FileDto file = fileService.getFile(savedPost.getFileId());
-            requestDto.setFileId(file.getId());
-            model.addAttribute("filename", file.getOriginFilename());
+            FileDto file = fileService.getFile(savedPost.getFileId()); //조회
+            requestDto.setFileId(file.getId()); //postDto fileId 셋팅
+            model.addAttribute("filename", file.getOriginFilename()); //파일명 뷰 전달
         }
 
         //Bean Validation
@@ -117,7 +118,7 @@ public class PostsRestfulController {
             return "posts/editPost";
         }
 
-        postsService.update(postId, requestDto);
+        postsService.update(postId, requestDto); //게시글 갱신
 
         return "redirect:/posts/" + postId;
 
@@ -161,26 +162,24 @@ public class PostsRestfulController {
             String filePath = fileStore.getFullPath(originFilename);
             files.transferTo(new File(filePath)); //업로드
 
-            //FileDto 셋팅
+            //FileDto 바인딩
             FileDto fileDto = new FileDto();
             fileDto.setOriginFilename(originFilename);
             fileDto.setFilename(storeFileName);
             fileDto.setFilePath(filePath);
 
-            //DB File 저장
-            Long fileId = fileService.saveFile(fileDto);
+            Long fileId = fileService.saveFile(fileDto); //DB File 저장
 
             //현재 게시글 조회 + fileId 변경
             PostDto postDto = postsService.getPost(postId);
             postDto.setFileId(fileId);
             Posts posts = postsService.updateFile(postId, postDto);
 
-            //뷰 파일명 전달
+            //업로드 파일이 존재할 경우
             if (postDto.getFileId() != null) {
-                FileDto file = fileService.getFile(posts.getFileId());
-                model.addAttribute("filename", file.getOriginFilename());
+                FileDto file = fileService.getFile(posts.getFileId()); //조회
+                model.addAttribute("filename", file.getOriginFilename()); //파일명 뷰 전달
             }
-
             model.addAttribute("posts", posts);
         } catch (IOException e) {
             model.addAttribute("postId", postId);
