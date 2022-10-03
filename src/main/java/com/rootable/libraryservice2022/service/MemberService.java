@@ -54,4 +54,11 @@ public class MemberService {
 
     }
 
+    /*
+     * 회원 ID 중복 확인
+     * */
+    public Member checkDuplicatedLoginId(Long id, String loginId) {
+        return memberRepository.checkDuplicatedLoginId(id, loginId);
+    }
+
 }
