@@ -61,4 +61,11 @@ public class MemberService {
         return memberRepository.checkDuplicatedLoginId(id, loginId);
     }
 
+    /*
+     * 로그인 ID -> 회원 조회
+     * */
+    public Member findByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId);
+    }
+
 }

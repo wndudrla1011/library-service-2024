@@ -189,7 +189,7 @@ public class MemberController {
 
     private void duplicationCheckLoginId(Member member, BindingResult bindingResult) {
 
-        if (memberRepository.findByLoginId(member.getLoginId()) != null) {
+        if (memberService.findByLoginId(member.getLoginId()) != null) {
             log.info(">>> 로그인 ID 중복");
             bindingResult.rejectValue("loginId", "overlap");
         }
