@@ -69,6 +69,44 @@ public class CommentServiceTest {
 
     @Test
     public void update() {
+
+        Member member = memberService.findMembers().get(0);
+        Book book = bookService.books().get(0);
+        String com = "comment";
+        String newCom = "new";
+
+        //given
+        Posts posts = Posts.builder()
+                .id(1L)
+                .title("aa")
+                .member(member)
+                .book(book)
+                .build();
+
+        CommentRequestDto dto = CommentRequestDto.builder()
+                .id(1L)
+                .comment(com)
+                .member(member)
+                .posts(posts)
+                .build();
+
+        CommentRequestDto updateDto = CommentRequestDto.builder()
+                .id(2L)
+                .comment(newCom)
+                .member(member)
+                .posts(posts)
+                .build();
+
+        postsRepository.save(posts);
+        Long savedId = commentService.commentSave(member.getLoginId(), posts.getId(), dto);
+
+        //when
+        Long updatedId = commentService.update(savedId, updateDto);
+        Comment comment = commentService.getComment(updatedId);
+
+        //then
+        assertThat(comment.getComment()).isEqualTo(newCom);
+
     }
 
     @Test
