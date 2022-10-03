@@ -21,7 +21,6 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
     public static String COMMON_MEMBER_KEY = "common";
 
@@ -198,7 +197,7 @@ public class MemberController {
 
     private void duplicationCheckEmail(Member member, BindingResult bindingResult) {
 
-        if (memberRepository.findByEmail(member.getEmail()) != null) {
+        if (memberService.findByEmail(member.getEmail()) != null) {
             log.info(">>> 로그인 Email 중복");
             bindingResult.rejectValue("email", "duplication");
         }

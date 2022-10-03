@@ -68,4 +68,11 @@ public class MemberService {
         return memberRepository.findByLoginId(loginId);
     }
 
+    /*
+     * 이메일 -> 회원 조회
+     * */
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
 }
