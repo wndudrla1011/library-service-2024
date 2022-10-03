@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
 
@@ -33,6 +35,9 @@ public class CommentServiceTest {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Test
     public void commentSave() {
@@ -111,6 +116,35 @@ public class CommentServiceTest {
 
     @Test
     public void delete() {
+
+        Member member = memberService.findMembers().get(0);
+        Book book = bookService.books().get(0);
+
+        //given
+        Posts posts = Posts.builder()
+                .id(1L)
+                .title("aa")
+                .member(member)
+                .book(book)
+                .build();
+
+        CommentRequestDto dto = CommentRequestDto.builder()
+                .id(1L)
+                .comment("bb")
+                .member(member)
+                .posts(posts)
+                .build();
+
+        postsRepository.save(posts);
+        Long savedId = commentService.commentSave(member.getLoginId(), posts.getId(), dto);
+
+        //when
+        Comment comment = commentService.getComment(savedId);
+        commentService.delete(savedId);
+
+        //then
+        assertThat(entityManager.contains(comment)).isFalse();
+
     }
 
 }
