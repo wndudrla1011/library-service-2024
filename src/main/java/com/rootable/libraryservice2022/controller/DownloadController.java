@@ -28,9 +28,10 @@ public class DownloadController {
 
         log.info("다운로드가 진행됩니다.");
 
-        FileDto fileDto = fileService.getFile(fileId);
-        Path path = Paths.get(fileDto.getFilePath());
-        Resource resource = new InputStreamResource(Files.newInputStream(path));
+        FileDto fileDto = fileService.getFile(fileId); //FileDto 생성
+        Path path = Paths.get(fileDto.getFilePath()); //경로 접근
+        Resource resource = new InputStreamResource(Files.newInputStream(path)); //해당 경로에 파일 생성
+        //생성할 파일 관련 정보 설정
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +

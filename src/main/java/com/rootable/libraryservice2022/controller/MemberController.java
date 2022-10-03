@@ -2,7 +2,6 @@ package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Role;
-import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.service.MemberService;
 import com.rootable.libraryservice2022.web.MySecured;
 import lombok.RequiredArgsConstructor;
