@@ -116,7 +116,7 @@ public class BookController {
     }
 
     @MySecured(role = Role.ADMIN)
-    @PostMapping("/admin/books/{bookId}/edit")
+    @PutMapping("/admin/books/{bookId}/edit")
     public String edit(@PathVariable Long bookId, @Validated @ModelAttribute("book") BookUpdateDto dto,
                        BindingResult bindingResult, Model model) {
 
