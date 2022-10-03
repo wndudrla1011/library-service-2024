@@ -30,6 +30,7 @@ public class PostsController {
 
     public static String SAME_PERSON_KEY = "same";
     public static String SAME_WRITER_KEY = "writer";
+    public static String ADMIN_KEY = "admin";
 
     @GetMapping("/posts")
     public String posts(Model model, HttpServletRequest request) {
@@ -119,6 +120,8 @@ public class PostsController {
     @GetMapping("/posts/mine")
     public String myList(Model model, HttpServletRequest request) {
 
+        log.info("나의 게시물 목록");
+
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
 
@@ -164,13 +167,13 @@ public class PostsController {
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("loginMember");
 
-        //댓글 작성자 확인
+        //댓글 작성자 본인 확인 키 발급
         if (member.getId().equals(comment.getMember().getId())) {
             model.addAttribute("isWriter", SAME_WRITER_KEY);
         }
 
         model.addAttribute("comment", comment);
-        model.addAttribute("memberId", member.getId());
+        model.addAttribute("member", member);
 
         return "comments/editComment";
 

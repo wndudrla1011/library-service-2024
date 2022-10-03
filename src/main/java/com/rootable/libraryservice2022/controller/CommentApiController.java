@@ -1,6 +1,7 @@
 package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Member;
+import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.CommentService;
 import com.rootable.libraryservice2022.web.dto.CommentRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class CommentApiController {
 
     private final CommentService commentService;
 
-    @PostMapping(value = "/posts/{postId}/comments/add")
+    @PostMapping("/posts/{postId}/comments/add")
     public ResponseEntity commentSave(@PathVariable Long postId, @RequestBody CommentRequestDto dto,
                                       HttpServletRequest request) {
 

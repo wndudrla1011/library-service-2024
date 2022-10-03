@@ -77,7 +77,26 @@ var main = {
             postId: $('#postId').val(),
             commentId: $('#commentId').val(),
             memberId: $('#memberId').val(),
-            writerId: $('#writerId').val()
+            writerId: $('#writerId').val(),
+            role: $('#role').val()
+        }
+
+        if (data.role == "관리자") {
+            const check = confirm("삭제하시겠습니까?");
+
+            if (check === true) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/posts/' + data.postId + '/comments/' + data.commentId,
+                    contentType: 'application/json; charset=utf-8'
+                }).done(function () {
+                    alert('댓글이 삭제되었습니다.');
+                    window.location.href='/posts/' + data.postId;
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
+            return true;
         }
 
         if (data.memberId !== data.writerId) {
