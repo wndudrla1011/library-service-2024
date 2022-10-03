@@ -5,7 +5,6 @@ import com.rootable.libraryservice2022.domain.Status;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.web.dto.BookSaveDto;
 import com.rootable.libraryservice2022.web.dto.BookUpdateDto;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -110,7 +109,8 @@ public class BookServiceTest {
     public void update() {
 
         //given
-        Book book1 = Book.builder()
+        BookSaveDto saveDto = BookSaveDto.builder()
+                .id(1L)
                 .title("book1")
                 .writer("a")
                 .price(10000)
@@ -118,16 +118,17 @@ public class BookServiceTest {
                 .status(Status.PERMISSION)
                 .build();
 
-        BookUpdateDto book2 = createUpdateForm();
-        bookService.create(book1);
+        BookUpdateDto updateDto = createUpdateForm();
+        Long savedId = bookService.create(saveDto);
 
         //when
-        bookService.update(book1.getId(), book2);
+        bookService.update(savedId, updateDto);
+        Book book = bookService.findOne(savedId);
 
         //then
-        assertThat(book1.getPrice()).isEqualTo(book2.getPrice());
-        assertThat(book1.getStock()).isEqualTo(book2.getStock());
-        assertThat(book1.getStatus()).isEqualTo(book2.getStatus());
+        assertThat(book.getPrice()).isEqualTo(updateDto.getPrice());
+        assertThat(book.getStock()).isEqualTo(updateDto.getStock());
+        assertThat(book.getStatus()).isEqualTo(updateDto.getStatus());
 
     }
 
@@ -143,7 +144,8 @@ public class BookServiceTest {
     public void delete() {
 
         //given
-        Book book = Book.builder()
+        BookSaveDto dto = BookSaveDto.builder()
+                .id(1L)
                 .title("book1")
                 .writer("a")
                 .price(10000)
@@ -151,10 +153,11 @@ public class BookServiceTest {
                 .status(Status.PERMISSION)
                 .build();
 
-        bookService.create(book);
+        Long savedId = bookService.create(dto);
 
         //when
-        bookService.delete(book.getId());
+        Book book = bookService.findOne(savedId);
+        bookService.delete(savedId);
 
         //then
         assertThat(entityManager.contains(book)).isFalse();
