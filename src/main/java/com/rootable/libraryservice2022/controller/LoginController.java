@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -22,6 +21,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     private final LoginService loginService;
+    private final HttpSession httpSession;
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginDto dto) {
@@ -31,8 +31,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("loginForm") LoginDto dto, BindingResult bindingResult,
-                        @RequestParam(defaultValue = "/") String redirectURL,
-                        HttpServletRequest request) {
+                        @RequestParam(defaultValue = "/") String redirectURL) {
 
         log.info("로그인 검증");
 
@@ -52,8 +51,7 @@ public class LoginController {
         //로그인 성공 처리
         log.info("정상 입력으로 로그인 성공");
 
-        HttpSession session = request.getSession(); //세션 얻기
-        session.setAttribute("loginMember", loginMember); //세션에 회원 정보 저장
+        httpSession.setAttribute("loginMember", loginMember); //세션에 회원 정보 저장
 
 
         return "redirect:" + redirectURL; //로그인 후 최초 위치로 돌아가도록
@@ -61,14 +59,13 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout() {
 
         log.info("로그아웃");
 
         //세션 삭제
-        HttpSession session = request.getSession();
-        if (session != null) {
-            session.invalidate();
+        if (httpSession != null) {
+            httpSession.invalidate();
         }
 
         return "redirect:/";
