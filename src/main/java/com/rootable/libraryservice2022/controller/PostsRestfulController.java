@@ -7,6 +7,7 @@ import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.MySecured;
+import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import com.rootable.libraryservice2022.web.file.FileStore;
@@ -19,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
@@ -32,17 +32,15 @@ public class PostsRestfulController {
     private final BookService bookService;
     private final FileService fileService;
     private final FileStore fileStore;
-    private final HttpSession httpSession;
 
     @MySecured(role = Role.GUEST)
     @PostMapping("/posts/add")
     public String write(@Validated @ModelAttribute("posts") PostDto postDto, BindingResult bindingResult,
-                        @RequestParam("file") MultipartFile files, Model model) {
+                        @RequestParam("file") MultipartFile files, Model model, @Login Member loginMember) {
 
         log.info("게시글 등록");
 
-        Member member = (Member) httpSession.getAttribute("loginMember");
-        postDto.setMember(member);
+        postDto.setMember(loginMember);
 
         //파일 -> 서버 (저장/업로드)
         try {
@@ -94,14 +92,13 @@ public class PostsRestfulController {
     @MySecured(role = Role.GUEST)
     @PutMapping("/posts/{postId}/edit")
     public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto requestDto,
-                       BindingResult bindingResult, Model model) {
+                       BindingResult bindingResult, Model model, @Login Member loginMember) {
 
         log.info("게시글 수정");
 
         model.addAttribute("bookList", bookService.books());
 
-        Member member = (Member) httpSession.getAttribute("loginMember");
-        requestDto.setMember(member);
+        requestDto.setMember(loginMember);
 
         PostDto savedPost = postsService.getPost(postId); //게시글 조회
 

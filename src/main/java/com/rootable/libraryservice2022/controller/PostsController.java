@@ -6,6 +6,7 @@ import com.rootable.libraryservice2022.service.CommentService;
 import com.rootable.libraryservice2022.service.FileService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.MySecured;
+import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -26,22 +26,19 @@ public class PostsController {
     private final BookService bookService;
     private final FileService fileService;
     private final CommentService commentService;
-    private final HttpSession httpSession;
 
     public static String SAME_PERSON_KEY = "same";
 
     @GetMapping("/posts")
-    public String posts(Model model) {
+    public String posts(Model model, @Login Member loginMember) {
 
         log.info("게시글 관리 페이지");
 
         List<Posts> posts = postsService.findPosts();
 
-        Member member = (Member) httpSession.getAttribute("loginMember");
-
         //뷰 렌더링 값 전달
         model.addAttribute("posts", posts);
-        model.addAttribute("member", member);
+        model.addAttribute("member", loginMember);
         return "posts/posts";
 
     }
@@ -62,11 +59,9 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String post(@PathVariable Long postId, Model model) {
+    public String post(@PathVariable Long postId, Model model, @Login Member loginMember) {
 
         log.info("게시글 정보");
-
-        Member member = (Member) httpSession.getAttribute("loginMember");
 
         Posts post = postsService.findById(postId);
         model.addAttribute("post", post);
@@ -78,7 +73,7 @@ public class PostsController {
         }
 
         //작성자 본인이거나 관리자일 경우
-        if (post.getMember().getId().equals(member.getId()) || member.getRole() == Role.ADMIN) {
+        if (post.getMember().getId().equals(loginMember.getId()) || loginMember.getRole() == Role.ADMIN) {
             model.addAttribute("same", SAME_PERSON_KEY); //키 발급
         }
 
@@ -118,13 +113,11 @@ public class PostsController {
     }
 
     @GetMapping("/posts/mine")
-    public String myList(Model model) {
+    public String myList(Model model, @Login Member loginMember) {
 
         log.info("나의 게시물 목록");
 
-        Member member = (Member) httpSession.getAttribute("loginMember");
-
-        List<Posts> myPosts = postsService.findMyPosts(member.getId());
+        List<Posts> myPosts = postsService.findMyPosts(loginMember.getId());
         model.addAttribute("myPosts", myPosts);
 
         return "posts/myPosts";
@@ -155,15 +148,15 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}/comments/{commentId}")
-    public String editComment(@PathVariable Long postId, @PathVariable Long commentId, Model model) {
+    public String editComment(@PathVariable Long postId, @PathVariable Long commentId, Model model,
+                              @Login Member loginMember) {
 
         log.info("댓글 수정 폼 이동");
 
         Comment comment = commentService.getComment(commentId);
-        Member member = (Member) httpSession.getAttribute("loginMember");
 
         model.addAttribute("comment", comment);
-        model.addAttribute("member", member);
+        model.addAttribute("member", loginMember);
 
         return "comments/editComment";
 
