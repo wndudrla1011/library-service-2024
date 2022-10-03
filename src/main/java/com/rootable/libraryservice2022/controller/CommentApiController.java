@@ -1,7 +1,6 @@
 package com.rootable.libraryservice2022.controller;
 
 import com.rootable.libraryservice2022.domain.Member;
-import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.CommentService;
 import com.rootable.libraryservice2022.web.dto.CommentRequestDto;
 import lombok.RequiredArgsConstructor;
