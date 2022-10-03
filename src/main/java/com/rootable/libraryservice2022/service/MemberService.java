@@ -2,6 +2,7 @@ package com.rootable.libraryservice2022.service;
 
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.repository.MemberRepository;
+import com.rootable.libraryservice2022.web.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +19,8 @@ public class MemberService {
     * 회원 가입
     * */
     @Transactional
-    public Long join(Member member) {
-        return memberRepository.save(member).getId();
+    public Long join(MemberDto dto) {
+        return memberRepository.save(dto.toEntity()).getId();
     }
 
     /*
@@ -33,9 +34,27 @@ public class MemberService {
     * 회원 조회
     * */
     public Member findOne(Long id) {
-
         return memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + id));
+    }
+
+    /*
+    * 회원 DTO 조회
+    * */
+    @Transactional
+    public MemberDto getMember(Long memberId) {
+
+        Member member = memberRepository.findById(memberId).get();
+
+        MemberDto memberDto = MemberDto.builder()
+                .name(member.getName())
+                .loginId(member.getLoginId())
+                .password(member.getPassword())
+                .email(member.getEmail())
+                .role(member.getRole())
+                .build();
+
+        return memberDto;
 
     }
 
@@ -43,12 +62,12 @@ public class MemberService {
      * 회원 수정
      * */
     @Transactional
-    public Long update(Long memberId, Member updateParam) {
+    public Long update(Long memberId, MemberDto updateParam) {
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + memberId));
 
-        member.update(updateParam.getLoginId(), updateParam.getPassword(), member.getRole());
+        member.update(updateParam.getLoginId(), updateParam.getPassword(), updateParam.getRole());
 
         return memberId;
 

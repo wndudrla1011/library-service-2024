@@ -3,6 +3,7 @@ package com.rootable.libraryservice2022.service;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.repository.MemberRepository;
+import com.rootable.libraryservice2022.web.dto.MemberDto;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -33,7 +34,7 @@ public class MemberServiceTest {
     public void join() {
 
         //given
-        Member member = Member.builder()
+        MemberDto memberDto = MemberDto.builder()
                 .name("kim")
                 .loginId("test2")
                 .password("1111@@gg")
@@ -42,12 +43,11 @@ public class MemberServiceTest {
                 .build();
 
         //when
-        Long savedId = memberService.join(member);
-        Member findMember = (Member) memberRepository.findById(savedId)
-                .orElseThrow(IllegalArgumentException::new);
+        Long savedId = memberService.join(memberDto);
+        MemberDto savedMemberDto = memberService.getMember(savedId);
 
         //then
-        assertEquals(member, findMember);
+        assertEquals(memberDto, savedMemberDto);
 
     }
 
