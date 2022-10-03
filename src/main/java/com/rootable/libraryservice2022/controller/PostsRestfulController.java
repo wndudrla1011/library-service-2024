@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -33,17 +32,16 @@ public class PostsRestfulController {
     private final BookService bookService;
     private final FileService fileService;
     private final FileStore fileStore;
+    private final HttpSession httpSession;
 
     @MySecured(role = Role.GUEST)
     @PostMapping("/posts/add")
     public String write(@Validated @ModelAttribute("posts") PostDto postDto, BindingResult bindingResult,
-                        @RequestParam("file") MultipartFile files, HttpServletRequest request, Model model) {
+                        @RequestParam("file") MultipartFile files, Model model) {
 
         log.info("게시글 등록");
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
-
+        Member member = (Member) httpSession.getAttribute("loginMember");
         postDto.setMember(member);
 
         //파일 -> 서버 (저장/업로드)
@@ -95,15 +93,13 @@ public class PostsRestfulController {
     @MySecured(role = Role.GUEST)
     @PutMapping("/posts/{postId}/edit")
     public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto requestDto,
-                       BindingResult bindingResult, Model model, HttpServletRequest request) {
+                       BindingResult bindingResult, Model model) {
 
         log.info("게시글 수정");
 
         model.addAttribute("bookList", bookService.books());
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
-
+        Member member = (Member) httpSession.getAttribute("loginMember");
         requestDto.setMember(member);
 
         PostDto savedPost = postsService.getPost(postId);
