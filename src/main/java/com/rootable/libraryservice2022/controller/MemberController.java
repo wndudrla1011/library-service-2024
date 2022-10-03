@@ -4,6 +4,7 @@ import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.MemberService;
 import com.rootable.libraryservice2022.web.MySecured;
+import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,12 +56,14 @@ public class MemberController {
 
     @MySecured(role = Role.STAFF)
     @GetMapping("/admin/members")
-    public String members(Model model) {
+    public String members(Model model, @Login Member loginMember) {
 
         log.info("회원 관리 페이지");
 
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
+
+        model.addAttribute("loginMember", loginMember);
 
         return "members/members";
 
