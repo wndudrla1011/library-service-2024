@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -27,18 +26,18 @@ public class PostsController {
     private final BookService bookService;
     private final FileService fileService;
     private final CommentService commentService;
+    private final HttpSession httpSession;
 
     public static String SAME_PERSON_KEY = "same";
 
     @GetMapping("/posts")
-    public String posts(Model model, HttpServletRequest request) {
+    public String posts(Model model) {
 
         log.info("게시글 관리 페이지");
 
         List<Posts> posts = postsService.findPosts();
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
+        Member member = (Member) httpSession.getAttribute("loginMember");
 
         model.addAttribute("posts", posts);
         model.addAttribute("member", member);
@@ -61,12 +60,11 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String post(@PathVariable Long postId, Model model, HttpServletRequest request) {
+    public String post(@PathVariable Long postId, Model model) {
 
         log.info("게시글 정보");
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
+        Member member = (Member) httpSession.getAttribute("loginMember");
 
         Posts post = postsService.findById(postId);
         model.addAttribute("post", post);
@@ -89,7 +87,6 @@ public class PostsController {
 
         //댓글 렌더링
         model.addAttribute("comment", new Comment());
-
 
         return "/posts/postInfo";
 
@@ -116,12 +113,11 @@ public class PostsController {
     }
 
     @GetMapping("/posts/mine")
-    public String myList(Model model, HttpServletRequest request) {
+    public String myList(Model model) {
 
         log.info("나의 게시물 목록");
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
+        Member member = (Member) httpSession.getAttribute("loginMember");
 
         List<Posts> myPosts = postsService.findMyPosts(member.getId());
         model.addAttribute("myPosts", myPosts);
@@ -154,16 +150,14 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}/comments/{commentId}")
-    public String editComment(@PathVariable Long postId, @PathVariable Long commentId, Model model,
-                              HttpServletRequest request) {
+    public String editComment(@PathVariable Long postId, @PathVariable Long commentId, Model model) {
 
         log.info("댓글 수정 폼 이동");
 
         Comment comment = commentService.getComment(commentId);
         model.addAttribute("commentId", comment.getId());
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
+        Member member = (Member) httpSession.getAttribute("loginMember");
 
         model.addAttribute("comment", comment);
         model.addAttribute("member", member);

@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -17,15 +16,14 @@ import javax.servlet.http.HttpSession;
 public class CommentApiController {
 
     private final CommentService commentService;
+    private final HttpSession httpSession;
 
     @PostMapping("/posts/{postId}/comments/add")
-    public ResponseEntity commentSave(@PathVariable Long postId, @RequestBody CommentRequestDto dto,
-                                      HttpServletRequest request) {
+    public ResponseEntity commentSave(@PathVariable Long postId, @RequestBody CommentRequestDto dto) {
 
         log.info("댓글 생성");
 
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
+        Member member = (Member) httpSession.getAttribute("loginMember");
 
         return ResponseEntity.ok(commentService.commentSave(member.getLoginId(), postId, dto));
 
