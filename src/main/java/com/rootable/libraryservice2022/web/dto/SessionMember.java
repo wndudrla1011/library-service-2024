@@ -1,0 +1,26 @@
+package com.rootable.libraryservice2022.web.dto;
+
+import com.rootable.libraryservice2022.domain.Member;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+//세션에 사용자 정보를 저장하기 위한 DTO + 직렬화 기능
+@Data
+@NoArgsConstructor
+public class SessionMember implements Serializable {
+
+    private String name;
+    private String loginId;
+    private String password;
+    private String email;
+
+    public SessionMember(Member member) {
+        this.name = member.getName();
+        this.loginId = member.getLoginId();
+        this.password = member.getPassword();
+        this.email = member.getEmail();
+    }
+
+}
