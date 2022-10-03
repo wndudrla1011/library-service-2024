@@ -147,7 +147,7 @@ public class BookController {
     }
 
     @MySecured(role = Role.ADMIN)
-    @PostMapping("/admin/books/{bookId}")
+    @DeleteMapping("/admin/books/{bookId}")
     public String delete(@PathVariable Long bookId) {
 
         log.info("도서 삭제");
