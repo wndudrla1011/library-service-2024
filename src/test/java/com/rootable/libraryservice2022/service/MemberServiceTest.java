@@ -58,7 +58,8 @@ public class MemberServiceTest {
         String loginId2 = "test3";
 
         //given
-        Member member1 = Member.builder()
+        MemberDto member1 = MemberDto.builder()
+                .id(1L)
                 .name("kim")
                 .loginId(loginId1)
                 .password("1111!!ee")
@@ -66,7 +67,8 @@ public class MemberServiceTest {
                 .role(Role.USER)
                 .build();
 
-        Member member2 = Member.builder()
+        MemberDto member2 = MemberDto.builder()
+                .id(2L)
                 .name("kim")
                 .loginId(loginId2)
                 .password("1111!!ee")
@@ -74,13 +76,14 @@ public class MemberServiceTest {
                 .role(Role.USER)
                 .build();
 
-        memberRepository.save(member1);
+        memberService.join(member1);
 
         //when
         memberService.update(member1.getId(), member2);
+        MemberDto updatedMember = memberService.getMember(member1.getId());
 
         //then
-        assertThat(member1.getLoginId()).isEqualTo(loginId2);
+        assertThat(updatedMember.getLoginId()).isEqualTo(loginId2);
 
     }
 
