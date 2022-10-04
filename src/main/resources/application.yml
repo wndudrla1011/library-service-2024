@@ -12,6 +12,11 @@ spring:
       hibernate:
         format_sql: true
 
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+
 logging:
   level:
     org.hibernate-SQL: debug
