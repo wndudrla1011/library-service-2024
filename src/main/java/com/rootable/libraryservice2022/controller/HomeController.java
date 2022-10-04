@@ -19,7 +19,7 @@ public class HomeController {
 
         //세션에 회원 데이터가 없으면 intro 화면으로
         if (loginMember == null) {
-            return "intro";
+            return "index";
         }
 
         //회원 데이터가 있으면 로그인 화면으로
