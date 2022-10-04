@@ -60,8 +60,7 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String post(@PathVariable Long postId, Model model, @Login SessionMember
-            loginMember) {
+    public String post(@PathVariable Long postId, Model model, @Login SessionMember loginMember) {
 
         log.info("게시글 정보");
 
@@ -84,6 +83,7 @@ public class PostsController {
 
         if (comments != null && !comments.isEmpty()) {
             model.addAttribute("comments", comments);
+            model.addAttribute("size", comments.size());
         }
 
         //댓글 렌더링
