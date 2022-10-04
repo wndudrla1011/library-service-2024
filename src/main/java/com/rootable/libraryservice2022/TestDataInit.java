@@ -3,7 +3,6 @@ package com.rootable.libraryservice2022;
 import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
-import com.rootable.libraryservice2022.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +18,7 @@ public class TestDataInit {
     /*
     * 테스트용 데이터 추가
     * */
+
     @PostConstruct
     public void init() {
 
@@ -27,7 +27,7 @@ public class TestDataInit {
         * */
 
         Member member1 = Member.builder()
-                .name("test")
+                .name("USER")
                 .loginId("test1")
                 .password("1111!!aa")
                 .email("test@gmail.com")
@@ -35,7 +35,7 @@ public class TestDataInit {
                 .build();
 
         Member member2 = Member.builder()
-                .name("bot1")
+                .name("ADMIN")
                 .loginId("admin11")
                 .password("1111!!bb")
                 .email("admin@gmail.com")
@@ -43,7 +43,7 @@ public class TestDataInit {
                 .build();
 
         Member member3 = Member.builder()
-                .name("bot2")
+                .name("STAFF")
                 .loginId("staff22")
                 .password("1111!!cc")
                 .email("staff@gmail.com")
