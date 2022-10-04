@@ -76,11 +76,11 @@ public class MemberServiceTest {
                 .role(Role.USER)
                 .build();
 
-        memberService.join(member1);
+        Long savedId = memberService.join(member1);
 
         //when
-        memberService.update(member1.getId(), member2);
-        MemberDto updatedMember = memberService.getMember(member1.getId());
+        Long updatedId = memberService.update(savedId, member2);
+        MemberDto updatedMember = memberService.getMember(updatedId);
 
         //then
         assertThat(updatedMember.getLoginId()).isEqualTo(loginId2);
