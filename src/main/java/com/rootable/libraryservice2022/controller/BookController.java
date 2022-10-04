@@ -9,6 +9,7 @@ import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.BookSaveDto;
 import com.rootable.libraryservice2022.web.dto.BookUpdateDto;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class BookController {
 
     @MySecured(role = Role.ADMIN)
     @GetMapping("/admin/books")
-    public String books(Model model, @Login Member loginMember) {
+    public String books(Model model, @Login SessionMember loginMember) {
 
         log.info("도서 관리 페이지");
 

@@ -6,6 +6,7 @@ import com.rootable.libraryservice2022.service.MemberService;
 import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.MemberDto;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class MemberController {
 
     @MySecured(role = Role.STAFF)
     @GetMapping("/admin/members")
-    public String members(Model model, @Login Member loginMember) {
+    public String members(Model model, @Login SessionMember loginMember) {
 
         log.info("회원 관리 페이지");
 

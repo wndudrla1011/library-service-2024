@@ -5,11 +5,13 @@ import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.FileService;
+import com.rootable.libraryservice2022.service.MemberService;
 import com.rootable.libraryservice2022.service.PostsService;
 import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import com.rootable.libraryservice2022.web.file.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +32,20 @@ public class PostsRestfulController {
 
     private final PostsService postsService;
     private final BookService bookService;
+    private final MemberService memberService;
     private final FileService fileService;
     private final FileStore fileStore;
 
     @MySecured(role = Role.GUEST)
     @PostMapping("/posts/add")
     public String write(@Validated @ModelAttribute("posts") PostDto postDto, BindingResult bindingResult,
-                        @RequestParam("file") MultipartFile files, Model model, @Login Member loginMember) {
+                        @RequestParam("file") MultipartFile files, Model model, @Login SessionMember loginMember) {
 
         log.info("게시글 등록");
 
-        postDto.setMember(loginMember);
+        Member member = memberService.findOne(loginMember.getId());
+
+        postDto.setMember(member);
 
         //파일 -> 서버 (저장/업로드)
         try {
@@ -92,13 +97,14 @@ public class PostsRestfulController {
     @MySecured(role = Role.GUEST)
     @PutMapping("/posts/{postId}/edit")
     public String edit(@PathVariable Long postId, @Validated @ModelAttribute("posts") PostDto requestDto,
-                       BindingResult bindingResult, Model model, @Login Member loginMember) {
+                       BindingResult bindingResult, Model model, @Login SessionMember loginMember) {
 
         log.info("게시글 수정");
 
         model.addAttribute("bookList", bookService.books());
 
-        requestDto.setMember(loginMember);
+        Member member = memberService.findOne(loginMember.getId());
+        requestDto.setMember(member);
 
         PostDto savedPost = postsService.getPost(postId); //게시글 조회
 

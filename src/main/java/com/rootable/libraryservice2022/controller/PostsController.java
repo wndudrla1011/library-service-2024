@@ -9,6 +9,7 @@ import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.argumentresolver.Login;
 import com.rootable.libraryservice2022.web.dto.FileDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class PostsController {
     public static String SAME_PERSON_KEY = "same";
 
     @GetMapping("/posts")
-    public String posts(Model model, @Login Member loginMember) {
+    public String posts(Model model, @Login SessionMember loginMember) {
 
         log.info("게시글 관리 페이지");
 
@@ -59,7 +60,8 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String post(@PathVariable Long postId, Model model, @Login Member loginMember) {
+    public String post(@PathVariable Long postId, Model model, @Login SessionMember
+            loginMember) {
 
         log.info("게시글 정보");
 
@@ -113,7 +115,7 @@ public class PostsController {
     }
 
     @GetMapping("/posts/mine")
-    public String myList(Model model, @Login Member loginMember) {
+    public String myList(Model model, @Login SessionMember loginMember) {
 
         log.info("나의 게시물 목록");
 
@@ -149,7 +151,7 @@ public class PostsController {
 
     @GetMapping("/posts/{postId}/comments/{commentId}")
     public String editComment(@PathVariable Long postId, @PathVariable Long commentId, Model model,
-                              @Login Member loginMember) {
+                              @Login SessionMember loginMember) {
 
         log.info("댓글 수정 폼 이동");
 

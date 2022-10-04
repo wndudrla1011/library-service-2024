@@ -3,6 +3,7 @@ package com.rootable.libraryservice2022.web.interceptor;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.web.MySecured;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -38,7 +39,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         //@MySecured (인증이 필요한 요청 처리)
 
         HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("loginMember");
+        SessionMember member = (SessionMember) session.getAttribute("loginMember");
 
         //case ADMIN or STAFF
         String role = mySecured.role().toString();

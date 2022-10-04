@@ -3,6 +3,7 @@ package com.rootable.libraryservice2022.controller;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.service.LoginService;
 import com.rootable.libraryservice2022.web.dto.LoginDto;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -52,7 +53,7 @@ public class LoginController {
         //로그인 성공 처리
         log.info("정상 입력으로 로그인 성공");
 
-        httpSession.setAttribute("loginMember", loginMember); //세션에 회원 정보 저장
+        httpSession.setAttribute("loginMember", new SessionMember(loginMember)); //세션에 회원 정보 저장
 
 
         return "redirect:" + redirectURL; //로그인 후 최초 위치로 돌아가도록

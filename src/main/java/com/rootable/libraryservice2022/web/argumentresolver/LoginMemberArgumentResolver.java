@@ -1,6 +1,7 @@
 package com.rootable.libraryservice2022.web.argumentresolver;
 
 import com.rootable.libraryservice2022.domain.Member;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -20,7 +21,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         log.info("supportsParameter 실행");
 
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-        boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasMemberType = SessionMember.class.isAssignableFrom(parameter.getParameterType());
 
         //호환 검사
         return hasLoginAnnotation && hasMemberType;

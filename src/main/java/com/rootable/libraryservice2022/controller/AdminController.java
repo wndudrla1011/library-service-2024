@@ -4,6 +4,7 @@ import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Role;
 import com.rootable.libraryservice2022.web.MySecured;
 import com.rootable.libraryservice2022.web.argumentresolver.Login;
+import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ public class AdminController {
 
     @MySecured(role = Role.ADMIN)
     @GetMapping("/admin")
-    public String admin(Model model, @Login Member loginMember) {
+    public String admin(Model model, @Login SessionMember loginMember) {
 
         log.info("관리자 페이지 접근");
 
