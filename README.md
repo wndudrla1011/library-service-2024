@@ -18,7 +18,7 @@ Library Service 2022
 - Login & Logout
 - Keep Login
 3. Admin Service (ADMIN or STAFF)
-- All Member CRU
+- All Member CRUD
 - Book CRUD
 - All Post CRUD
 - Comment CRUD
