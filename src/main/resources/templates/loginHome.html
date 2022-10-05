@@ -18,6 +18,12 @@
     <header class="mb-auto">
         <div>
             <h3 class="float-md-start mb-0">Rootable Library</h3>
+            <form action="" class="d-flex justify-content-end" method="post">
+                <button th:if="${admin}" class="btn btn-lg btn-secondary fw-bold border-white bg-white text-dark"
+                        type="button" th:onclick="|location.href='@{/admin}'|">
+                    관리 페이지
+                </button>
+            </form>
         </div>
     </header>
 
