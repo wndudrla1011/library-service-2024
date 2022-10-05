@@ -19,7 +19,7 @@
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
         </div>
 
-        <div class="mb-3" th:if="${common == null}">
+        <div class="mb-3" th:unless="${common}">
             <label for="id" class="form-label">회원번호</label>
             <input type="text" class="form-control" id="id" th:field="*{id}" th:errorclass="field-error" readonly>
         </div>
@@ -49,7 +49,7 @@
             <div class="field-error" th:errors="*{email}"></div>
         </div>
 
-        <div class="mb-3" th:if="${common == null}">
+        <div class="mb-3" th:unless="${common}">
             <div>권한</div>
             <select th:field="*{role}" class="form-select">
                 <option value="">권한 선택 🔻</option>
@@ -63,7 +63,7 @@
             <div class="col">
                 <button type="submit" class="w-100 btn btn-dark btn-lg">수정완료</button>
             </div>
-            <div class="col" th:if="${common == null}">
+            <div class="col" th:unless="${common}">
                 <button type="button" class="w-100 btn btn-dark btn-lg"
                         onclick="location.href='posts.html'"
                         th:onclick="|location.href='@{/admin/members}'|">

@@ -74,6 +74,18 @@ public class MemberService {
     }
 
     /*
+     * 회원 삭제
+     * */
+    public void delete(Long memberId) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + memberId));
+
+        memberRepository.delete(member);
+
+    }
+
+    /*
      * 회원 ID 중복 확인
      * */
     public Member checkDuplicatedLoginId(Long id, String loginId) {

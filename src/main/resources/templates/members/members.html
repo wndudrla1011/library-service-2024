@@ -79,6 +79,7 @@
                 <th>비밀번호</th>
                 <th>이메일</th>
                 <th>권한</th>
+                <th>삭제</th>
             </tr>
             </thead>
             <tbody>
@@ -91,6 +92,15 @@
                 <td th:text="${member.password}"></td>
                 <td th:text="${member.email}"></td>
                 <td th:text="${member.role}"></td>
+                <td>
+                    <form action="" th:action method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="memberId" th:value="${member.id}" />
+                        <button type="submit" class="btn btn-dark btn-sm">
+                            X
+                        </button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

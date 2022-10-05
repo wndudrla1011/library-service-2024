@@ -125,6 +125,19 @@ public class MemberController {
 
     }
 
+    @MySecured(role = Role.STAFF)
+    @DeleteMapping("/admin/members")
+    public String delete(@RequestParam("memberId") Long memberId) {
+
+        log.info("회원 삭제");
+
+        Member member = memberService.findOne(memberId);
+        memberService.delete(member.getId());
+
+        return "redirect:/admin/members";
+
+    }
+
     @GetMapping("/members/{memberId}")
     public String myInfo(@PathVariable Long memberId, Model model) {
 
