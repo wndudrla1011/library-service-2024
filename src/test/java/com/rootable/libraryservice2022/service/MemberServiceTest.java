@@ -20,10 +20,6 @@ import static org.junit.Assert.assertEquals;
 @Transactional
 public class MemberServiceTest {
 
-    /*
-     * TestDataInit 빈 컨테이너에서 제외시키고 테스트하기
-     * */
-
     @Autowired
     MemberService memberService;
 

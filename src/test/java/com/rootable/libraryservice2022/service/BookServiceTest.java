@@ -23,10 +23,6 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 public class BookServiceTest {
 
-    /*
-    * TestDataInit 빈 컨테이너에서 제외시키고 테스트하기
-    * */
-
     @Autowired
     BookRepository bookRepository;
 
@@ -94,11 +90,11 @@ public class BookServiceTest {
                 .status(Status.PERMISSION)
                 .build();
 
-        bookService.create(dto);
+        Long savedId = bookService.create(dto);
 
         //when
-        Long failId = 2L;
-        bookService.findOne(failId);
+        Book savedBook = bookService.findOne(savedId);
+        bookService.findByTitle("book2");
 
         //then
         fail("존재하지 않는 책 조회로 예외가 발생해야 한다.");

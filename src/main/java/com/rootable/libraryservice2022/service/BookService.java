@@ -73,7 +73,15 @@ public class BookService {
      * 도서 조회 by 제목
      * */
     public Book findByTitle(String title) {
-        return bookRepository.findByTitle(title);
+
+        Book book = bookRepository.findByTitle(title);
+
+        if (book == null) {
+            throw new IllegalArgumentException("해당 도서가 존재하지 않습니다. title=" + title);
+        }
+
+        return book;
+
     }
 
 }
