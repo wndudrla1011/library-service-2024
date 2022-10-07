@@ -163,4 +163,28 @@ public class BookServiceTest {
         assertThat(entityManager.contains(book)).isFalse();
 
     }
+
+    @Test
+    @DisplayName("도서 제목으로 조회")
+    public void findByTitle() {
+
+        //given
+        BookSaveDto dto = BookSaveDto.builder()
+                .id(1L)
+                .title("book1")
+                .writer("a")
+                .price(10000)
+                .stock(2)
+                .status(Status.PERMISSION)
+                .build();
+
+        //when
+        bookService.create(dto);
+        Book savedTitle = bookService.findByTitle(dto.getTitle());
+
+        //then
+        assertThat(savedTitle.getTitle()).isEqualTo(dto.getTitle());
+
+    }
+
 }
