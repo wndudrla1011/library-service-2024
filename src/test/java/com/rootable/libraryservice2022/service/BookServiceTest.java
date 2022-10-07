@@ -46,11 +46,15 @@ public class BookServiceTest {
 
         //when
         Long savedId = bookService.create(dto);
-        Book book = bookService.findOne(savedId);
 
         //then
         List<Book> books = bookRepository.findAll();
-        assertThat(books.get(0)).usingRecursiveComparison().isEqualTo(book);
+        Book findBook = books.stream()
+                .filter(b -> b.getId().equals(savedId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 도서가 존재하지 않습니다. id+" + savedId));
+
+        assertThat(findBook).isNotNull();
 
     }
 
