@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
@@ -63,6 +64,52 @@ public class PostsRepositoryTest {
         //then
         assertThat(savedPost.getCreatedDate()).isAfter(now);
         assertThat(savedPost.getModifiedDate()).isAfter(now);
+
+    }
+
+    @Test
+    public void findPosts() {
+
+        Member member = memberService.findByLoginId("admin11");
+        Book book = bookService.findByTitle("원씽");
+
+        //given
+        Posts post1 = Posts.builder()
+                .title("aaa")
+                .content("hello")
+                .member(member)
+                .book(book)
+                .build();
+
+        Posts post2 = Posts.builder()
+                .title("bbb")
+                .content("hello")
+                .member(member)
+                .book(book)
+                .build();
+
+        postsRepository.save(post1);
+        postsRepository.save(post2);
+
+        //when
+        List<Posts> posts = postsRepository.findPosts();
+        Posts findPost1 = posts.stream()
+                .filter(p -> p.getTitle().equals("aaa"))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다. title=" + post1.getTitle()));
+
+        Posts findPost2 = posts.stream()
+                .filter(p -> p.getTitle().equals("bbb"))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다. title=" + post2.getTitle()));
+
+        for (Posts post : posts) {
+            System.out.println("post.getTitle() = " + post.getTitle());
+        }
+
+        //then
+        assertThat(posts.contains(findPost1)).isTrue();
+        assertThat(posts.contains(findPost2)).isTrue();
 
     }
 
