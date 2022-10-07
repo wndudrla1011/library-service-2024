@@ -1,6 +1,5 @@
 package com.rootable.libraryservice2022.repository;
 
-import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

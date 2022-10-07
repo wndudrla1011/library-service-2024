@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -110,6 +109,46 @@ public class PostsRepositoryTest {
         //then
         assertThat(posts.contains(findPost1)).isTrue();
         assertThat(posts.contains(findPost2)).isTrue();
+
+    }
+
+    @Test
+    public void findMyPosts() {
+
+        Member myOne = memberService.findByLoginId("test1");
+        Member another = memberService.findByLoginId("admin11");
+        Book book = bookService.findByTitle("원씽");
+
+        //given
+        Posts myPost = Posts.builder()
+                .title("나의 도서")
+                .content("hello")
+                .member(myOne)
+                .book(book)
+                .build();
+
+        Posts anotherPost = Posts.builder()
+                .title("관리자 도서")
+                .content("hello")
+                .member(another)
+                .book(book)
+                .build();
+
+        postsRepository.save(myPost);
+        postsRepository.save(anotherPost);
+
+        //when
+        List<Posts> myPosts = postsRepository.findMyPosts(myOne.getId());
+        Posts findMyPost = myPosts.stream()
+                .filter(my -> my.getTitle().equals("나의 도서"))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다. title=" + myPost.getTitle()));
+
+        //then
+        assertThat(myPosts.contains(findMyPost)).isTrue();
+        assertThat(myPosts.stream()
+                .filter(my -> my.getTitle().equals("관리자 도서"))
+                .findFirst().isEmpty()).isTrue();
 
     }
 
