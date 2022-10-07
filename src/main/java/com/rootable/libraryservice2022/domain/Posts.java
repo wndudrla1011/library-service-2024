@@ -32,7 +32,7 @@ public class Posts extends BaseTimeEntity{
     @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member; //게시물 작성자
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book; //신청 도서
 

@@ -2,6 +2,8 @@ package com.rootable.libraryservice2022.repository;
 
 import com.rootable.libraryservice2022.TestDataInit;
 import com.rootable.libraryservice2022.domain.*;
+import com.rootable.libraryservice2022.service.BookService;
+import com.rootable.libraryservice2022.service.MemberService;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
@@ -28,10 +30,10 @@ public class PostsRepositoryTest {
     PostsRepository postsRepository;
 
     @Autowired
-    MemberRepository memberRepository;
+    MemberService memberService;
 
     @Autowired
-    BookRepository bookRepository;
+    BookService bookService;
 
     @After
     public void cleanUp() {
@@ -44,8 +46,8 @@ public class PostsRepositoryTest {
         //given
         LocalDateTime now = LocalDateTime.of(2022, 9, 24, 0, 0, 0);
 
-        Member member = createMember();
-        Book book = createBook();
+        Member member = memberService.findByLoginId("admin11");
+        Book book = bookService.findByTitle("원씽");
 
         Posts posts = Posts.builder()
                 .title("aaa")
@@ -67,32 +69,6 @@ public class PostsRepositoryTest {
         assertThat(savedPost.getCreatedDate()).isAfter(now);
         assertThat(savedPost.getModifiedDate()).isAfter(now);
 
-    }
-
-    private Book createBook() {
-        Book book = Book.builder()
-                .title("원띵")
-                .writer("게리 켈러")
-                .price(12000)
-                .stock(5)
-                .status(Status.PERMISSION)
-                .build();
-
-        bookRepository.save(book);
-        return book;
-    }
-
-    private Member createMember() {
-        Member member = Member.builder()
-                .name("best")
-                .loginId("best1")
-                .password("1111!!aa")
-                .email("best@gmail.com")
-                .role(Role.USER)
-                .build();
-
-        memberRepository.save(member);
-        return member;
     }
 
 }

@@ -69,4 +69,11 @@ public class BookService {
 
     }
 
+    /*
+     * 도서 조회 by 제목
+     * */
+    public Book findByTitle(String title) {
+        return bookRepository.findByTitle(title);
+    }
+
 }
