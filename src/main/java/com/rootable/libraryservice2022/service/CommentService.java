@@ -32,10 +32,7 @@ public class CommentService {
         dto.setMember(member);
         dto.setPosts(posts);
 
-        Comment comment = dto.toEntity();
-        commentRepository.save(comment);
-
-        return dto.getId();
+        return commentRepository.save(dto.toEntity()).getId();
 
     }
 

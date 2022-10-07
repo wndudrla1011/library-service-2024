@@ -6,7 +6,6 @@ import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
 import com.rootable.libraryservice2022.repository.PostsRepository;
 import com.rootable.libraryservice2022.web.dto.CommentRequestDto;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,14 +47,12 @@ public class CommentServiceTest {
         String com = "Hello";
 
         Posts posts = Posts.builder()
-                .id(1L)
                 .title("aa")
                 .member(member)
                 .book(book)
                 .build();
 
         CommentRequestDto dto = CommentRequestDto.builder()
-                .id(1L)
                 .comment(com)
                 .member(member)
                 .posts(posts)
@@ -82,21 +79,18 @@ public class CommentServiceTest {
 
         //given
         Posts posts = Posts.builder()
-                .id(1L)
                 .title("aa")
                 .member(member)
                 .book(book)
                 .build();
 
         CommentRequestDto dto = CommentRequestDto.builder()
-                .id(1L)
                 .comment(com)
                 .member(member)
                 .posts(posts)
                 .build();
 
         CommentRequestDto updateDto = CommentRequestDto.builder()
-                .id(2L)
                 .comment(newCom)
                 .member(member)
                 .posts(posts)
@@ -122,14 +116,12 @@ public class CommentServiceTest {
 
         //given
         Posts posts = Posts.builder()
-                .id(1L)
                 .title("aa")
                 .member(member)
                 .book(book)
                 .build();
 
         CommentRequestDto dto = CommentRequestDto.builder()
-                .id(1L)
                 .comment("bb")
                 .member(member)
                 .posts(posts)
