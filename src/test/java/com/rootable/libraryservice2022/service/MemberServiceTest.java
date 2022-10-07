@@ -27,9 +27,6 @@ public class MemberServiceTest {
     @Autowired
     MemberService memberService;
 
-    @Autowired
-    MemberRepository memberRepository;
-
     @Test
     public void join() {
 
@@ -92,7 +89,7 @@ public class MemberServiceTest {
     public void notFineOne() {
 
         //given
-        Member member = Member.builder()
+        MemberDto memberDto = MemberDto.builder()
                 .name("kim")
                 .loginId("test2")
                 .password("1111!!ee")
@@ -100,11 +97,10 @@ public class MemberServiceTest {
                 .role(Role.USER)
                 .build();
 
-        memberRepository.save(member);
+        memberService.join(memberDto);
 
         //when
-        Long failId = 2L;
-        memberService.findOne(failId);
+        memberService.findByLoginId("joo");
 
         //then
         fail("존재하지 않은 회원 조회로 예외가 발생해야 한다.");
