@@ -1,23 +1,16 @@
 package com.rootable.libraryservice2022.repository;
 
-import com.rootable.libraryservice2022.TestDataInit;
 import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.service.BookService;
 import com.rootable.libraryservice2022.service.MemberService;
-import com.rootable.libraryservice2022.web.dto.PostDto;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
@@ -59,7 +52,9 @@ public class PostsRepositoryTest {
         postsRepository.save(posts);
 
         //when
-        Posts savedPost = postsRepository.findById(1L)
+        Posts savedPost = postsRepository.findPosts().stream()
+                .filter(post -> post.getTitle().equals("aaa"))
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("게시물이 존재하지 않습니다."));
 
         System.out.println("post.getCreatedDate() = " + savedPost.getCreatedDate());
