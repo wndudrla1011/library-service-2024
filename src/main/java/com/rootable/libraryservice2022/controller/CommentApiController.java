@@ -18,9 +18,12 @@ public class CommentApiController {
     private final CommentService commentService;
 
     @PostMapping("/posts/{postId}/comments/add")
-    public ResponseEntity commentSave(@PathVariable Long postId, @RequestBody CommentRequestDto dto, @Login SessionMember loginMember) {
+    public ResponseEntity commentSave(@PathVariable Long postId, @RequestBody CommentRequestDto dto,
+                                      @Login SessionMember loginMember) {
+
         log.info("댓글 생성");
         return ResponseEntity.ok(commentService.commentSave(loginMember.getLoginId(), postId, dto));
+
     }
 
     @PutMapping("/posts/{postId}/comments/{commentId}")
