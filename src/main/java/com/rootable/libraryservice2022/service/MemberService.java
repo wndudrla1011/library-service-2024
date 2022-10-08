@@ -96,30 +96,14 @@ public class MemberService {
      * 로그인 ID -> 회원 조회
      * */
     public Member findByLoginId(String loginId) {
-
-        Member member = memberRepository.findByLoginId(loginId);
-
-        if (member == null) {
-            throw new IllegalArgumentException("해당 회원이 존재하지 않습니다. loginId=" + loginId);
-        }
-
-        return member;
-
+        return memberRepository.findByLoginId(loginId);
     }
 
     /*
      * 이메일 -> 회원 조회
      * */
     public Member findByEmail(String email) {
-
-        Member member = memberRepository.findByEmail(email);
-
-        if (member == null) {
-            throw new IllegalArgumentException("해당 회원이 존재하지 않습니다. email=" + email);
-        }
-
-        return member;
-
+        return memberRepository.findByEmail(email);
     }
 
 }
