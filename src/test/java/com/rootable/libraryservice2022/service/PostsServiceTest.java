@@ -4,6 +4,8 @@ import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
+import com.rootable.libraryservice2022.web.dto.BookSaveDto;
+import com.rootable.libraryservice2022.web.dto.MemberDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -43,10 +45,30 @@ public class PostsServiceTest {
     public void savePost() {
 
         String title = "First";
-        Member member = createMember();
-        Book book = createBook();
 
         //given
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         PostDto posts = PostDto.builder()
                 .title(title)
                 .content("hello")
@@ -68,10 +90,29 @@ public class PostsServiceTest {
     @Test
     public void updatePost() {
 
-        Member member = createMember();
-        Book book = createBook();
-
         //given
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         Posts posts = Posts.builder()
                 .title("aaa")
                 .content("hello")
@@ -101,10 +142,29 @@ public class PostsServiceTest {
     @Test
     public void deletePost() {
 
-        Member member = createMember();
-        Book book = createBook();
-
         //given
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         Posts posts = Posts.builder()
                 .title("aaa")
                 .content("hello")
@@ -126,28 +186,57 @@ public class PostsServiceTest {
     @DisplayName("나의 게시물 조회")
     public void myPosts() {
 
-        Member testMember = memberRepository.findByLoginId("test1");
-        Book book = createBook();
-
         //given
+        MemberDto memberDto1 = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        MemberDto memberDto2 = MemberDto.builder()
+                .name("Lee")
+                .loginId("staff11")
+                .password("1111!!rr")
+                .email("staff11@gmail.com")
+                .role(Role.STAFF)
+                .build();
+
+        Member member = createMember(memberDto1);
+        Member staff = createMember(memberDto2);
+        memberRepository.save(member);
+        memberRepository.save(staff);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         Posts myPosts1 = Posts.builder()
                 .title("first")
                 .content("hello")
-                .member(testMember)
+                .member(member)
                 .book(book)
                 .build();
 
         Posts myPosts2 = Posts.builder()
                 .title("second")
                 .content("hello")
-                .member(testMember)
+                .member(member)
                 .book(book)
                 .build();
 
         Posts another = Posts.builder()
                 .title("third")
                 .content("hello")
-                .member(memberRepository.findByLoginId("staff22"))
+                .member(staff)
                 .book(book)
                 .build();
 
@@ -156,13 +245,13 @@ public class PostsServiceTest {
         postsRepository.save(another);
 
         //when
-        List<Posts> myPosts = postsService.findMyPosts(testMember.getId());
+        List<Posts> myPosts = postsService.findMyPosts(member.getId());
 
         //then
         assertThat(myPosts.size()).isEqualTo(2);
         for (Posts myPost : myPosts) {
             System.out.println("myPost.getTitle() = " + myPost.getTitle());
-            assertThat(myPost.getMember().getLoginId()).isEqualTo("test1");
+            assertThat(myPost.getMember().getLoginId()).isEqualTo("test2");
         }
 
     }
@@ -180,17 +269,24 @@ public class PostsServiceTest {
         return member;
     }
 
-    private Book createBook() {
-        Book book = Book.builder()
-                .title("원띵")
-                .writer("게리 켈러")
-                .price(12000)
-                .stock(5)
-                .status(Status.PERMISSION)
+    public Member createMember(MemberDto dto) {
+        return Member.builder()
+                .name(dto.getName())
+                .loginId(dto.getLoginId())
+                .password(dto.getPassword())
+                .email(dto.getEmail())
+                .role(dto.getRole())
                 .build();
+    }
 
-        bookRepository.save(book);
-        return book;
+    public Book createBook(BookSaveDto dto) {
+        return Book.builder()
+                .title(dto.getTitle())
+                .writer(dto.getWriter())
+                .price(dto.getPrice())
+                .stock(dto.getStock())
+                .status(dto.getStatus())
+                .build();
     }
 
 }
