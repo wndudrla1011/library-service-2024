@@ -22,7 +22,7 @@ public class CommentApiController {
                                       @Login SessionMember loginMember) {
 
         log.info("댓글 생성");
-        return ResponseEntity.ok(commentService.commentSave(loginMember.getLoginId(), postId, dto));
+        return ResponseEntity.ok(commentService.commentSave(loginMember.getId(), postId, dto));
 
     }
 

@@ -73,7 +73,7 @@ public class CommentServiceTest {
         postsRepository.save(posts);
 
         //when
-        Long savedId = commentService.commentSave(member.getLoginId(), posts.getId(), dto);
+        Long savedId = commentService.commentSave(member.getId(), posts.getId(), dto);
 
         //then
         Comment comment = commentService.getComment(savedId);
@@ -129,7 +129,7 @@ public class CommentServiceTest {
                 .build();
 
         postsRepository.save(posts);
-        Long savedId = commentService.commentSave(member.getLoginId(), posts.getId(), dto);
+        Long savedId = commentService.commentSave(member.getId(), posts.getId(), dto);
 
         //when
         Long updatedId = commentService.update(savedId, updateDto);
@@ -179,7 +179,7 @@ public class CommentServiceTest {
                 .build();
 
         postsRepository.save(posts);
-        Long savedId = commentService.commentSave(member.getLoginId(), posts.getId(), dto);
+        Long savedId = commentService.commentSave(member.getId(), posts.getId(), dto);
 
         //when
         Comment comment = commentService.getComment(savedId);

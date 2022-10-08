@@ -23,9 +23,10 @@ public class CommentService {
     * 댓글 생성
     * */
     @Transactional
-    public Long commentSave(String loginId, Long postId, CommentRequestDto dto) {
+    public Long commentSave(Long memberId, Long postId, CommentRequestDto dto) {
 
-        Member member = memberRepository.findByLoginId(loginId);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + memberId));
         Posts posts = postsRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("댓글 쓰기 실패 : 해당 게시글이 존재하지 않습니다. id=" + postId));
 
