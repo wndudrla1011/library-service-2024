@@ -97,7 +97,7 @@ public class BookServiceTest {
         Long savedId = bookService.create(dto);
 
         //when
-        Book savedBook = bookService.findOne(savedId);
+        bookService.findOne(savedId);
         bookService.findByTitle("book2");
 
         //then

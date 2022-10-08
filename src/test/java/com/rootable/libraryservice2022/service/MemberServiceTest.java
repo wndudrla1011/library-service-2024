@@ -80,7 +80,7 @@ public class MemberServiceTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     @DisplayName("존재하지 않는 회원 조회")
     public void notFineOne() {
 
@@ -96,10 +96,12 @@ public class MemberServiceTest {
         memberService.join(memberDto);
 
         //when
-        memberService.findByLoginId("joo");
+        Member unsavedId = memberService.findByLoginId("joo");
+        Member unsavedEmail = memberService.findByEmail("qqqq@gmail.com");
 
         //then
-        fail("존재하지 않은 회원 조회로 예외가 발생해야 한다.");
+        assertThat(unsavedId).isNull();
+        assertThat(unsavedEmail).isNull();
 
     }
 
