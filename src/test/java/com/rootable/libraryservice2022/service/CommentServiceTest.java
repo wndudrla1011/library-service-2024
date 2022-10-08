@@ -4,6 +4,7 @@ import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Comment;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
 import com.rootable.libraryservice2022.web.dto.CommentRequestDto;
 import org.junit.Test;
@@ -23,20 +24,12 @@ import static org.junit.Assert.*;
 @Transactional
 public class CommentServiceTest {
 
-    @Autowired
-    CommentService commentService;
-
-    @Autowired
-    PostsRepository postsRepository;
-
-    @Autowired
-    MemberService memberService;
-
-    @Autowired
-    BookService bookService;
-
-    @Autowired
-    EntityManager entityManager;
+    @Autowired CommentService commentService;
+    @Autowired PostsRepository postsRepository;
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
+    @Autowired BookService bookService;
+    @Autowired EntityManager entityManager;
 
     @Test
     public void commentSave() {

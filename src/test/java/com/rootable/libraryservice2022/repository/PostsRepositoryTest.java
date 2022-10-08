@@ -1,8 +1,8 @@
 package com.rootable.libraryservice2022.repository;
 
 import com.rootable.libraryservice2022.domain.*;
-import com.rootable.libraryservice2022.service.BookService;
-import com.rootable.libraryservice2022.service.MemberService;
+import com.rootable.libraryservice2022.web.dto.BookSaveDto;
+import com.rootable.libraryservice2022.web.dto.MemberDto;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +23,10 @@ public class PostsRepositoryTest {
     PostsRepository postsRepository;
 
     @Autowired
-    MemberService memberService;
+    MemberRepository memberRepository;
 
     @Autowired
-    BookService bookService;
+    BookRepository bookRepository;
 
     @After
     public void cleanUp() {
@@ -39,8 +39,27 @@ public class PostsRepositoryTest {
         //given
         LocalDateTime now = LocalDateTime.of(2022, 9, 24, 0, 0, 0);
 
-        Member member = memberService.findByLoginId("admin11");
-        Book book = bookService.findByTitle("원씽");
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
 
         Posts posts = Posts.builder()
                 .title("aaa")
@@ -69,10 +88,29 @@ public class PostsRepositoryTest {
     @Test
     public void findPosts() {
 
-        Member member = memberService.findByLoginId("admin11");
-        Book book = bookService.findByTitle("원씽");
-
         //given
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         Posts post1 = Posts.builder()
                 .title("aaa")
                 .content("hello")
@@ -115,11 +153,40 @@ public class PostsRepositoryTest {
     @Test
     public void findMyPosts() {
 
-        Member myOne = memberService.findByLoginId("test1");
-        Member another = memberService.findByLoginId("admin11");
-        Book book = bookService.findByTitle("원씽");
-
         //given
+        MemberDto memberDto1 = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        MemberDto memberDto2 = MemberDto.builder()
+                .name("Lee")
+                .loginId("staff11")
+                .password("1111!!rr")
+                .email("staff11@gmail.com")
+                .role(Role.STAFF)
+                .build();
+
+        Member myOne = createMember(memberDto1);
+        Member another = createMember(memberDto2);
+
+        memberRepository.save(myOne);
+        memberRepository.save(another);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         Posts myPost = Posts.builder()
                 .title("나의 도서")
                 .content("hello")
@@ -150,6 +217,26 @@ public class PostsRepositoryTest {
                 .filter(my -> my.getTitle().equals("관리자 도서"))
                 .findFirst().isEmpty()).isTrue();
 
+    }
+
+    public Member createMember(MemberDto dto) {
+        return Member.builder()
+                .name(dto.getName())
+                .loginId(dto.getLoginId())
+                .password(dto.getPassword())
+                .email(dto.getEmail())
+                .role(dto.getRole())
+                .build();
+    }
+
+    public Book createBook(BookSaveDto dto) {
+        return Book.builder()
+                .title(dto.getTitle())
+                .writer(dto.getWriter())
+                .price(dto.getPrice())
+                .stock(dto.getStock())
+                .status(dto.getStatus())
+                .build();
     }
 
 }
