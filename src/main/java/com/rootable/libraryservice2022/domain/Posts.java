@@ -41,7 +41,7 @@ public class Posts extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)
     private Result result;
 
-    @OneToMany(mappedBy = "posts", fetch = EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "posts", fetch = LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("id asc") //댓글 정렬
     private List<Comment> comments;
 
