@@ -1,12 +1,12 @@
 package com.rootable.libraryservice2022.service;
 
-import com.rootable.libraryservice2022.domain.Book;
-import com.rootable.libraryservice2022.domain.Comment;
-import com.rootable.libraryservice2022.domain.Member;
-import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.domain.*;
+import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
+import com.rootable.libraryservice2022.web.dto.BookSaveDto;
 import com.rootable.libraryservice2022.web.dto.CommentRequestDto;
+import com.rootable.libraryservice2022.web.dto.MemberDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +26,37 @@ public class CommentServiceTest {
 
     @Autowired CommentService commentService;
     @Autowired PostsRepository postsRepository;
-    @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
-    @Autowired BookService bookService;
+    @Autowired BookRepository bookRepository;
     @Autowired EntityManager entityManager;
 
     @Test
     public void commentSave() {
 
-        //given
-        Member member = memberService.findMembers().get(0);
-        Book book = bookService.books().get(0);
         String com = "Hello";
+
+        //given
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
 
         Posts posts = Posts.builder()
                 .title("aa")
@@ -65,12 +84,32 @@ public class CommentServiceTest {
     @Test
     public void update() {
 
-        Member member = memberService.findMembers().get(0);
-        Book book = bookService.books().get(0);
         String com = "comment";
         String newCom = "new";
 
         //given
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         Posts posts = Posts.builder()
                 .title("aa")
                 .member(member)
@@ -104,10 +143,29 @@ public class CommentServiceTest {
     @Test
     public void delete() {
 
-        Member member = memberService.findMembers().get(0);
-        Book book = bookService.books().get(0);
-
         //given
+        MemberDto memberDto = MemberDto.builder()
+                .name("kim")
+                .loginId("test2")
+                .password("1111!!qq")
+                .email("test2@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member = createMember(memberDto);
+        memberRepository.save(member);
+
+        BookSaveDto bookDto = BookSaveDto.builder()
+                .title("자바 기초")
+                .writer("TonyJoo")
+                .price(10000)
+                .stock(3)
+                .status(Status.PERMISSION)
+                .build();
+
+        Book book = createBook(bookDto);
+        bookRepository.save(book);
+
         Posts posts = Posts.builder()
                 .title("aa")
                 .member(member)
@@ -130,6 +188,26 @@ public class CommentServiceTest {
         //then
         assertThat(entityManager.contains(comment)).isFalse();
 
+    }
+
+    public Member createMember(MemberDto dto) {
+        return Member.builder()
+                .name(dto.getName())
+                .loginId(dto.getLoginId())
+                .password(dto.getPassword())
+                .email(dto.getEmail())
+                .role(dto.getRole())
+                .build();
+    }
+
+    public Book createBook(BookSaveDto dto) {
+        return Book.builder()
+                .title(dto.getTitle())
+                .writer(dto.getWriter())
+                .price(dto.getPrice())
+                .stock(dto.getStock())
+                .status(dto.getStatus())
+                .build();
     }
 
 }
