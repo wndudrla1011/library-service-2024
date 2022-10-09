@@ -3,6 +3,8 @@ Library Service 2022
 > Environment
 - Spring boot
 - JAVA 11
+- loaded EC2
+- linked up with RDS (MySQL)
 
 > Functions
 1. User Service
