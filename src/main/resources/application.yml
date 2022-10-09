@@ -5,15 +5,7 @@ spring:
 #    password:
 #    driver-class-name: org.h2.Driver
 
-  datasource:
-    url: jdbc:mysql://library-service-2022.c386f93qydae.ap-northeast-2.rds.amazonaws.com/library_service_2022:3306/library_service_2022
-    username: rootable
-    password: young429!
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
   jpa:
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
