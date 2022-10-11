@@ -203,10 +203,11 @@ public class PostsServiceTest {
                 .role(Role.STAFF)
                 .build();
 
-        Member member = createMember(memberDto1);
-        Member staff = createMember(memberDto2);
-        memberRepository.save(member);
-        memberRepository.save(staff);
+        Member myOne = createMember(memberDto1);
+        Member another = createMember(memberDto2);
+
+        memberRepository.save(myOne);
+        memberRepository.save(another);
 
         BookSaveDto bookDto = BookSaveDto.builder()
                 .title("자바 기초")
@@ -219,40 +220,35 @@ public class PostsServiceTest {
         Book book = createBook(bookDto);
         bookRepository.save(book);
 
-        Posts myPosts1 = Posts.builder()
-                .title("first")
+        PostDto myPostDto = PostDto.builder()
+                .title("나의 도서")
                 .content("hello")
-                .member(member)
+                .member(myOne)
                 .book(book)
                 .build();
 
-        Posts myPosts2 = Posts.builder()
-                .title("second")
+        PostDto anotherPostDto = PostDto.builder()
+                .title("직원 도서")
                 .content("hello")
-                .member(member)
+                .member(another)
                 .book(book)
                 .build();
 
-        Posts another = Posts.builder()
-                .title("third")
-                .content("hello")
-                .member(staff)
-                .book(book)
-                .build();
-
-        postsRepository.save(myPosts1);
-        postsRepository.save(myPosts2);
-        postsRepository.save(another);
+        postsService.savePost(myPostDto);
+        postsService.savePost(anotherPostDto);
 
         //when
-        List<Posts> myPosts = postsService.findMyPosts(member.getId());
+        List<Posts> myPosts = postsService.findMyPosts(myOne.getId());
+        Posts findMyPost = myPosts.stream()
+                .filter(my -> my.getTitle().equals("나의 도서"))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다. title=" + myPostDto.getTitle()));
 
         //then
-        assertThat(myPosts.size()).isEqualTo(2);
-        for (Posts myPost : myPosts) {
-            System.out.println("myPost.getTitle() = " + myPost.getTitle());
-            assertThat(myPost.getMember().getLoginId()).isEqualTo("test2");
-        }
+        assertThat(myPosts.contains(findMyPost)).isTrue();
+        assertThat(myPosts.stream()
+                .filter(my -> my.getTitle().equals("관리자 도서"))
+                .findFirst().isEmpty()).isTrue();
 
     }
 
