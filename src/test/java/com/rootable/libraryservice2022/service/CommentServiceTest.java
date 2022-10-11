@@ -45,7 +45,7 @@ public class CommentServiceTest {
                 .build();
 
         Member member = createMember(memberDto);
-        memberRepository.save(member);
+        Member savedMember = memberRepository.save(member);
 
         BookSaveDto bookDto = BookSaveDto.builder()
                 .title("자바 기초")
@@ -64,16 +64,16 @@ public class CommentServiceTest {
                 .book(book)
                 .build();
 
+        Posts savedPost = postsRepository.save(posts);
+
         CommentRequestDto dto = CommentRequestDto.builder()
                 .comment(com)
                 .member(member)
                 .posts(posts)
                 .build();
 
-        postsRepository.save(posts);
-
         //when
-        Long savedId = commentService.commentSave(member.getId(), posts.getId(), dto);
+        Long savedId = commentService.commentSave(savedMember.getId(), savedPost.getId(), dto);
 
         //then
         Comment comment = commentService.getComment(savedId);

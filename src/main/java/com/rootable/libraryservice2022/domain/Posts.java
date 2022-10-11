@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.*;
@@ -43,7 +44,7 @@ public class Posts extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
     @OrderBy("id asc") //댓글 정렬
-    private List<Comment> comments;
+    private List<Comment> commentList = new ArrayList<>();
 
     @Builder
     public Posts(Long id, String title, String content, Member member, Book book, Long fileId) {

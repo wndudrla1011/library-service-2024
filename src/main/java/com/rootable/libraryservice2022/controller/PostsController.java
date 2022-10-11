@@ -79,7 +79,7 @@ public class PostsController {
         }
 
         //댓글 리스트
-        List<Comment> comments = post.getComments();
+        List<Comment> comments = post.getCommentList();
 
         if (comments != null && !comments.isEmpty()) {
             model.addAttribute("comments", comments);
