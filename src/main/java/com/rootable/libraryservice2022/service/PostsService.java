@@ -16,6 +16,7 @@ import java.util.List;
 public class PostsService {
 
     private final MemberRepository memberRepository;
+    private final BookRepository bookRepository;
     private final PostsRepository postsRepository;
 
     /*
@@ -25,12 +26,15 @@ public class PostsService {
     public Long savePost(PostDto postDto) {
 
         Member member = memberRepository.findById(postDto.getMember().getId()).get();
+        Book book = bookRepository.findById(postDto.getBook().getId()).get();
         Posts posts = postDto.toEntity();
 
         Status status = posts.getBook().getStatus();
         Integer stock = posts.getBook().getStock();
 
+        //OneToMany 연관 관계 추가
         posts.setMember(member);
+        posts.setBook(book);
 
         if (status != Status.DENIED && stock > 0) { //재고가 있고 절판 도서가 아닌 경우
             posts.setResult(Result.SUCCESS);
