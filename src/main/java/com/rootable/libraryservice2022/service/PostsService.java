@@ -32,7 +32,7 @@ public class PostsService {
         Status status = posts.getBook().getStatus();
         Integer stock = posts.getBook().getStock();
 
-        //OneToMany 연관 관계 추가
+        //연관 관계 추가
         posts.setMember(member);
         posts.setBook(book);
 
