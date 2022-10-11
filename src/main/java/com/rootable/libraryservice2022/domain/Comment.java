@@ -8,6 +8,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Getter
 @NoArgsConstructor
 @Table(name = "comments")
@@ -21,12 +23,12 @@ public class Comment extends BaseTimeEntity{
     @Column(columnDefinition = "TEXT", nullable = false)
     private String comment; //댓글 내용
 
-    @ManyToOne
-    @JoinColumn(name = "posts_id")
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "posts_id", nullable = false)
     private Posts posts;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member; //작성자
 
     @Builder

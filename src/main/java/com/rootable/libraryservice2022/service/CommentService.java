@@ -33,13 +33,13 @@ public class CommentService {
         dto.setMember(member);
         dto.setPosts(posts);
 
-        Comment comment = commentRepository.save(dto.toEntity());
+        Comment comment = dto.toEntity();
 
         //연관 관계 추가
         comment.setPosts(posts);
         comment.setMember(member);
 
-        return comment.getId();
+        return commentRepository.save(comment).getId();
 
     }
 
