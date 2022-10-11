@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.controller;
 
+import com.rootable.libraryservice2022.domain.Comment;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.service.CommentService;
 import com.rootable.libraryservice2022.web.argumentresolver.Login;
@@ -8,7 +9,11 @@ import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -16,6 +21,20 @@ import org.springframework.web.bind.annotation.*;
 public class CommentApiController {
 
     private final CommentService commentService;
+
+    @GetMapping("/posts/comments")
+    public ModelAndView comments(@Login SessionMember loginMember) {
+
+        log.info("나의 댓글 목록");
+
+        ModelAndView mav = new ModelAndView("comments/myComments");
+
+        List<Comment> myComments = commentService.findMyComments(loginMember.getId());
+
+        mav.addObject("myComments", myComments);
+        return mav;
+
+    }
 
     @PostMapping("/posts/{postId}/comments/add")
     public ResponseEntity commentSave(@PathVariable Long postId, @RequestBody CommentRequestDto dto,

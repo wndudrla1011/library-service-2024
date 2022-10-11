@@ -41,6 +41,7 @@ public class Member extends BaseTimeEntity {
     private List<Posts> postsList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OrderBy("id desc")
     private List<Comment> commentList = new ArrayList<>();
 
     @Builder
