@@ -1,10 +1,15 @@
 Library Service 2022
 
+> Update Contents
+- Put sample data in TestDataInit for testing
+- Sorry, EC2 and RDS will be disconnected due to Free tier expiration
+  (~June 2022)
+
 > Environment
 - Spring boot
 - JAVA 11
-- Loaded EC2
-- Linked up with RDS (MySQL)
+- ~~Loaded EC2~~
+- ~~Linked up with RDS (MySQL)~~
 
 > Functions
 1. User Service

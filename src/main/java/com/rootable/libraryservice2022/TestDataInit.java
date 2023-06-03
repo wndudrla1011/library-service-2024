@@ -19,40 +19,40 @@ public class TestDataInit {
     * 테스트용 데이터 추가
     * */
 
-//    @PostConstruct
-//    public void init() {
-//
-//        /*
-//        * 회원
-//        * */
-//
-//        Member member1 = Member.builder()
-//                .name("USER")
-//                .loginId("test1")
-//                .password("1111!!aa")
-//                .email("test@gmail.com")
-//                .role(Role.USER)
-//                .build();
-//
-//        Member member2 = Member.builder()
-//                .name("ADMIN")
-//                .loginId("admin11")
-//                .password("1111!!bb")
-//                .email("admin@gmail.com")
-//                .role(Role.ADMIN)
-//                .build();
-//
-//        Member member3 = Member.builder()
-//                .name("STAFF")
-//                .loginId("staff22")
-//                .password("1111!!cc")
-//                .email("staff@gmail.com")
-//                .role(Role.STAFF)
-//                .build();
-//
-//        memberRepository.save(member1);
-//        memberRepository.save(member2);
-//        memberRepository.save(member3);
+    @PostConstruct
+    public void init() {
+
+        /*
+        * 회원
+        * */
+
+        Member member1 = Member.builder()
+                .name("USER")
+                .loginId("test1")
+                .password("1111!!aa")
+                .email("test@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        Member member2 = Member.builder()
+                .name("ADMIN")
+                .loginId("admin11")
+                .password("1111!!bb")
+                .email("admin@gmail.com")
+                .role(Role.ADMIN)
+                .build();
+
+        Member member3 = Member.builder()
+                .name("STAFF")
+                .loginId("staff22")
+                .password("1111!!cc")
+                .email("staff@gmail.com")
+                .role(Role.STAFF)
+                .build();
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
 //
 //        /*
 //         * 도서
@@ -95,6 +95,6 @@ public class TestDataInit {
 //        bookRepository.save(book3);
 //        bookRepository.save(book4);
 //
-//    }
+    }
 
 }
