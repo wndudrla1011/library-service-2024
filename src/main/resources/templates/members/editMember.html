@@ -63,17 +63,17 @@
             <div class="col">
                 <button type="submit" class="w-100 btn btn-dark btn-lg">수정완료</button>
             </div>
+            <div class="col" th:if="${common}">
+                <button type="button" class="w-100 btn btn-dark btn-lg"
+                        onclick="location.href='posts.html'"
+                        th:onclick="|location.href='@{/posts}'|">
+                    취소
+                </button>
+            </div>
             <div class="col" th:unless="${common}">
                 <button type="button" class="w-100 btn btn-dark btn-lg"
                         onclick="location.href='posts.html'"
                         th:onclick="|location.href='@{/admin/members}'|">
-                    취소
-                </button>
-            </div>
-            <div class="col" th:if="${common != null}">
-                <button type="button" class="w-100 btn btn-dark btn-lg"
-                        onclick="location.href='posts.html'"
-                        th:onclick="|location.href='@{/posts}'|">
                     취소
                 </button>
             </div>
