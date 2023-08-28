@@ -36,11 +36,11 @@
     </div>
 
     <!--추가-->
-    <div class="mb-3" th:unless="${common}">
+    <div class="mb-3" th:unless="${common}"> <!--관리자 -> 회원 정보 관리-->
       <label for="role" class="form-label">권한</label>
       <input type="text" class="form-control" id="role" value="USER" th:value="${member.role}" readonly>
     </div>
-    <div class="mb-3" th:if="${common != null}">
+    <div class="mb-3" th:if="${common != null}"> <!--모든 사용자 -> 내 정보-->
       <label for="user" class="form-label">등급</label>
       <input type="text" class="form-control" id="user" value="USER" th:value="${member.role.title}" readonly>
     </div>
