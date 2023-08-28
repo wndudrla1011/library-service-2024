@@ -36,43 +36,43 @@
     </div>
 
     <!--추가-->
+    <div class="mb-3" th:if="${common}"> <!--모든 사용자 -> 내 정보-->
+      <label for="user" class="form-label">등급</label>
+      <input type="text" class="form-control" id="user" value="USER" th:value="${member.role.title}" readonly>
+    </div>
     <div class="mb-3" th:unless="${common}"> <!--관리자 -> 회원 정보 관리-->
       <label for="role" class="form-label">권한</label>
       <input type="text" class="form-control" id="role" value="USER" th:value="${member.role}" readonly>
-    </div>
-    <div class="mb-3" th:if="${common != null}"> <!--모든 사용자 -> 내 정보-->
-      <label for="user" class="form-label">등급</label>
-      <input type="text" class="form-control" id="user" value="USER" th:value="${member.role.title}" readonly>
     </div>
 
     <hr class="my-4">
 
     <div class="row">
-      <div class="col" th:unless="${common}">
-        <button type="button" class="w-100 btn btn-dark btn-lg"
-                onclick="location.href='editMember.html'"
-                th:onclick="|location.href='@{/admin/members/{memberId}/edit(memberId=${member.id})}'|">
-          수정
-        </button>
-      </div>
-      <div class="col" th:if="${common}">
+      <div class="col" th:if="${common}"> <!--모든 회원 -> 내 정보 수정-->
         <button type="button" class="w-100 btn btn-dark btn-lg"
                 onclick="location.href='editMember.html'"
                 th:onclick="|location.href='@{/members/{memberId}/edit(memberId=${member.id})}'|">
           수정
         </button>
       </div>
-      <div class="col" th:unless="${common}">
+      <div class="col" th:unless="${common}"> <!--관리자 -> 회원 정보 수정-->
         <button type="button" class="w-100 btn btn-dark btn-lg"
-                onclick="location.href='posts.html'"
-                th:onclick="|location.href='@{/admin/members}'|">
-          취소
+                onclick="location.href='editMember.html'"
+                th:onclick="|location.href='@{/admin/members/{memberId}/edit(memberId=${member.id})}'|">
+          수정
         </button>
       </div>
-      <div class="col" th:if="${common}">
+      <div class="col" th:if="${common}"> <!--내 정보 -> 메인으로-->
         <button type="button" class="w-100 btn btn-dark btn-lg"
                 onclick="location.href='posts.html'"
                 th:onclick="|location.href='@{/posts}'|">
+          취소
+        </button>
+      </div>
+      <div class="col" th:unless="${common}"> <!--회원 정보 -> 회원 목록-->
+        <button type="button" class="w-100 btn btn-dark btn-lg"
+                onclick="location.href='posts.html'"
+                th:onclick="|location.href='@{/admin/members}'|">
           취소
         </button>
       </div>
