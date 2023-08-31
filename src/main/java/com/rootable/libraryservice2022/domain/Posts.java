@@ -30,7 +30,7 @@ public class Posts extends BaseTimeEntity{
     private String content;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id", nullable = false, updatable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member; //게시물 작성자
 
     @ManyToOne(fetch = LAZY)
