@@ -148,7 +148,7 @@ public class PostsRestfulController {
 
         try {
             String originFilename = files.getOriginalFilename(); //고객이 업로드한 파일명
-            //업로드 파일이 없는 경우
+            //업로드 파일이 없도록 수정한 경우
             if ("".equals(originFilename)) {
                 throw new IOException();
             }
