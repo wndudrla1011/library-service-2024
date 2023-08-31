@@ -3,7 +3,7 @@ Library Service 2022
 > Update Contents
 - Put sample data in TestDataInit for testing
 - Sorry, EC2 and RDS will be disconnected due to Free tier expiration
-  (~June 2022)
+  (~June 2023)
 
 > Environment
 - Spring boot
