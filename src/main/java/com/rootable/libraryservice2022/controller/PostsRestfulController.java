@@ -50,12 +50,9 @@ public class PostsRestfulController {
         //파일 -> 서버 (저장/업로드)
         try {
             String originFilename = files.getOriginalFilename(); //고객이 업로드한 파일명
-            //업로드 파일이 없는 경우
-            if ("".equals(originFilename)) {
-                throw new IOException();
-            }
             String storeFileName = fileStore.createStoreFileName(originFilename); //서버 저장 파일명
             String saveDir = fileStore.getFileDir(); //서버 저장 디렉토리
+
             //저장 디렉토리가 없는 경우
             if (!new File(saveDir).exists()) {
                 try {
