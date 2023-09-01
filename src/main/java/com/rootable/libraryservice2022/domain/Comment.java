@@ -28,7 +28,7 @@ public class Comment extends BaseTimeEntity{
     private Posts posts;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id", nullable = false, updatable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member; //작성자
 
     @Builder
