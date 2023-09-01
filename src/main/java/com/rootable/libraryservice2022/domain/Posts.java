@@ -58,12 +58,12 @@ public class Posts extends BaseTimeEntity{
     /*
      * 연관관계 메서드
      * */
-    public void setMember(Member member) {
+    public void bindMember(Member member) {
         this.member = member;
         member.getPostsList().add(this);
     }
 
-    public void setBook(Book book) {
+    public void bindBook(Book book) {
         this.book = book;
         book.getPostsList().add(this);
     }

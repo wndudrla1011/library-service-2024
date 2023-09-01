@@ -33,8 +33,8 @@ public class PostsService {
         Integer stock = posts.getBook().getStock();
 
         //연관 관계 추가
-        posts.setMember(member);
-        posts.setBook(book);
+        posts.bindMember(member);
+        posts.bindBook(book);
 
         if (status != Status.DENIED && stock > 0) { //재고가 있고 절판 도서가 아닌 경우
             posts.setResult(Result.SUCCESS);
