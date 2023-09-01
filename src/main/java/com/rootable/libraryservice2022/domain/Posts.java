@@ -13,7 +13,6 @@ import java.util.List;
 import static javax.persistence.FetchType.*;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
 public class Posts extends BaseTimeEntity{
