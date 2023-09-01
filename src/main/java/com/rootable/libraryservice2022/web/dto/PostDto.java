@@ -3,6 +3,7 @@ package com.rootable.libraryservice2022.web.dto;
 import com.rootable.libraryservice2022.domain.Book;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.domain.Posts;
+import com.rootable.libraryservice2022.domain.Result;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,8 @@ public class PostDto {
 
     private Long fileId;
 
+    private Result result;
+
     public Posts toEntity() {
         Posts build = Posts.builder()
                 .id(id)
@@ -40,6 +43,7 @@ public class PostDto {
                 .member(member)
                 .book(book)
                 .fileId(fileId)
+                .result(result)
                 .build();
         return build;
     }

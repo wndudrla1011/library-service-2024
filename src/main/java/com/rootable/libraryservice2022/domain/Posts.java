@@ -46,13 +46,14 @@ public class Posts extends BaseTimeEntity{
     private List<Comment> commentList = new ArrayList<>();
 
     @Builder
-    public Posts(Long id, String title, String content, Member member, Book book, Long fileId) {
+    public Posts(Long id, String title, String content, Member member, Book book, Long fileId, Result result) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.member = member;
         this.book = book;
         this.fileId = fileId;
+        this.result = result;
     }
 
     /*

@@ -27,22 +27,23 @@ public class PostsService {
 
         Member member = memberRepository.findById(postDto.getMember().getId()).get();
         Book book = bookRepository.findById(postDto.getBook().getId()).get();
-        Posts posts = postDto.toEntity();
 
-        Status status = posts.getBook().getStatus();
-        Integer stock = posts.getBook().getStock();
+        Status status = postDto.getBook().getStatus();
+        Integer stock = postDto.getBook().getStock();
+
+        if (status != Status.DENIED && stock > 0) { //재고가 있고 절판 도서가 아닌 경우
+            postDto.setResult(Result.SUCCESS);
+        } else if (status == Status.PERMISSION && stock == 0){ //재고가 없는 경우
+            postDto.setResult(Result.FAIL);
+        } else if (status == Status.DENIED) { //절판 도서인 경우
+            postDto.setResult(Result.DENIED);
+        }
+
+        Posts posts = postDto.toEntity();
 
         //연관 관계 추가
         posts.bindMember(member);
         posts.bindBook(book);
-
-        if (status != Status.DENIED && stock > 0) { //재고가 있고 절판 도서가 아닌 경우
-            posts.setResult(Result.SUCCESS);
-        } else if (status == Status.PERMISSION && stock == 0){ //재고가 없는 경우
-            posts.setResult(Result.FAIL);
-        } else if (status == Status.DENIED) { //절판 도서인 경우
-            posts.setResult(Result.DENIED);
-        }
 
         return postsRepository.save(posts).getId();
 
