@@ -130,6 +130,13 @@ public class PostsRestfulController {
 
         log.info("게시글 삭제");
 
+        Long fileId = postsService.findById(postId).getFileId();
+
+        //게시글 삭제 -> 파일도 함께 삭제
+        if (fileService.getFile(fileId) != null) {
+            fileService.delete(fileId);
+        }
+
         postsService.delete(postId);
         return "redirect:/posts";
 
