@@ -101,14 +101,14 @@ public class PostsService {
         Integer stock = requestDto.getBook().getStock();
 
         if (status != Status.DENIED && stock > 0) { //재고가 있고 절판 도서가 아닌 경우
-            posts.setResult(Result.SUCCESS);
+            requestDto.setResult(Result.SUCCESS);
         } else if (status == Status.PERMISSION && stock == 0){ //재고가 없는 경우
-            posts.setResult(Result.FAIL);
+            requestDto.setResult(Result.FAIL);
         } else if (status == Status.DENIED) { //절판 도서인 경우
-            posts.setResult(Result.DENIED);
+            requestDto.setResult(Result.DENIED);
         }
 
-        posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getBook());
+        posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getBook(), requestDto.getResult());
 
         return id;
 
