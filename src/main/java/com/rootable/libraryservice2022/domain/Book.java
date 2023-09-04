@@ -10,11 +10,16 @@ import java.util.List;
 
 @Getter
 @Entity
+@SequenceGenerator(
+        name = "BOOK_SEQ_GENERATOR",
+        sequenceName = "BOOK_SEQ",
+        initialValue = 5, allocationSize = 50
+)
 @NoArgsConstructor
 public class Book extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOOK_SEQ_GENERATOR")
     @Column(name = "book_id")
     private Long id;
 
