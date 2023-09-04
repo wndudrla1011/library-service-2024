@@ -9,11 +9,16 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@SequenceGenerator(
+        name = "FILE_SEQ_GENERATOR",
+        sequenceName = "FILE_SEQ",
+        initialValue = 1, allocationSize = 50
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class File {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FILE_SEQ_GENERATOR")
     @Column(name = "file_id")
     private Long id;
 

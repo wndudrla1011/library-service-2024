@@ -14,10 +14,15 @@ import static javax.persistence.FetchType.*;
 @NoArgsConstructor
 @Table(name = "comments")
 @Entity
+@SequenceGenerator(
+        name = "COMMENTS_SEQ_GENERATOR",
+        sequenceName = "COMMENTS_SEQ",
+        initialValue = 1, allocationSize = 50
+)
 public class Comment extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMMENTS_SEQ_GENERATOR")
     private Long id;
 
     @Column(columnDefinition = "TEXT", nullable = false)

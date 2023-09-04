@@ -13,11 +13,16 @@ import static javax.persistence.FetchType.*;
 
 @Getter
 @Entity
+@SequenceGenerator(
+        name = "POSTS_SEQ_GENERATOR",
+        sequenceName = "POSTS_SEQ",
+        initialValue = 1, allocationSize = 50
+)
 @NoArgsConstructor
 public class Posts extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POSTS_SEQ_GENERATOR")
     @Column(name = "post_id")
     private Long id;
 
