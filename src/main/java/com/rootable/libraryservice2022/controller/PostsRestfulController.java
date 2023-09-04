@@ -133,7 +133,7 @@ public class PostsRestfulController {
         Long fileId = postsService.findById(postId).getFileId();
 
         //게시글 삭제 -> 파일도 함께 삭제
-        if (fileService.getFile(fileId) != null) {
+        if (fileId != null) {
             fileService.delete(fileId);
         }
 
