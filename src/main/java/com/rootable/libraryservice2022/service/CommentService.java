@@ -38,8 +38,8 @@ public class CommentService {
         Comment comment = dto.toEntity();
 
         //연관 관계 추가
-        comment.setPosts(posts);
-        comment.setMember(member);
+        comment.bindPosts(posts);
+        comment.bindMember(member);
 
         return commentRepository.save(comment).getId();
 

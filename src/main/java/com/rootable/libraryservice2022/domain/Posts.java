@@ -75,7 +75,7 @@ public class Posts extends BaseTimeEntity{
         this.result = result;
     }
 
-    public void setFile(Long fileId) {
+    public void changeFile(Long fileId) {
         this.fileId = fileId;
     }
 

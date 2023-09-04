@@ -136,7 +136,7 @@ public class PostsService {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
 
-        posts.setFile(postDto.getFileId());
+        posts.changeFile(postDto.getFileId());
 
         return posts;
 

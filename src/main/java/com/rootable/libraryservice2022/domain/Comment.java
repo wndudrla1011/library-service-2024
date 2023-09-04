@@ -42,12 +42,12 @@ public class Comment extends BaseTimeEntity{
     /*
      * 연관 관계 메서드
      * */
-    public void setPosts(Posts posts) {
+    public void bindPosts(Posts posts) {
         this.posts = posts;
         posts.getCommentList().add(this);
     }
 
-    public void setMember(Member member) {
+    public void bindMember(Member member) {
         this.member = member;
         member.getCommentList().add(this);
     }
