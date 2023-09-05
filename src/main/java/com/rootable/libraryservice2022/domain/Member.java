@@ -14,7 +14,7 @@ import java.util.List;
 @SequenceGenerator(
         name = "MEMBER_SEQ_GENERATOR",
         sequenceName = "MEMBER_SEQ",
-        initialValue = 4, allocationSize = 50
+        initialValue = 4, allocationSize = 1
 )
 @NoArgsConstructor
 public class Member extends BaseTimeEntity {

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @SequenceGenerator(
         name = "FILE_SEQ_GENERATOR",
         sequenceName = "FILE_SEQ",
-        initialValue = 1, allocationSize = 50
+        initialValue = 1, allocationSize = 1
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class File {

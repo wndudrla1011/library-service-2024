@@ -13,7 +13,7 @@ import java.util.List;
 @SequenceGenerator(
         name = "BOOK_SEQ_GENERATOR",
         sequenceName = "BOOK_SEQ",
-        initialValue = 5, allocationSize = 50
+        initialValue = 5, allocationSize = 1
 )
 @NoArgsConstructor
 public class Book extends BaseTimeEntity{

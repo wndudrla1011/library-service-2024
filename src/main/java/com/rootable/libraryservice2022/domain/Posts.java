@@ -16,7 +16,7 @@ import static javax.persistence.FetchType.*;
 @SequenceGenerator(
         name = "POSTS_SEQ_GENERATOR",
         sequenceName = "POSTS_SEQ",
-        initialValue = 1, allocationSize = 50
+        initialValue = 1, allocationSize = 1
 )
 @NoArgsConstructor
 public class Posts extends BaseTimeEntity{

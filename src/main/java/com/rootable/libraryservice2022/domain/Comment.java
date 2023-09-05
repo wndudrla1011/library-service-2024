@@ -17,7 +17,7 @@ import static javax.persistence.FetchType.*;
 @SequenceGenerator(
         name = "COMMENTS_SEQ_GENERATOR",
         sequenceName = "COMMENTS_SEQ",
-        initialValue = 1, allocationSize = 50
+        initialValue = 1, allocationSize = 1
 )
 public class Comment extends BaseTimeEntity{
 
