@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Home() {
-  const [model, setModel] = useState("");
-  useEffect(() => {
-    axios
-      .get("/")
-      .then((res) => setModel(res.data))
-      .catch((error) => console.log(error));
-  }, []);
-
   return (
     <div>
-      {model}
       <header>
         <div>
           <h3>Rootable Library</h3>
