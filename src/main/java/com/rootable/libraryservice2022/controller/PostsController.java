@@ -12,6 +12,8 @@ import com.rootable.libraryservice2022.web.dto.PostDto;
 import com.rootable.libraryservice2022.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class PostsController {
 
@@ -31,16 +33,14 @@ public class PostsController {
     public static String SAME_PERSON_KEY = "same";
 
     @GetMapping("/posts")
-    public String posts(Model model, @Login SessionMember loginMember) {
+    public ResponseEntity<?> posts(Model model, @Login SessionMember loginMember) {
 
         log.info("게시글 관리 페이지");
 
-        List<Posts> posts = postsService.findPosts();
-
         //뷰 렌더링 값 전달
-        model.addAttribute("posts", posts);
-        model.addAttribute("member", loginMember);
-        return "posts/posts";
+//        model.addAttribute("posts", posts);
+//        model.addAttribute("member", loginMember);
+        return new ResponseEntity<>(postsService.findPosts(), HttpStatus.OK);
 
     }
 
@@ -60,7 +60,7 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String post(@PathVariable Long postId, Model model, @Login SessionMember loginMember) {
+    public ResponseEntity<?> post(@PathVariable Long postId, Model model, @Login SessionMember loginMember) {
 
         log.info("게시글 정보");
 
@@ -89,7 +89,7 @@ public class PostsController {
         //댓글 렌더링
         model.addAttribute("comment", new Comment());
 
-        return "/posts/postInfo";
+        return new ResponseEntity<>(post, HttpStatus.OK);
 
     }
 
