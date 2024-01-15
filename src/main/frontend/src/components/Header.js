@@ -10,12 +10,7 @@ import { Link } from 'react-router-dom';
 function Header() {
   return (
     <div>
-      <Navbar
-        bg="dark"
-        data-bs-theme="dark"
-        expand="lg"
-        className="bg-body-tertiary"
-      >
+      <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
           <Navbar.Brand href="#">Rootable's Library</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -35,7 +30,15 @@ function Header() {
                 <NavDropdown.Item href="#action3">나의 게시물</NavDropdown.Item>
                 <NavDropdown.Item href="#action4">나의 댓글</NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="#action2">계정 관리</Nav.Link>
+              <Link to="/members/:memberId" className="nav-link">
+                계정 관리
+              </Link>
+              <Link to="/members/add" className="nav-link">
+                회원가입
+              </Link>
+              <Link to="/login" className="nav-link">
+                로그인
+              </Link>
             </Nav>
             <Form className="d-flex">
               <Form.Control

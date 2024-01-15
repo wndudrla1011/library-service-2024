@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Signup() {
+function Alert() {
   return (
     <div>
-      <h1>Signup</h1>
+      <h1>Alert용</h1>
     </div>
   );
 }
 
-export default Signup;
+export default Alert;
