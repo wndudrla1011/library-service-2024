@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -23,8 +24,12 @@ function Home() {
           <br />
         </p>
         <p>
-          <button>회원가입</button>
-          <button>로그인</button>
+          <Link to="/members/add">
+            <button>회원가입</button>
+          </Link>
+          <Link to="/login">
+            <button>로그인</button>
+          </Link>
         </p>
       </main>
 
