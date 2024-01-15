@@ -15,7 +15,7 @@ function PostItem() {
           Some quick example text to build on the card title and make up the
           bulk of the card's content.
         </Card.Text>
-        <Link to="/posts/1" className="btn btn-primary" variant="primary">
+        <Link to="/posts/1" className="btn btn-primary">
           Go somewhere
         </Link>
       </Card.Body>
