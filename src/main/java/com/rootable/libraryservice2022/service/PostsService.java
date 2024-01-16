@@ -4,7 +4,9 @@ import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
+import com.rootable.libraryservice2022.web.dto.MemberDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
+import com.rootable.libraryservice2022.web.dto.PostsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import java.util.List;
 public class PostsService {
 
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final BookRepository bookRepository;
     private final PostsRepository postsRepository;
 
@@ -52,8 +55,10 @@ public class PostsService {
     /*
     * 전체 게시글 조회
     * */
-    public List<Posts> findPosts() {
-        return postsRepository.findPosts();
+    public PostsDto findPosts(Long memberId) {
+        List<Posts> posts = postsRepository.findPosts();
+        MemberDto memberDto = memberService.getMember(memberId);
+        return new PostsDto(posts, memberDto);
     }
 
     /*

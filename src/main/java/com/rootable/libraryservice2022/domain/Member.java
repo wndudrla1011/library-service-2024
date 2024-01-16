@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2022.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,9 +41,11 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Posts> postsList = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @OrderBy("id desc")
     private List<Comment> commentList = new ArrayList<>();

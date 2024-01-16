@@ -1,5 +1,7 @@
 package com.rootable.libraryservice2022.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +34,7 @@ public class Book extends BaseTimeEntity{
     @Column(nullable = false)
     private Status status;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Posts> postsList = new ArrayList<>();
 

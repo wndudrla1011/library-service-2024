@@ -40,7 +40,7 @@ public class PostsController {
         //뷰 렌더링 값 전달
 //        model.addAttribute("posts", posts);
 //        model.addAttribute("member", loginMember);
-        return new ResponseEntity<>(postsService.findPosts(), HttpStatus.OK);
+        return new ResponseEntity<>(postsService.findPosts(loginMember.getId()), HttpStatus.OK);
 
     }
 
