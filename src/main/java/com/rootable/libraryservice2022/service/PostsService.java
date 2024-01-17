@@ -18,7 +18,6 @@ import java.util.List;
 public class PostsService {
 
     private final MemberRepository memberRepository;
-    private final MemberService memberService;
     private final BookRepository bookRepository;
     private final PostsRepository postsRepository;
 

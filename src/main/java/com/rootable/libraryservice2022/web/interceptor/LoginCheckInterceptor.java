@@ -19,11 +19,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
 
         //미인증 사용자의 요청일 경우, 로그인 화면으로 이동
-        /*if (session == null || session.getAttribute("loginMember") == null) {
+        if (session == null || session.getAttribute("loginMember") == null) {
             log.info("미인증 사용자 요청");
             response.sendRedirect("/login?redirectURL=" + requestURI);
             return false;
-        }*/
+        }
 
         return true;
 
