@@ -4,11 +4,13 @@ import com.rootable.libraryservice2022.domain.*;
 import com.rootable.libraryservice2022.repository.BookRepository;
 import com.rootable.libraryservice2022.repository.MemberRepository;
 import com.rootable.libraryservice2022.repository.PostsRepository;
+import com.rootable.libraryservice2022.web.dto.FindPostsDto;
 import com.rootable.libraryservice2022.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,8 +55,15 @@ public class PostsService {
     /*
     * 전체 게시글 조회
     * */
-    public List<Posts> findPosts() {
-        return postsRepository.findPosts();
+    public List<FindPostsDto> findPosts() {
+        List<Posts> posts = postsRepository.findPosts();
+        List<FindPostsDto> DTOs = new ArrayList<>();
+
+        for (Posts post : posts) {
+            DTOs.add(new FindPostsDto(post, post.getMember().getName()));
+        }
+
+        return DTOs;
     }
 
     /*
