@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
-                .allowedMethods(HttpMethod.GET.name());
+                .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error/**", "/js/**", "/posts");
+                .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error/**", "/js/**", "/posts", "/posts/add");
 
         registry.addInterceptor(new AuthInterceptor())
                 .order(2)
