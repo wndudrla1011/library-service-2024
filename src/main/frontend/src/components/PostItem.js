@@ -12,7 +12,7 @@ function PostItem({ id, title, content, author }) {
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{content}</Card.Text>
-        <Link to="/posts/1" className="btn btn-primary">
+        <Link to={'/posts/' + id} className="btn btn-primary">
           게시물 보기
         </Link>
         <Card.Subtitle>{author}</Card.Subtitle>
