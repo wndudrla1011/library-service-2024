@@ -7,15 +7,25 @@ function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/posts')
+    fetch('http://localhost:8080/posts', {
+      method: 'GET',
+    })
       .then((res) => res.json())
       .then((res) => {
-        console.log(1, res);
+        setPosts(res);
       });
   }, []);
   return (
     <div>
-      <PostItem />
+      {posts.map((data) => (
+        <PostItem
+          key={data.post.id}
+          id={data.post.id}
+          title={data.post.title}
+          content={data.post.content}
+          author={data.author}
+        />
+      ))}
     </div>
   );
 }
