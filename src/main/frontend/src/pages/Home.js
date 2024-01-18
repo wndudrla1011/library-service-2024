@@ -7,16 +7,29 @@ function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/posts', {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setPosts(res);
-      });
+    getData();
   }, []);
+
+  async function getData() {
+    await axios
+      .get('http://localhost:8080/posts')
+      .then((res) => setPosts(res.data))
+      .catch((error) => console.log(error));
+  }
+
   return (
-    <div>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridAutoRows: 'minmax(100px, auto)',
+        gap: '2rem',
+        gridAutoFlow: 'dense',
+        justifyItems: 'center',
+        margin: '22% 0px',
+        padding: '0px 13%',
+      }}
+    >
       {posts.map((data) => (
         <PostItem
           key={data.post.id}
