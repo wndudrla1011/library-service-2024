@@ -11,17 +11,18 @@ function Login() {
   const formSubmit = async (e) => {
     e.preventDefault();
 
+    const data = {
+      loginId: loginId,
+      password: password,
+    };
+
     await axios
-      .post('http://localhost:8080/login', null, {
-        params: {
-          loginId: loginId,
-          password: password,
-        },
-      })
+      .post('http://localhost:8080/login', data)
       .then((res) => {
+        console.log(res);
         navigate('/');
       })
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
   };
 
   const idChange = (e) => {
@@ -54,7 +55,9 @@ function Login() {
           onChange={pwChange}
           placeholder="비밀번호를 입력하세요"
         ></input>
-        <button type="submit">Login In</button>
+        <button type="submit" onClick={formSubmit}>
+          Login In
+        </button>
       </form>
     </div>
   );
