@@ -1,22 +1,37 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
+  const [loginId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const formSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:8080/login', { id: id, pw: pw });
+
+    await axios
+      .post('http://localhost:8080/login', null, {
+        params: {
+          loginId: loginId,
+          password: password,
+        },
+      })
+      .then((res) => {
+        navigate('/');
+      })
+      .catch((error) => alert(error));
   };
 
   const idChange = (e) => {
-    setId(e.target.value);
+    e.preventDefault();
+    setUserId(e.target.value);
   };
 
   const pwChange = (e) => {
-    setPw(e.target.value);
+    e.preventDefault();
+    setPassword(e.target.value);
   };
 
   return (
@@ -26,18 +41,20 @@ function Login() {
       </div>
       <form onSubmit={formSubmit} className={styles.login__form}>
         <input
-          name="id"
-          value={id}
+          name="loginId"
+          type="text"
+          value={loginId}
           onChange={idChange}
           placeholder="아이디를 입력하세요"
         ></input>
         <input
-          name="pw"
-          value={pw}
+          name="password"
+          type="password"
+          value={password}
           onChange={pwChange}
           placeholder="비밀번호를 입력하세요"
         ></input>
-        <button>Login In</button>
+        <button type="submit">Login In</button>
       </form>
     </div>
   );
