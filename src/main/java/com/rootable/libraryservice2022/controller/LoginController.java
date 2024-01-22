@@ -1,6 +1,5 @@
 package com.rootable.libraryservice2022.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rootable.libraryservice2022.domain.Member;
 import com.rootable.libraryservice2022.service.LoginService;
 import com.rootable.libraryservice2022.web.dto.LoginDto;
@@ -9,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
