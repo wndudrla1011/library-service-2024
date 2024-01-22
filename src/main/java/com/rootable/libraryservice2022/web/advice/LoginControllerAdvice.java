@@ -33,7 +33,7 @@ public class LoginControllerAdvice {
     }
 
     @ExceptionHandler(NullPointerException.class)
-    protected ResponseEntity<LoginResponseDto> invalidMemberException(NullPointerException ex) {
+    protected ResponseEntity<LoginResponseDto> invalidMemberException() {
 
         LoginResponseDto errorInfo = new LoginResponseDto("global", "로그인 정보가 일치하지 않습니다.");
 
