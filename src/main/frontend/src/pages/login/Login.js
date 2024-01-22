@@ -12,6 +12,8 @@ function Login() {
 
   const formSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsgId('');
+    setErrorMsgPw('');
 
     const data = {
       loginId: loginId,
@@ -26,15 +28,17 @@ function Login() {
       })
       .catch((error) => {
         console.log(error);
-        if (error.response.data.length === 2) {
-          setErrorMsgId(error.response.data[1].message);
-          setErrorMsgPw(error.response.data[0].message);
-        } else if (error.response.data.length === 1) {
-          if (error.response.data[0].field === 'loginId') {
-            setErrorMsgId(error.response.data[0].message);
-          } else if (error.response.data[0].field === 'password') {
-            setErrorMsgPw(error.response.data[0].message);
-          }
+        if (error.response.data.field === 'global') {
+          //회원 정보 불일치
+          alert(error.response.data.message);
+        } else {
+          error.response.data.map((errors) => {
+            if (errors.field === 'loginId') {
+              setErrorMsgId(errors.message);
+            } else {
+              setErrorMsgPw(errors.message);
+            }
+          });
         }
       });
   };
@@ -56,21 +60,31 @@ function Login() {
       </div>
       <form onSubmit={formSubmit} className={styles.login__form}>
         <input
+          style={{
+            borderColor: errorMsgId !== '' ? 'red' : 'white',
+          }}
           name="loginId"
           type="text"
           value={loginId}
           onChange={idChange}
           placeholder="아이디를 입력하세요"
-        ></input>
-        <div>{errorMsgId !== null ? errorMsgId : null}</div>
+        />
+        <div className={styles.error__ID}>
+          {errorMsgId !== null ? errorMsgId : null}
+        </div>
         <input
+          style={{
+            borderColor: errorMsgPw !== '' ? 'red' : 'white',
+          }}
           name="password"
           type="password"
           value={password}
           onChange={pwChange}
           placeholder="비밀번호를 입력하세요"
-        ></input>
-        <div>{errorMsgPw !== null ? errorMsgPw : null}</div>
+        />
+        <div className={styles.error__PW}>
+          {errorMsgPw !== null ? errorMsgPw : null}
+        </div>
         <button type="submit" onClick={formSubmit}>
           Login In
         </button>

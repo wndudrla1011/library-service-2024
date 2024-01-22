@@ -48,3 +48,8 @@
   background-color: #3c3c8c;
   color: white;
 }
+
+.error__ID,
+.error__PW {
+  color: red;
+}
