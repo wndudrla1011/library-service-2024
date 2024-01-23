@@ -84,6 +84,7 @@ function Login() {
           value={password}
           onChange={pwChange}
           placeholder="비밀번호를 입력하세요"
+          //TODO: 아이디 저장 기능 구현 후 추가
         />
         <div className={styles.error__PW}>
           {errorMsgPw !== null ? errorMsgPw : null}
