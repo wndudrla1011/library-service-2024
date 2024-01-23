@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './Login.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { LoginContext } from '../../contexts/LoginContextProvider';
 
 function Login() {
   const [loginId, setLoginId] = useState('');
@@ -9,6 +10,7 @@ function Login() {
   const [errorMsgId, setErrorMsgId] = useState('');
   const [errorMsgPw, setErrorMsgPw] = useState('');
   const navigate = useNavigate();
+  const { setIsLogin } = useContext(LoginContext);
 
   const formSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +26,7 @@ function Login() {
       .post('http://localhost:8080/login', data)
       .then((res) => {
         console.log(res);
+        setIsLogin(true);
         navigate('/');
       })
       .catch((error) => {

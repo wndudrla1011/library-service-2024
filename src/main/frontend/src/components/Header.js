@@ -4,10 +4,14 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { LoginContext } from '../contexts/LoginContextProvider';
+import styles from './Header.module.css';
 
 function Header() {
+  const { isLogin, logout } = useContext(LoginContext);
+
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -30,15 +34,33 @@ function Header() {
                 <NavDropdown.Item href="#action3">나의 게시물</NavDropdown.Item>
                 <NavDropdown.Item href="#action4">나의 댓글</NavDropdown.Item>
               </NavDropdown>
-              <Link to="/members/:memberId" className="nav-link">
-                계정 관리
-              </Link>
-              <Link to="/members/add" className="nav-link">
-                회원가입
-              </Link>
-              <Link to="/login" className="nav-link">
-                로그인
-              </Link>
+              {!isLogin ? (
+                <ul>
+                  <li>
+                    <Link to="/members/add" className="nav-link">
+                      회원가입
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/login" className="nav-link">
+                      로그인
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <ul>
+                  <li>
+                    <Link to="/members/:memberId" className="nav-link">
+                      계정 관리
+                    </Link>
+                  </li>
+                  <li>
+                    <button className="nav-link" onClick={() => logout()}>
+                      로그아웃
+                    </button>
+                  </li>
+                </ul>
+              )}
             </Nav>
             <Form className="d-flex">
               <Form.Control
