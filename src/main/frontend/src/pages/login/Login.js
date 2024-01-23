@@ -88,9 +88,7 @@ function Login() {
         <div className={styles.error__PW}>
           {errorMsgPw !== null ? errorMsgPw : null}
         </div>
-        <button type="submit" onClick={formSubmit}>
-          Login In
-        </button>
+        <button type="submit">Login In</button>
       </form>
     </div>
   );
