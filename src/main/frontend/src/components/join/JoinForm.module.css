@@ -1,0 +1,79 @@
+.join__root {
+  width: 23rem;
+  height: 37rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3.8rem;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.join__textBox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3.5rem;
+}
+
+.join__text {
+  margin: auto;
+  padding: 30px;
+  font-size: 60px;
+  font-weight: 800;
+  background: linear-gradient(to right, #185a9d, #43cea2);
+  color: transparent;
+  -webkit-background-clip: text;
+  font-family: 'Kanit', sans-serif;
+}
+
+.join__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 60px 50px;
+}
+
+.join__form label {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.join__form input {
+  border-radius: 30px;
+  padding: 15px 10px;
+  font-size: 15px;
+  margin-bottom: 40px;
+  width: 100%;
+  height: 40px;
+  color: black;
+  background-color: #f6f1f1;
+  box-shadow: 1px 1px 1px 1px rgb(203, 202, 202);
+}
+
+.join__form input::placeholder {
+  color: black;
+  font-weight: 500;
+  padding: 0px 10px;
+  font-size: 15px;
+}
+
+.join__form button {
+  margin: 2rem 1rem 0px 0px;
+  border-width: thin;
+  border-radius: 8px;
+  border-color: transparent;
+  width: 50%;
+  height: 40px;
+  font-size: 20px;
+  font-weight: 1000;
+  color: white;
+  background: #43cea2;
+  background: -webkit-linear-gradient(to right, #185a9d, #43cea2);
+  background: linear-gradient(to right, #185a9d, #43cea2);
+  box-shadow: 1px 1px 1px 1px rgb(203, 202, 202);
+}
+
+.error__ID,
+.error__PW {
+  color: red;
+}
