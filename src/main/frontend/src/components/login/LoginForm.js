@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import styles from './Login.module.css';
+import styles from './LoginForm.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
-import { FaRegUser } from 'react-icons/fa6';
 
 function Login() {
   const [loginId, setLoginId] = useState('');

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
-import Login from './components/login/Login';
+import Login from './pages/Login';
 import Books from './pages/books/Books';
 import AddBook from './pages/books/AddBook';
 import BookInfo from './pages/books/BookInfo';
@@ -15,7 +15,7 @@ import Alert from './pages/posts/Alert';
 import CommentForm from './pages/comments/CommentForm';
 import EditComment from './pages/comments/EditComment';
 import MyComments from './pages/comments/MyComments';
-import Signup from './pages/members/Signup';
+import Join from './pages/Join';
 import Members from './pages/members/Members';
 import MemberInfo from './pages/members/MemberInfo';
 import EditMember from './pages/members/EditMember';
@@ -26,10 +26,8 @@ function App() {
     <div>
       <Router>
         <LoginContextProvider>
-          <Header />
           <Routes>
             <Route path="/" exact={true} element={<Home />} />
-            <Route path="/logout" exact={true} element={<Home />} />
             {/* {도서 관련} */}
             <Route path="/admin/books" exact={true} element={<Books />} />
             <Route path="/admin/books/add" exact={true} element={<AddBook />} />
@@ -71,7 +69,9 @@ function App() {
               element={<MyComments />}
             />
             {/* {회원 관련} */}
-            <Route path="/members/add" exact={true} element={<Signup />} />
+            <Route path="/login" exact={true} element={<Login />} />
+            <Route path="/logout" exact={true} element={<Home />} />
+            <Route path="/members/add" exact={true} element={<Join />} />
             <Route path="/admin/members" exact={true} element={<Members />} />
             <Route
               path="/admin/members/:memberId"
@@ -94,21 +94,6 @@ function App() {
               element={<EditMember />}
             />
           </Routes>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: '#43cea2',
-              background: '-webkit-linear-gradient(to right, #185a9d, #43cea2)',
-              background: 'linear-gradient(to right, #185a9d, #43cea2)',
-              height: '100dvh',
-            }}
-          >
-            <Routes>
-              <Route path="/login" exact={true} element={<Login />} />
-            </Routes>
-          </div>
         </LoginContextProvider>
       </Router>
     </div>
