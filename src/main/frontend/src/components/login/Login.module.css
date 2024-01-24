@@ -18,10 +18,11 @@
 .login__text {
   margin: auto;
   font-size: 60px;
+  font-weight: 800;
   background: linear-gradient(to right, #185a9d, #43cea2);
   color: transparent;
   -webkit-background-clip: text;
-  font-family: 'Bilbo Swash Caps', cursive;
+  font-family: 'Kanit', sans-serif;
 }
 
 .login__form {
