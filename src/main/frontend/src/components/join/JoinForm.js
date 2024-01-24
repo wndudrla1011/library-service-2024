@@ -2,22 +2,7 @@ import React, { useState } from 'react';
 import styles from './JoinForm.module.css';
 
 function JoinForm() {
-  const [loginId, setLoginId] = useState('');
-  const [password, setPassword] = useState('');
-
-  const formSubmit = async (e) => {
-    e.preventDefault();
-  };
-
-  const idChange = (e) => {
-    e.preventDefault();
-    setLoginId(e.target.value);
-  };
-
-  const pwChange = (e) => {
-    e.preventDefault();
-    setPassword(e.target.value);
-  };
+  const formSubmit = async (e) => {};
 
   return (
     <div className={styles.join__root}>
@@ -25,24 +10,50 @@ function JoinForm() {
         <h1 className={styles.join__text}>Sign Up</h1>
       </div>
       <form onSubmit={formSubmit} className={styles.join__form}>
-        <label htmlFor="loginId">Login ID</label>
-        <input
-          id="loginId"
-          name="loginId"
-          type="text"
-          value={loginId}
-          onChange={idChange}
-          placeholder="아이디를 입력하세요"
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value={password}
-          onChange={pwChange}
-          placeholder="비밀번호를 입력하세요"
-        />
+        <div>
+          <label htmlFor="loginId">Login ID</label>
+          <input
+            id="loginId"
+            name="loginId"
+            type="text"
+            placeholder="아이디를 입력하세요"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="비밀번호를 입력하세요"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="name">Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="이름을 입력하세요"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="이메일을 입력하세요"
+            required
+          />
+        </div>
+
         <button type="submit">Register</button>
       </form>
     </div>
