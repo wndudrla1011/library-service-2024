@@ -3,6 +3,7 @@ import styles from './Login.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
+import { FaRegUser } from 'react-icons/fa6';
 
 function Login() {
   const [loginId, setLoginId] = useState('');
@@ -58,14 +59,16 @@ function Login() {
 
   return (
     <div className={styles.login__root}>
-      <div className={styles.login__text}>
-        <h2>Rootable Library</h2>
+      <div className={styles.login__textBox}>
+        <h1 className={styles.login__text}>LOGIN</h1>
       </div>
       <form onSubmit={formSubmit} className={styles.login__form}>
+        <label htmlFor="loginId">Login ID</label>
         <input
           style={{
             borderColor: errorMsgId !== '' ? 'red' : 'white',
           }}
+          id="loginId"
           name="loginId"
           type="text"
           value={loginId}
@@ -75,10 +78,12 @@ function Login() {
         <div className={styles.error__ID}>
           {errorMsgId !== null ? errorMsgId : null}
         </div>
+        <label htmlFor="password">Password</label>
         <input
           style={{
             borderColor: errorMsgPw !== '' ? 'red' : 'white',
           }}
+          id="password"
           name="password"
           type="password"
           value={password}

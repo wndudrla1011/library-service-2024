@@ -99,6 +99,10 @@ function App() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              background: '#43cea2',
+              background: '-webkit-linear-gradient(to right, #185a9d, #43cea2)',
+              background: 'linear-gradient(to right, #185a9d, #43cea2)',
+              height: '100dvh',
             }}
           >
             <Routes>
