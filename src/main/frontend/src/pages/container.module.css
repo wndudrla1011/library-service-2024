@@ -7,3 +7,14 @@
   background: linear-gradient(to right, #185a9d, #43cea2);
   height: 100dvh;
 }
+
+.homeContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  gap: 2rem;
+  grid-auto-flow: dense;
+  justify-items: center;
+  margin: 22% 0px;
+  padding: 0px 13%;
+}
