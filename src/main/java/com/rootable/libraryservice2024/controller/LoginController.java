@@ -1,9 +1,15 @@
 package com.rootable.libraryservice2024.controller;
 
 import com.rootable.libraryservice2024.domain.Member;
+import com.rootable.libraryservice2024.domain.Role;
+import com.rootable.libraryservice2024.jwt.constants.SecurityConstants;
+import com.rootable.libraryservice2024.jwt.prop.JwtProp;
 import com.rootable.libraryservice2024.service.LoginService;
 import com.rootable.libraryservice2024.web.dto.LoginDto;
 import com.rootable.libraryservice2024.web.dto.SessionMember;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -20,6 +29,7 @@ public class LoginController {
 
     private final LoginService loginService;
     private final HttpSession httpSession;
+    private final JwtProp jwtProp;
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginDto dto) {
@@ -32,13 +42,33 @@ public class LoginController {
 
         log.info("로그인 검증");
 
-        //로그인 유효성 검사
-        Member loginMember = loginService.validationLogin(loginDto.getLoginId(), loginDto.getPassword());
-        log.info("Login Member = {}", loginMember);
+        String loginId = loginDto.getLoginId();
+        String password = loginDto.getPassword();
 
-        httpSession.setAttribute("loginMember", new SessionMember(loginMember)); //세션에 회원 정보 저장
+        log.info("loginId : " + loginId);
+        log.info("password : " + password);
 
-        return new ResponseEntity<>(loginDto, HttpStatus.CREATED); //로그인 후 최초 위치로 돌아가도록
+        List<String> roles = new ArrayList();
+        roles.add(Role.ADMIN.getKey());
+        roles.add(Role.STAFF.getKey());
+        roles.add(Role.GUEST.getKey());
+        roles.add(Role.USER.getKey());
+
+        //secret key -> bytes
+        byte[] signingKey = jwtProp.getSecretKey().getBytes();
+
+        //토큰 생성
+        String jwt = Jwts.builder()
+                .signWith(SignatureAlgorithm.HS512, Keys.hmacShaKeyFor(signingKey))
+                .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 3)) //3 min
+                .claim("uid", loginId)
+                .claim("role", roles)
+                .compact();
+
+        log.info("jwt : " + jwt);
+
+        return new ResponseEntity<>(jwt, HttpStatus.OK);
 
     }
 
