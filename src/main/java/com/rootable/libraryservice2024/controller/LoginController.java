@@ -7,6 +7,8 @@ import com.rootable.libraryservice2024.jwt.prop.JwtProp;
 import com.rootable.libraryservice2024.service.LoginService;
 import com.rootable.libraryservice2024.web.dto.LoginDto;
 import com.rootable.libraryservice2024.web.dto.SessionMember;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -59,16 +61,44 @@ public class LoginController {
 
         //토큰 생성
         String jwt = Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, Keys.hmacShaKeyFor(signingKey))
-                .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 3)) //3 min
-                .claim("uid", loginId)
-                .claim("role", roles)
+                .signWith(SignatureAlgorithm.HS512, Keys.hmacShaKeyFor(signingKey)) //hash algorithm, secret key for signature
+                .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE) //header configuration {typ : JWT}
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 3)) //exp: 3 min
+                .claim("uid", loginId) //payload - uid
+                .claim("role", roles) //payload - role
                 .compact();
 
         log.info("jwt : " + jwt);
 
         return new ResponseEntity<>(jwt, HttpStatus.OK);
+
+    }
+
+    //토큰 해석
+    @GetMapping("/member/info")
+    public ResponseEntity<?> validateToken(@RequestHeader(name = "Authorization") String header) {
+
+        log.info("토큰 해석");
+        log.info("Authorization : " + header);
+
+        //Prefix 제거
+        String jwt = header.replace(SecurityConstants.TOKEN_PREFIX, "");
+
+        byte[] signingKey = jwtProp.getSecretKey().getBytes();
+
+        //Decode Token
+        Jws<Claims> parsedToken = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(jwt);
+
+        log.info("parsedToken : " + parsedToken);
+
+        //Get Payload
+        String loginId = parsedToken.getBody().get("uid").toString();
+        log.info("loginId : " + loginId);
+
+        Object roles = parsedToken.getBody().get("role");
+        log.info("role : " + roles);
+
+        return new ResponseEntity<>(parsedToken.toString(), HttpStatus.OK);
 
     }
 
