@@ -26,10 +26,10 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String nickname;
 
     @Column(nullable = false)
-    private String loginId;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -37,9 +37,8 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private String role;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -51,17 +50,17 @@ public class Member extends BaseTimeEntity {
     private List<Comment> commentList = new ArrayList<>();
 
     @Builder
-    public Member(Long id, String name, String loginId, String password, String email, Role role) {
+    public Member(Long id, String nickname, String username, String password, String email, String role) {
         this.id = id;
-        this.name = name;
-        this.loginId = loginId;
+        this.nickname = nickname;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
     }
 
-    public void update(String loginId, String password, Role role) {
-        this.loginId = loginId;
+    public void update(String username, String password, String role) {
+        this.username = username;
         this.password = password;
         this.role = role;
     }
