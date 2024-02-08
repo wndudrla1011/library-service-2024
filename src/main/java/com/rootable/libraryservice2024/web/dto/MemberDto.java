@@ -1,7 +1,7 @@
 package com.rootable.libraryservice2024.web.dto;
 
+import com.rootable.libraryservice2024.domain.Authority;
 import com.rootable.libraryservice2024.domain.Member;
-import com.rootable.libraryservice2024.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +32,7 @@ public class MemberDto {
     @NotBlank(message = "이메일은 필수 입력 값입니다.")
     private String email;
 
-    private String role;
+    private Authority authority;
 
     public Member toEntity() {
         Member build = Member.builder()
@@ -41,7 +41,7 @@ public class MemberDto {
                 .username(username)
                 .password(password)
                 .email(email)
-                .role(role)
+                .authority(authority)
                 .build();
         return build;
     }

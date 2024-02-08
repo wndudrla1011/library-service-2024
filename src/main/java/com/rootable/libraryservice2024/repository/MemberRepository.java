@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
+    Boolean existByUsername(String username); //회원 존재 여부
+
     @Query("select m from Member m order by m.id desc")
     List<Member> findMembers();
 

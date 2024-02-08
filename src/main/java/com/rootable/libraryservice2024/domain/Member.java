@@ -37,8 +37,9 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String role;
+    private Authority authority;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -50,19 +51,19 @@ public class Member extends BaseTimeEntity {
     private List<Comment> commentList = new ArrayList<>();
 
     @Builder
-    public Member(Long id, String nickname, String username, String password, String email, String role) {
+    public Member(Long id, String nickname, String username, String password, String email, Authority authority) {
         this.id = id;
         this.nickname = nickname;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.authority = authority;
     }
 
-    public void update(String username, String password, String role) {
+    public void update(String username, String password, Authority authority) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.authority = authority;
     }
 
 }

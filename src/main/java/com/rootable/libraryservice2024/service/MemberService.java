@@ -20,6 +20,10 @@ public class MemberService {
     * */
     @Transactional
     public Long join(MemberDto dto) {
+        Boolean isExist = memberRepository.existByUsername(dto.getUsername());
+
+        if (isExist) return 0L; //이미 가입된 username 존재
+
         return memberRepository.save(dto.toEntity()).getId();
     }
 
@@ -51,7 +55,7 @@ public class MemberService {
                 .username(member.getUsername())
                 .password(member.getPassword())
                 .email(member.getEmail())
-                .role(member.getRole())
+                .authority(member.getAuthority())
                 .build();
 
         return memberDto;
@@ -67,7 +71,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + memberId));
 
-        member.update(updateParam.getUsername(), updateParam.getPassword(), updateParam.getRole());
+        member.update(updateParam.getUsername(), updateParam.getPassword(), updateParam.getAuthority());
 
         return memberId;
 
