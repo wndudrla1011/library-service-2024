@@ -1,7 +1,7 @@
 package com.rootable.libraryservice2024.web.dto;
 
+import com.rootable.libraryservice2024.domain.Authority;
 import com.rootable.libraryservice2024.domain.Member;
-import com.rootable.libraryservice2024.domain.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +17,7 @@ public class SessionMember implements Serializable {
     private String username;
     private String password;
     private String email;
-    private String role;
+    private Authority authority;
 
     public SessionMember(Member member) {
         this.id = member.getId();
@@ -25,7 +25,7 @@ public class SessionMember implements Serializable {
         this.username = member.getUsername();
         this.password = member.getPassword();
         this.email = member.getEmail();
-        this.role = member.getRole();
+        this.authority = member.getAuthority();
     }
 
 }
