@@ -7,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
 @Slf4j
+@RestController
 public class HomeController {
 
     public static String ADMIN_KEY = "admin";
@@ -19,18 +20,7 @@ public class HomeController {
 
         log.info("홈 화면 이동");
 
-        //세션에 회원 데이터가 없으면 intro 화면으로
-        if (loginMember == null) {
-            return "index";
-        }
-
-        if (loginMember.getRole() == Role.ADMIN || loginMember.getRole() == Role.STAFF) {
-            model.addAttribute("admin", ADMIN_KEY);
-        }
-
-        //회원 데이터가 있으면 로그인 화면으로
-        model.addAttribute("member", loginMember);
-        return "loginHome";
+        return "Home Controller";
 
     }
 
