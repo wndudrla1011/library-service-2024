@@ -1,28 +1,21 @@
 package com.rootable.libraryservice2024.controller;
 
-import com.rootable.libraryservice2024.domain.Role;
-import com.rootable.libraryservice2024.web.MySecured;
-import com.rootable.libraryservice2024.web.argumentresolver.Login;
-import com.rootable.libraryservice2024.web.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class AdminController {
 
-    @MySecured(role = Role.ADMIN)
     @GetMapping("/admin")
-    public String admin(Model model, @Login SessionMember loginMember) {
+    public String admin() {
 
         log.info("관리자 페이지 접근");
 
-        model.addAttribute("member", loginMember);
-        return "loginHomeAdmin";
+        return "Admin Controller";
 
     }
 
