@@ -12,18 +12,18 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("select m from Member m order by m.id desc")
     List<Member> findMembers();
 
-    @Query("select m from Member m where m.loginId = :memberId")
-    Member findByLoginId(@Param("memberId") String loginId);
+    @Query("select m from Member m where m.username = :memberId")
+    Member findByLoginId(@Param("memberId") String username);
 
-    @Query("select m from Member m where m.id <> :id and m.loginId = :memberId")
+    @Query("select m from Member m where m.id <> :id and m.username = :memberId")
     Member checkDuplicatedLoginId(@Param("id") Long id,
-                                  @Param("memberId") String loginId);
+                                  @Param("memberId") String username);
 
     @Query("select m from Member m where m.email = :memberEmail")
     Member findByEmail(@Param("memberEmail") String email);
 
-    @Query("select m from Member m where m.loginId = :memberId and m.password = :pw")
-    Member certify(@Param("memberId") String loginId,
+    @Query("select m from Member m where m.username = :memberId and m.password = :pw")
+    Member certify(@Param("memberId") String username,
                    @Param("pw") String password);
 
 

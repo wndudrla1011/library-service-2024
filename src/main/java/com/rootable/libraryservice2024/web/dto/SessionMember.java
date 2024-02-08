@@ -13,16 +13,16 @@ import java.io.Serializable;
 public class SessionMember implements Serializable {
 
     private Long id;
-    private String name;
-    private String loginId;
+    private String nickname;
+    private String username;
     private String password;
     private String email;
-    private Role role;
+    private String role;
 
     public SessionMember(Member member) {
         this.id = member.getId();
-        this.name = member.getName();
-        this.loginId = member.getLoginId();
+        this.nickname = member.getNickname();
+        this.username = member.getUsername();
         this.password = member.getPassword();
         this.email = member.getEmail();
         this.role = member.getRole();

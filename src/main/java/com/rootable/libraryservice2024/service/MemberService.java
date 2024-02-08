@@ -47,8 +47,8 @@ public class MemberService {
         Member member = memberRepository.findById(memberId).get();
 
         MemberDto memberDto = MemberDto.builder()
-                .name(member.getName())
-                .loginId(member.getLoginId())
+                .nickname(member.getNickname())
+                .username(member.getUsername())
                 .password(member.getPassword())
                 .email(member.getEmail())
                 .role(member.getRole())
@@ -67,7 +67,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다. id=" + memberId));
 
-        member.update(updateParam.getLoginId(), updateParam.getPassword(), updateParam.getRole());
+        member.update(updateParam.getUsername(), updateParam.getPassword(), updateParam.getRole());
 
         return memberId;
 

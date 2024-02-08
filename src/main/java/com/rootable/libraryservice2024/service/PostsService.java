@@ -59,7 +59,7 @@ public class PostsService {
         List<FindPostsDto> DTOs = new ArrayList<>();
 
         for (Posts post : posts) {
-            DTOs.add(new FindPostsDto(post, post.getMember().getName()));
+            DTOs.add(new FindPostsDto(post, post.getMember().getNickname()));
         }
 
         return DTOs;

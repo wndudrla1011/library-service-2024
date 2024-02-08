@@ -74,9 +74,9 @@ public class PostsController {
         }
 
         //작성자 본인이거나 관리자일 경우
-        if (post.getMember().getId().equals(loginMember.getId()) || loginMember.getRole() == Role.ADMIN) {
-            model.addAttribute("same", SAME_PERSON_KEY); //키 발급
-        }
+//        if (post.getMember().getId().equals(loginMember.getId()) || loginMember.getRole() == Role.ADMIN) {
+//            model.addAttribute("same", SAME_PERSON_KEY); //키 발급
+//        }
 
         //댓글 리스트
         List<Comment> comments = post.getCommentList();

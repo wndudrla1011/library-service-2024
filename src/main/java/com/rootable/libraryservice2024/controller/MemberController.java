@@ -39,19 +39,7 @@ public class MemberController {
 
         log.info("회원 가입 검증");
 
-        dto.setRole(Role.USER);
-
-        duplicationCheckLoginId(dto, bindingResult); //중복 아이디 검증
-        duplicationCheckEmail(dto, bindingResult); //중복 이메일 검증
-
-        if (bindingResult.hasErrors()) {
-            log.info("검증 에러 errors={}", bindingResult);
-            return "members/signup";
-        }
-
-        log.info("정상 입력으로 회원 가입 진행");
-        memberService.join(dto); //회원 가입
-        return "redirect:/";
+        return "join";
 
     }
 
@@ -195,7 +183,7 @@ public class MemberController {
     //수정 -> ID 중복 확인
     private void duplicationCheckUpdateLoginId(Long memberId, MemberDto form, BindingResult bindingResult) {
 
-        if (memberService.checkDuplicatedLoginId(memberId, form.getLoginId()) != null) {
+        if (memberService.checkDuplicatedLoginId(memberId, form.getUsername()) != null) {
             log.info(">>> 로그인 ID 중복");
             bindingResult.rejectValue("loginId", "overlap");
         }
@@ -205,7 +193,7 @@ public class MemberController {
     //회원 ID 중복 확인
     private void duplicationCheckLoginId(MemberDto member, BindingResult bindingResult) {
 
-        if (memberService.findByLoginId(member.getLoginId()) != null) {
+        if (memberService.findByLoginId(member.getUsername()) != null) {
             log.info(">>> 로그인 ID 중복");
             bindingResult.rejectValue("loginId", "overlap");
         }
