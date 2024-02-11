@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2024.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -28,7 +30,7 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String nickname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -37,9 +39,9 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Enumerated(EnumType.STRING)
+    @JsonIgnore
     @Column(nullable = false)
-    private Authority authority;
+    private boolean activated;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -50,20 +52,11 @@ public class Member extends BaseTimeEntity {
     @OrderBy("id desc")
     private List<Comment> commentList = new ArrayList<>();
 
-    @Builder
-    public Member(Long id, String nickname, String username, String password, String email, Authority authority) {
-        this.id = id;
-        this.nickname = nickname;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.authority = authority;
-    }
-
-    public void update(String username, String password, Authority authority) {
-        this.username = username;
-        this.password = password;
-        this.authority = authority;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
 
 }
