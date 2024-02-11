@@ -1,6 +1,6 @@
 package com.rootable.libraryservice2024.web.advice;
 
-import com.rootable.libraryservice2024.controller.LoginController;
+import com.rootable.libraryservice2024.controller.AuthController;
 import com.rootable.libraryservice2024.web.dto.LoginResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestControllerAdvice(basePackageClasses = LoginController.class)
+@RestControllerAdvice(basePackageClasses = AuthController.class)
 public class LoginControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
