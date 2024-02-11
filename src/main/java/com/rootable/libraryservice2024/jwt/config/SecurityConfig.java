@@ -2,7 +2,9 @@ package com.rootable.libraryservice2024.jwt.config;
 
 import com.rootable.libraryservice2024.jwt.handler.JwtAccessDeniedHandler;
 import com.rootable.libraryservice2024.jwt.handler.JwtAuthenticationEntryPoint;
+import com.rootable.libraryservice2024.jwt.provider.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -31,16 +34,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
-                //token 방식 => off the csrf/form login/httpBasic
                 .csrf().disable()
-                .formLogin().disable()
-                .httpBasic().disable()
 
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                //enable h2-console
+                // enable h2-console
                 .and()
                 .headers()
                 .frameOptions()
@@ -50,15 +50,17 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
 
                 //HttpServletRequest를 사용하는 요청들에 대한 접근제한 설정
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/")).permitAll() //홈
-                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll() //로그인 api
-                        .requestMatchers(new AntPathRequestMatcher("/members/add")).permitAll() //회원가입 api
-                        .requestMatchers(new AntPathRequestMatcher("/admin")).hasRole("ADMIN") //관리자 페이지에 요구되는 권한 설정
-                        .anyRequest().authenticated()); //그 외 인증 없이 접근x
+                .and()
+                .authorizeHttpRequests() // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정하겠다.
+                .requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll() // 로그인 api
+                .requestMatchers(PathRequest.toH2Console()).permitAll()// h2-console, favicon.ico 요청 인증 무시
+                .requestMatchers(new AntPathRequestMatcher("/favicon.ico")).permitAll()
+                .anyRequest().authenticated() // 그 외 인증 없이 접근X
+
+                .and()
+                .apply(new JwtSecurityConfig(tokenProvider));
 
         return httpSecurity.build();
 
