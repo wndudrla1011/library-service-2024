@@ -1,10 +1,12 @@
 package com.rootable.libraryservice2024.controller;
 
+import com.rootable.libraryservice2024.jwt.filter.JwtFilter;
 import com.rootable.libraryservice2024.jwt.provider.TokenProvider;
 import com.rootable.libraryservice2024.web.dto.LoginDto;
 import com.rootable.libraryservice2024.web.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +37,10 @@ public class AuthController {
 
         String jwt = tokenProvider.createToken(authentication);
 
-        return new ResponseEntity<>(new TokenDto(jwt), HttpStatus.OK);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
 
     }
 
