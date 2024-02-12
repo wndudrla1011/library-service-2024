@@ -11,25 +11,8 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    @EntityGraph(attributePaths = "authorities")
-    Optional<Member> findOneWithAuthoritiesByUsername(String username);
+    Optional<Member> findByEmail(String email);
 
-    @Query("select m from Member m order by m.id desc")
-    List<Member> findMembers();
-
-    @Query("select m from Member m where m.username = :memberId")
-    Member findByLoginId(@Param("memberId") String username);
-
-    @Query("select m from Member m where m.id <> :id and m.username = :memberId")
-    Member checkDuplicatedLoginId(@Param("id") Long id,
-                                  @Param("memberId") String username);
-
-    @Query("select m from Member m where m.email = :memberEmail")
-    Member findByEmail(@Param("memberEmail") String email);
-
-    @Query("select m from Member m where m.username = :memberId and m.password = :pw")
-    Member certify(@Param("memberId") String username,
-                   @Param("pw") String password);
-
+    boolean existsByEmail(String email);
 
 }
