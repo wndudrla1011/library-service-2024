@@ -1,8 +1,10 @@
 package com.rootable.libraryservice2024.controller;
 
-import com.rootable.libraryservice2024.jwt.filter.JwtFilter;
-import com.rootable.libraryservice2024.jwt.provider.TokenProvider;
+import com.rootable.libraryservice2024.jwt.JwtFilter;
+import com.rootable.libraryservice2024.jwt.TokenProvider;
+import com.rootable.libraryservice2024.service.AuthService;
 import com.rootable.libraryservice2024.web.dto.LoginDto;
+import com.rootable.libraryservice2024.web.dto.MemberDto;
 import com.rootable.libraryservice2024.web.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +27,15 @@ public class AuthController {
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final AuthService authService;
+
+    @PostMapping("/signup")
+    public ResponseEntity<MemberDto> signup(@Valid @RequestBody MemberDto memberDto) {
+        return ResponseEntity.ok(authService.signup(memberDto));
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto) {
-
+    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
@@ -41,7 +48,6 @@ public class AuthController {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
-
     }
 
 }
