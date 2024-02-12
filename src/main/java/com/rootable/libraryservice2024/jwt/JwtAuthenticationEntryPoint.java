@@ -1,4 +1,4 @@
-package com.rootable.libraryservice2024.jwt.handler;
+package com.rootable.libraryservice2024.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

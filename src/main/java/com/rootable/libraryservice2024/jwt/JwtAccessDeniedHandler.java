@@ -1,4 +1,4 @@
-package com.rootable.libraryservice2024.jwt.handler;
+package com.rootable.libraryservice2024.jwt;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

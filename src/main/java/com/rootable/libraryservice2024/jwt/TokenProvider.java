@@ -1,4 +1,4 @@
-package com.rootable.libraryservice2024.jwt.provider;
+package com.rootable.libraryservice2024.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

@@ -1,8 +1,9 @@
-package com.rootable.libraryservice2024.jwt.config;
+package com.rootable.libraryservice2024.config;
 
-import com.rootable.libraryservice2024.jwt.handler.JwtAccessDeniedHandler;
-import com.rootable.libraryservice2024.jwt.handler.JwtAuthenticationEntryPoint;
-import com.rootable.libraryservice2024.jwt.provider.TokenProvider;
+import com.rootable.libraryservice2024.jwt.JwtSecurityConfig;
+import com.rootable.libraryservice2024.jwt.JwtAccessDeniedHandler;
+import com.rootable.libraryservice2024.jwt.JwtAuthenticationEntryPoint;
+import com.rootable.libraryservice2024.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

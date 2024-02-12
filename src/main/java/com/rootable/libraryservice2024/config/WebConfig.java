@@ -1,4 +1,4 @@
-package com.rootable.libraryservice2024;
+package com.rootable.libraryservice2024.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

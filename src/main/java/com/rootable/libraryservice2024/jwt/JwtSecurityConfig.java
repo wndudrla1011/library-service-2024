@@ -1,7 +1,5 @@
-package com.rootable.libraryservice2024.jwt.config;
+package com.rootable.libraryservice2024.jwt;
 
-import com.rootable.libraryservice2024.jwt.filter.JwtFilter;
-import com.rootable.libraryservice2024.jwt.provider.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
