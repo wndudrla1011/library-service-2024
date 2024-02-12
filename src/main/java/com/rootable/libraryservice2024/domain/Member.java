@@ -28,13 +28,10 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
 
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
-    private String email;
 
     @Column(nullable = false)
     private String nickname;
@@ -60,10 +57,9 @@ public class Member extends BaseTimeEntity {
     private Set<Authority> authorities;
 
     @Builder
-    public Member(String username, String password, String email, String nickname, boolean activated, Set<Authority> authorities) {
-        this.username = username;
-        this.password = password;
+    public Member(String email, String password, String nickname, boolean activated, Set<Authority> authorities) {
         this.email = email;
+        this.password = password;
         this.nickname = nickname;
         this.activated = activated;
         this.authorities = authorities;
