@@ -36,9 +36,8 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String nickname;
 
-    @JsonIgnore
-    @Column(nullable = false)
-    private boolean activated;
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -49,20 +48,12 @@ public class Member extends BaseTimeEntity {
     @OrderBy("id desc")
     private List<Comment> commentList = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-    private Set<Authority> authorities;
-
     @Builder
-    public Member(String email, String password, String nickname, boolean activated, Set<Authority> authorities) {
+    public Member(String email, String password, String nickname, Authority authority) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.activated = activated;
-        this.authorities = authorities;
+        this.authority = authority;
     }
 
 }
