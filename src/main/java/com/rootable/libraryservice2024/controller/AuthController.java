@@ -25,8 +25,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final TokenProvider tokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AuthService authService;
 
     @PostMapping("/signup")
@@ -36,18 +34,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-        String jwt = tokenProvider.createToken(authentication);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        return ResponseEntity.ok(authService.login(loginDto));
     }
 
 }
