@@ -27,9 +27,6 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String nickname;
-
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -38,6 +35,9 @@ public class Member extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String nickname;
 
     @JsonIgnore
     @Column(nullable = false)
@@ -58,5 +58,15 @@ public class Member extends BaseTimeEntity {
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
+
+    @Builder
+    public Member(String username, String password, String email, String nickname, boolean activated, Set<Authority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+        this.activated = activated;
+        this.authorities = authorities;
+    }
 
 }
