@@ -22,14 +22,8 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.*;
 @Builder
 public class MemberDto {
 
-    @NotBlank(message = "이름은 필수 입력 값입니다.")
-    @Size(min = 3, max = 50)
-    private String nickname;
-
-    @Pattern(regexp = "^[a-z0-9]{4,20}$",
-            message = "아이디는 영문 대소문자와 숫자만 허용되며 4~20 자리여야 합니다.")
-    @Size(min = 3, max = 50)
-    private String username;
+    @NotBlank(message = "이메일은 필수 입력 값입니다.")
+    private String email;
 
     @JsonProperty(access = WRITE_ONLY)
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$",
@@ -37,8 +31,9 @@ public class MemberDto {
     @Size(min = 3, max = 100)
     private String password;
 
-    @NotBlank(message = "이메일은 필수 입력 값입니다.")
-    private String email;
+    @NotBlank(message = "이름은 필수 입력 값입니다.")
+    @Size(min = 3, max = 50)
+    private String nickname;
 
     private Set<AuthorityDto> authorities;
 
@@ -46,8 +41,8 @@ public class MemberDto {
         if (member == null) return null;
 
         return MemberDto.builder()
+                .email(member.getEmail())
                 .nickname(member.getNickname())
-                .username(member.getUsername())
                 .authorities(member.getAuthorities().stream()
                         .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
                         .collect(Collectors.toSet()))
