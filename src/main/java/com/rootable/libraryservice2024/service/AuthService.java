@@ -1,5 +1,6 @@
 package com.rootable.libraryservice2024.service;
 
+import com.rootable.libraryservice2024.domain.Authority;
 import com.rootable.libraryservice2024.domain.Member;
 import com.rootable.libraryservice2024.jwt.TokenProvider;
 import com.rootable.libraryservice2024.repository.MemberRepository;
@@ -36,7 +37,7 @@ public class AuthService {
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .nickname(dto.getNickname())
-                .authority(dto.getAuthority())
+                .authority(Authority.ROLE_USER)
                 .build();
 
         return MemberDto.from(memberRepository.save(member));
