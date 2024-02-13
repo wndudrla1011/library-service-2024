@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests() // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정하겠다.
                 .requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll() // 로그인 api
+                .requestMatchers(new AntPathRequestMatcher("/api/signup")).permitAll() //회원가입 api
                 .requestMatchers(PathRequest.toH2Console()).permitAll()// h2-console, favicon.ico 요청 인증 무시
                 .requestMatchers(new AntPathRequestMatcher("/favicon.ico")).permitAll()
                 .anyRequest().authenticated() // 그 외 인증 없이 접근X
