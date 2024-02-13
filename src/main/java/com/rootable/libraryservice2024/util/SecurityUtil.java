@@ -12,23 +12,14 @@ public class SecurityUtil {
 
     private SecurityUtil() {}
 
-    public static Optional<String> getCurrentUsername() {
+    public static Long getCurrentUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null) {
-            log.debug("Security Context에 인증 정보가 없습니다.");
-            return Optional.empty();
+        if (authentication == null || authentication.getName() == null) {
+            throw  new RuntimeException("Security Context 에 인증 정보가 없습니다.");
         }
 
-        String username = null;
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-            username = springSecurityUser.getUsername();
-        } else if (authentication.getPrincipal() instanceof String) {
-            username = (String) authentication.getPrincipal();
-        }
-
-        return Optional.ofNullable(username);
+        return Long.parseLong(authentication.getName());
     }
 
 }
