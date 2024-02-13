@@ -1,6 +1,5 @@
 package com.rootable.libraryservice2024.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,8 +35,15 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String nickname;
 
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
+    @Column(nullable = false)
+    private boolean activated;
+
+    @ManyToMany
+    @JoinTable(
+            name = "member_authority",
+            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -49,11 +55,12 @@ public class Member extends BaseTimeEntity {
     private List<Comment> commentList = new ArrayList<>();
 
     @Builder
-    public Member(String email, String password, String nickname, Authority authority) {
+    public Member(String email, String password, String nickname, boolean activated, Set<Authority> authorities) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.authority = authority;
+        this.activated = activated;
+        this.authorities = authorities;
     }
 
 }
