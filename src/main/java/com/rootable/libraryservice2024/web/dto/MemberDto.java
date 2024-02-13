@@ -1,7 +1,6 @@
 package com.rootable.libraryservice2024.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.rootable.libraryservice2024.domain.Authority;
 import com.rootable.libraryservice2024.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +10,9 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.*;
 
@@ -33,7 +35,7 @@ public class MemberDto {
     @Size(min = 3, max = 50)
     private String nickname;
 
-    private Authority authority;
+    private Set<AuthorityDto> authorityDtoSet;
 
     public static MemberDto from(Member member) {
         if (member == null) return null;
@@ -41,7 +43,9 @@ public class MemberDto {
         return MemberDto.builder()
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .authority(member.getAuthority())
+                .authorityDtoSet(member.getAuthorities().stream()
+                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
+                        .collect(Collectors.toSet()))
                 .build();
     }
 
