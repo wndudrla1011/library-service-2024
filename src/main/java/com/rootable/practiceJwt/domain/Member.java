@@ -1,13 +1,10 @@
 package com.rootable.practiceJwt.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 
@@ -44,15 +41,6 @@ public class Member extends BaseTimeEntity {
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Posts> postsList = new ArrayList<>();
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    @OrderBy("id desc")
-    private List<Comment> commentList = new ArrayList<>();
 
     @Builder
     public Member(String email, String password, String nickname, boolean activated, Set<Authority> authorities) {
