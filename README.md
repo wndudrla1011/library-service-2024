@@ -1,4 +1,4 @@
 # Practice JWT
 
-- Singup
+- SingUp
 - Login
