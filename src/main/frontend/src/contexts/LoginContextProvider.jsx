@@ -1,6 +1,7 @@
 import React, { useState, createContext } from 'react';
 import api from '../apis/api';
 import Cookies from 'js-cookie';
+import * as auth from '../apis/auth';
 
 export const LoginContext = createContext();
 
@@ -32,6 +33,43 @@ function LoginContextProvider({ children }) {
 
   //아이디 저장
   const [rememberUserId, setRememberUserId] = useState();
+  /* ------------------------------[state]--------------------------------- */
+
+  /*
+    로그인 체크
+    - 쿠키에 jwt가 있는지 확인
+    - jwt로 사용자 정보를 요청
+  */
+  const loginCheck = async () => {
+    let response;
+    let data;
+
+    response = await auth.info();
+  };
+
+  //로그인
+  const login = async (loginId, password) => {
+    console.log(`loginId : ${loginId}`);
+    console.log(`password : ${password}`);
+
+    const response = await auth.login(loginId, password);
+    const data = response.data;
+    const status = response.status;
+    const headers = response.headers;
+    const authorization = headers.authorization;
+    const accessToken = authorization.replace('Bearer ', ''); //JWT
+
+    console.log(`data : ${data}`);
+    console.log(`status : ${status}`);
+    console.log(`headers : ${headers}`);
+    console.log(`jwt : ${accessToken}`);
+
+    //로그인 성공
+    if (status === 200) {
+      //로그인 체크 (/admin/members/${memberId}  <---  userData)
+      alert('로그인 되었습니다.');
+    }
+  };
 
   //로그인 세팅
   // userData, accessToken (jwt)
@@ -60,10 +98,10 @@ function LoginContextProvider({ children }) {
     //권한정보 세팅
     const updatedRoles = { isUser: false, isAdmin: false };
     roleList.foreach((role) => {
-      if (role == 'ROLE_USER' || role == 'ROLE_GUEST') {
+      if (role === 'ROLE_USER' || role === 'ROLE_GUEST') {
         updatedRoles.isUser = true;
       }
-      if (role == 'ROLE_STAFF' || role == 'ROLE_ADMIN') {
+      if (role === 'ROLE_STAFF' || role === 'ROLE_ADMIN') {
         updatedRoles.isAdmin = true;
       }
     });
