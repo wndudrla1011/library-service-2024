@@ -8,10 +8,10 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @EnableJpaAuditing //Jpa Auditing 활성화
 @SpringBootApplication
-public class LibraryService2024Application {
+public class PracticeJwtApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LibraryService2024Application.class, args);
+		SpringApplication.run(PracticeJwtApplication.class, args);
 	}
 
 	@Bean
