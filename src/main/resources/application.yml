@@ -47,6 +47,3 @@ jwt:
   header: Authorization
   secret: 1f75ab39d90b79e185ce0e0dbeaf852d64cda0e7436e27afa5afc04de53cedd34e369c56c595e793681770005002fa3d0f08c6e86179b8ea27c16bedcf64bba9
   token-validity-in-seconds: 86400
-
-file:
-  dir: C:/Users/JooYoungKim/Desktop/spring/files/

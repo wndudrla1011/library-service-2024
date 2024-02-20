@@ -1,7 +1,5 @@
 package com.rootable.libraryservice2024;
 
-import com.rootable.libraryservice2024.domain.*;
-import com.rootable.libraryservice2024.repository.BookRepository;
 import com.rootable.libraryservice2024.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
